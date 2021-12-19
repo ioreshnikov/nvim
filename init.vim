@@ -78,7 +78,6 @@ nnoremap <leader>vs :source %<CR>
 vnoremap <leader>vs y:@"<CR>
 
 
-
 " Color scheme
 " -------------------
 
