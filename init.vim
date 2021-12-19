@@ -26,3 +26,18 @@ call plug#begin(plugdir)
 Plug 'junegunn/vim-plug'
 
 call plug#end()
+
+
+" Whitespace
+" ----------
+
+" Show whitespace characters
+set list
+
+" Automatically expand tabs to 4 spaces. Indent by 4 spaces.
+set expandtab
+set tabstop=4
+set shiftwidth=4
+
+" Automatically remove trailing whitespace when saving the file
+autocmd BufWritePre * :%s/\s\+$//e
