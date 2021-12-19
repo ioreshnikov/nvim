@@ -3,7 +3,7 @@
 
 " Since `map` and `remap` evaluate `<leader>` definition eagerly (i.e. not in
 " a lazy manner), we have to set up leader key as soon as possible.
-let g:mapleader = '\<Space>'
+map <Space> <Leader>
 
 
 " Bootstrapping
@@ -40,6 +40,9 @@ Plug 'junegunn/vim-plug'
 " Some of my favourite color themes
 Plug 'folke/tokyonight.nvim'
 
+" Text icons
+Plug 'kyazdani42/nvim-web-devicons'
+
 " Modern syntax highlight with `tree-sitter`
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 
@@ -52,6 +55,9 @@ Plug 'ms-jpq/coq.artifacts', {'branch': 'artifacts'}
 
 " Automatically set `cwd` to the root of the current project
 Plug 'airblade/vim-rooter'
+
+" Use a custom statusline
+Plug 'nvim-lualine/lualine.nvim'
 
 call plug#end()
 
@@ -74,6 +80,7 @@ colorscheme tokyonight
 
 
 " Line numbers and sign column
+" ----------------------------
 
 " I'd love to see line numbers only in the programming-related files (but not
 " in markdown or LaTeX, for example), but I will be also fine if it's shown
@@ -81,6 +88,13 @@ colorscheme tokyonight
 " left that I'd like to see all the time as well.
 set number
 set signcolumn=yes
+
+
+" Current line
+" ------------
+
+" I like to see the current line to be highlighted
+set cursorline
 
 
 " Whitespace
@@ -199,8 +213,12 @@ require('nvim-treesitter.configs').setup {
 }
 EOF
 
+set foldmethod=expr
+set foldminlines=3
+set foldexpr=nvim_treesitter#foldexpr()
 
-" Code completion {{{
+
+" Code completion
 " ---------------
 
 " Completion backend is handed by the LSP servers of choice. We configure them
@@ -211,3 +229,29 @@ let g:coq_settings = {
 \ 'auto_start': 'shut-up',
 \ 'display.pum.fast_close': v:false }
 
+
+" VIM
+" ---
+
+" It would be cool if editing this very config was done with the help of an
+" LSP server. Thankfully, there is such a server!
+
+lua << EOG
+local lsp = require('lspconfig')
+local coq = require('coq')
+
+lsp.vimls.setup(coq.lsp_ensure_capabilities())
+EOG
+
+
+" Python
+" ------
+
+" I am mostly paid for writing python. Thankfully, with LSP and `tree-sitter`
+" being set up not a lot is left to do in terms of configuratoin.
+lua << EOF
+local lsp = require('lspconfig')
+local coq = require('coq')
+
+lsp.pyright.setup(coq.lsp_ensure_capabilities())
+EOF
