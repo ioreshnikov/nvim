@@ -73,7 +73,7 @@ vnoremap <leader>vs y:@"<CR>
 
 
 
-" Select color scheme
+" Color scheme
 " -------------------
 
 colorscheme tokyonight
@@ -255,3 +255,16 @@ local coq = require('coq')
 
 lsp.pyright.setup(coq.lsp_ensure_capabilities())
 EOF
+
+
+" TODOs
+" -----
+
+" A short list of things I would like to have set up.
+
+" TODO: Better statusline
+" TODO: LSP Signature in the status line
+" TODO: Maybe prettier tabs
+" TODO: A sane way to deal with buffers
+" TODO: Something similar to `selectrum` for opening files. Would be great if
+"       there was something for the buffers as well.
