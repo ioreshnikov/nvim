@@ -12,7 +12,10 @@ let g:mapleader = '\<Space>'
 " The section below automatically installs a plugin management system (in our
 " case `vim-plug`) if it's not present in the system already. This means that
 " we can copy this config on a clean machine, load nevim and then simply call
-" :PlugInstall and have a working configuration.
+" :PlugInstall and have an almost working configuration. "Almost working"
+" means that one still needs to install lsp servers and third-party
+" requirements for _some_ of the packages. Since this is very much plugin
+" dependentl, at the moment it's not clear how to automate this.
 let sitedir = stdpath('data') . '/site'
 let vimplug = sitedir . '/autoload/plug.vim'
 
@@ -36,6 +39,19 @@ Plug 'junegunn/vim-plug'
 
 " Some of my favourite color themes
 Plug 'folke/tokyonight.nvim'
+
+" Modern syntax highlight with `tree-sitter`
+Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
+
+" Code completion backend through LSP servers
+Plug 'neovim/nvim-lspconfig'
+
+" Code completion frontend with `coq` (ridiculously fast!)
+Plug 'ms-jpq/coq_nvim', {'branch': 'coq'}
+Plug 'ms-jpq/coq.artifacts', {'branch': 'artifacts'}
+
+" Automatically set `cwd` to the root of the current project
+Plug 'airblade/vim-rooter'
 
 call plug#end()
 
@@ -143,5 +159,46 @@ tnoremap <A-l> <C-\><C-n><C-w>l
 
 " Automatically enter insert mode when entering a terminal window.
 " Automatically switch to normal on exit.
-autocmd BufWinEnter,WinEnter term://* startinsert
+autocmd BufReadPost,BufEnter,WinEnter term://* startinsert
 autocmd BufLeave term://* stopinsert
+
+
+" Tree sitter
+" -----------
+
+" The section below configures `tree-sitter` to be used for syntax
+" highlighting, selection, indentation and automatic delimiters pairing.
+lua << EOF
+require('nvim-treesitter.configs').setup {
+    ensure_installed = 'maintained',
+    highlight = {
+        enable = true
+    },
+    incremental_selection = {
+        enable = true,
+        keymaps = {
+            init_selection = 'gnn',
+            node_incremental = 'grn',
+            scope_incremental = 'grc',
+            node_decremental = 'grm'
+        }
+    },
+    indent = {
+        enable = true
+    }
+}
+EOF
+
+
+" Code completion {{{
+" ---------------
+
+" Completion backend is handed by the LSP servers of choice. We configure them
+" in the corresponding language section. UI is provided by a brilliant and
+" blazing-fast COQ. It does not require any additional setup, except that we
+" would like it to start automatically once we open a buffer.
+let g:coq_settings = {
+\ 'auto_start': 'shut-up',
+\ 'display.pum.fast_close': v:false }
+
+
