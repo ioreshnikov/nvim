@@ -136,3 +136,12 @@ tnoremap <A-h> <C-\><C-n><C-w>h
 tnoremap <A-j> <C-\><C-n><C-w>j
 tnoremap <A-k> <C-\><C-n><C-w>k
 tnoremap <A-l> <C-\><C-n><C-w>l
+
+
+" Terminal
+" --------
+
+" Automatically enter insert mode when entering a terminal window.
+" Automatically switch to normal on exit.
+autocmd BufWinEnter,WinEnter term://* startinsert
+autocmd BufLeave term://* stopinsert
