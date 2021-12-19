@@ -62,6 +62,9 @@ Plug 'nvim-lualine/lualine.nvim'
 " Toggleable terminal
 Plug 'akinsho/toggleterm.nvim'
 
+" Commenting
+Plug 'numToStr/Comment.nvim'
+
 call plug#end()
 
 
@@ -254,6 +257,13 @@ set foldmethod=expr
 set foldminlines=3
 set foldexpr=nvim_treesitter#foldexpr()
 
+
+" Commenting
+" ----------
+
+lua << EOF
+require("Comment").setup {}
+EOF
 
 " Code completion
 " ---------------
