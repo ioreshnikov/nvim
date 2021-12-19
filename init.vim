@@ -193,12 +193,21 @@ autocmd BufLeave term://* stopinsert
 lua << EOF
 require('toggleterm').setup {
     size = function (term)
-        return 0.4 * vim.o.lines
+        if term.direction == 'horizontal' then
+           return vim.o.lines * 0.4
+        elseif term.direction == 'vertical' then
+            return vim.o.columns * 0.5
+        else
+            return 25
+        end
     end
 }
 EOF
 
 nnoremap <leader>t :ToggleTerm<CR>
+nnoremap <leader>ts :ToggleTerm direction=horizontal<CR>
+nnoremap <leader>tv :ToggleTerm direction=vertical<CR>
+nnoremap <leader>tt :ToggleTerm direction=tab<CR>
 
 
 " Status line
@@ -294,4 +303,3 @@ EOF
 " TODO: A sane way to deal with buffers
 " TODO: Something similar to `selectrum` for opening files. Would be great if
 "       there was something for the buffers as well.
-" TODO: Terminal mode when opening the terminal for the first time
