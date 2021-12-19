@@ -73,6 +73,16 @@ vnoremap <leader>vs y:@"<CR>
 colorscheme tokyonight
 
 
+" Line numbers and sign column
+
+" I'd love to see line numbers only in the programming-related files (but not
+" in markdown or LaTeX, for example), but I will be also fine if it's shown
+" everywhere. Also, even an empty sign column provides a nice margin to the
+" left that I'd like to see all the time as well.
+set number
+set signcolumn=yes
+
+
 " Whitespace
 " ----------
 
@@ -159,7 +169,7 @@ tnoremap <A-l> <C-\><C-n><C-w>l
 
 " Automatically enter insert mode when entering a terminal window.
 " Automatically switch to normal on exit.
-autocmd BufReadPost,BufEnter,WinEnter term://* startinsert
+autocmd BufRead,BufEnter,WinEnter term://* startinsert
 autocmd BufLeave term://* stopinsert
 
 
@@ -200,5 +210,4 @@ EOF
 let g:coq_settings = {
 \ 'auto_start': 'shut-up',
 \ 'display.pum.fast_close': v:false }
-
 
