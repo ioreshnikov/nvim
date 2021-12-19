@@ -23,9 +23,18 @@ endif
 let plugdir = stdpath('data') . '/plugged'
 call plug#begin(plugdir)
 
+" Make vim-plug manage itself
 Plug 'junegunn/vim-plug'
 
+" Some of my favourite color themes
+Plug 'folke/tokyonight.nvim'
+
 call plug#end()
+
+
+" Встречают по одёжке
+" -------------------
+colorscheme tokyonight
 
 
 " Whitespace
