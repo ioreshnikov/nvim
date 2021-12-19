@@ -5,6 +5,7 @@
 " a lazy manner), we have to set up leader key as soon as possible.
 let g:mapleader = '\<Space>'
 
+
 " Bootstrapping
 " -------------
 
