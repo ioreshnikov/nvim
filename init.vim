@@ -1,3 +1,10 @@
+" Leader key
+" ----------
+
+" Since `map` and `remap` evaluate `<leader>` definition eagerly (i.e. not in
+" a lazy manner), we have to set up leader key as soon as possible.
+let g:mapleader = '\<Space>'
+
 " Bootstrapping
 " -------------
 
@@ -30,6 +37,17 @@ Plug 'junegunn/vim-plug'
 Plug 'folke/tokyonight.nvim'
 
 call plug#end()
+
+
+" Evaluating
+" ----------
+
+" When editing this config we need to re-evaluate parts of it. We define two
+" additional commands. The first one evaluates the current line. The second
+" one -- the active visual selection.
+nnoremap <leader>vs :source %<CR>
+vnoremap <leader>vs y:@"<CR>
+
 
 
 " Select color scheme
