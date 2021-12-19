@@ -32,8 +32,9 @@ Plug 'folke/tokyonight.nvim'
 call plug#end()
 
 
-" Встречают по одёжке
+" Select color scheme
 " -------------------
+
 colorscheme tokyonight
 
 
@@ -50,3 +51,4 @@ set shiftwidth=4
 
 " Automatically remove trailing whitespace when saving the file
 autocmd BufWritePre * :%s/\s\+$//e
+
