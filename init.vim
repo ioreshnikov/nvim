@@ -59,6 +59,9 @@ Plug 'airblade/vim-rooter'
 " Use a custom statusline
 Plug 'nvim-lualine/lualine.nvim'
 
+" Toggleable terminal
+Plug 'akinsho/toggleterm.nvim'
+
 call plug#end()
 
 
@@ -186,6 +189,31 @@ tnoremap <A-l> <C-\><C-n><C-w>l
 autocmd BufRead,BufEnter,WinEnter term://* startinsert
 autocmd BufLeave term://* stopinsert
 
+" Open terminal in a toggle
+lua << EOF
+require('toggleterm').setup {
+    size = function (term)
+        return 0.4 * vim.o.lines
+    end
+}
+EOF
+
+nnoremap <leader>t :ToggleTerm<CR>
+
+
+" Status line
+" -----------
+
+" I am using a `lualine` with almost default settings.
+lua << EOF
+require('lualine').setup {
+    options = {
+        section_separators = '',
+        component_separators = '',
+    }
+}
+EOF
+
 
 " Tree sitter
 " -----------
@@ -235,7 +263,6 @@ let g:coq_settings = {
 
 " It would be cool if editing this very config was done with the help of an
 " LSP server. Thankfully, there is such a server!
-
 lua << EOG
 local lsp = require('lspconfig')
 local coq = require('coq')
@@ -262,9 +289,9 @@ EOF
 
 " A short list of things I would like to have set up.
 
-" TODO: Better statusline
-" TODO: LSP Signature in the status line
+" TODO: LSP function signature
 " TODO: Maybe prettier tabs
 " TODO: A sane way to deal with buffers
 " TODO: Something similar to `selectrum` for opening files. Would be great if
 "       there was something for the buffers as well.
+" TODO: Terminal mode when opening the terminal for the first time
