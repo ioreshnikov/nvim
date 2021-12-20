@@ -83,6 +83,20 @@ nnoremap <leader>vs :source %<CR>
 vnoremap <leader>vs y:@"<CR>
 
 
+" Backups
+" -------
+
+set nobackup
+set nowritebackup
+set noswapfile
+
+
+" Case sensitivity
+" ----------------
+
+set ignorecase
+
+
 " Color scheme
 " -------------------
 
