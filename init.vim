@@ -234,7 +234,7 @@ require('toggleterm').setup {
 }
 EOF
 
-nnoremap <leader>t :ToggleTerm<CR>
+nnoremap <leader>t  :ToggleTerm<CR>
 nnoremap <leader>ts :ToggleTerm direction=horizontal<CR>
 nnoremap <leader>tv :ToggleTerm direction=vertical<CR>
 nnoremap <leader>tt :ToggleTerm direction=tab<CR>
@@ -328,6 +328,12 @@ local coq = require('coq')
 
 lsp.pyright.setup(coq.lsp_ensure_capabilities())
 EOF
+
+
+" Random key combinations
+" -----------------------
+
+nnoremap <C-l> :noh<CR>zz
 
 
 " TODOs
