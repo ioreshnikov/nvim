@@ -210,6 +210,7 @@ local telescope = require('telescope')
 telescope.setup {
     defaults = {
         borderchars = { '─', '│', '─', '│', '┌', '┐', '┘', '└'},
+        file_ignore_patterns = {'__pycache__/', '%.pyc'},
         layout_config = {
             height = 0.5,
             width = 80
@@ -217,6 +218,11 @@ telescope.setup {
         layout_strategy = 'vertical',
         prompt_prefix = '  ',
         selection_caret = '  '
+    },
+    pickers = {
+        file_browser = {
+            hidden = true
+        }
     }
 }
 telescope.load_extension('project')
