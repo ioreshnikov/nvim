@@ -205,11 +205,28 @@ tnoremap <A-l> <C-\><C-n><C-w>l
 " Telescope
 " ---------
 
-lua require('telescope').load_extension('project')
+lua << EOF
+local telescope = require('telescope')
+telescope.setup {
+    defaults = {
+        borderchars = { '─', '│', '─', '│', '┌', '┐', '┘', '└'},
+        layout_config = {
+            height = 0.5,
+            width = 80
+        },
+        layout_strategy = 'vertical',
+        prompt_prefix = '  ',
+        selection_caret = '  '
+    }
+}
+telescope.load_extension('project')
+EOF
 
 noremap <leader>ff :Telescope find_files<CR>
 noremap <leader>fe :Telescope file_browser<CR>
 noremap <leader>fp :Telescope project<CR>
+noremap <leader>fb :Telescope buffers<CR>
+
 
 " Terminal
 " --------
