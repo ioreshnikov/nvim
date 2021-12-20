@@ -43,6 +43,11 @@ Plug 'folke/tokyonight.nvim'
 " Text icons
 Plug 'kyazdani42/nvim-web-devicons'
 
+" Fuzzy everything
+Plug 'nvim-lua/plenary.nvim'
+Plug 'nvim-telescope/telescope.nvim'
+Plug 'nvim-telescope/telescope-project.nvim'
+
 " Modern syntax highlight with `tree-sitter`
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 
@@ -182,6 +187,15 @@ tnoremap <A-j> <C-\><C-n><C-w>j
 tnoremap <A-k> <C-\><C-n><C-w>k
 tnoremap <A-l> <C-\><C-n><C-w>l
 
+
+" Telescope
+" ---------
+
+lua require('telescope').load_extension('project')
+
+noremap <leader>ff :Telescope find_files<CR>
+noremap <leader>fe :Telescope file_browser<CR>
+noremap <leader>fp :Telescope project<CR>
 
 " Terminal
 " --------
