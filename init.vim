@@ -366,6 +366,4 @@ nnoremap <C-l> :noh<CR>zz
 
 " TODO: LSP function signature
 " TODO: Maybe prettier tabs
-" TODO: A sane way to deal with buffers
-" TODO: Something similar to `selectrum` for opening files. Would be great if
-"       there was something for the buffers as well.
+" TODO: Switch default devicons icon for a smaller one
