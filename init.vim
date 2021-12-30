@@ -359,6 +359,19 @@ lsp.pyright.setup(coq.lsp_ensure_capabilities())
 EOF
 
 
+" TeX
+" ---
+
+" Occasionally I write LaTeX. It turns out there is an LSP mode for that as
+" well.
+lua << EOF
+local lsp = require('lspconfig')
+local coq = require('coq')
+
+lsp.texlab.setup(coq.lsp_ensure_capabilities())
+EOF
+
+
 " Random key combinations
 " -----------------------
 
