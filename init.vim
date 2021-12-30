@@ -211,6 +211,18 @@ tnoremap <A-k> <C-\><C-n><C-w>k
 tnoremap <A-l> <C-\><C-n><C-w>l
 
 
+" Movement on wrapped lines
+" -------------------------
+
+" I am using soft line-wrap everywhere. The default navigation commands in vim
+" work on physical lines, not wrapped ones. This is really inconvinient. This
+" should fix it.
+nnoremap <expr> j v:count ? 'j' : 'gj'
+nnoremap <expr> k v:count ? 'k' : 'gk'
+nnoremap <expr> ^ v:count ? '^' : 'g^'
+nnoremap <expr> 0 v:count ? '0' : 'g0'
+nnoremap <expr> $ v:count ? '$' : 'g$'
+
 " Telescope
 " ---------
 
