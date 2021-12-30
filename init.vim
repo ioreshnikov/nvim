@@ -137,6 +137,11 @@ set shiftwidth=4
 autocmd BufWritePre * :%s/\s\+$//e
 
 
+" Show ruler at 80th column
+" -------------------------
+set colorcolumn=80
+
+
 " Tabs and splits
 " ---------------
 
