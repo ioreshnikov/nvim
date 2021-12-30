@@ -111,6 +111,7 @@ colorscheme tokyonight
 " everywhere. Also, even an empty sign column provides a nice margin to the
 " left that I'd like to see all the time as well.
 set number
+set relativenumber
 set signcolumn=yes
 
 
