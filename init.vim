@@ -70,6 +70,9 @@ Plug 'akinsho/toggleterm.nvim'
 " Commenting
 Plug 'numToStr/Comment.nvim'
 
+" Auto-pairing
+Plug 'jiangmiao/auto-pairs'
+
 call plug#end()
 
 
