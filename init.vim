@@ -375,6 +375,19 @@ lsp.texlab.setup(coq.lsp_ensure_capabilities())
 EOF
 
 
+" Rust
+" ----
+
+" I need to learn a system programming language and it's definitely not C/C++
+" :)
+lua << EOF
+local lsp = require('lspconfig')
+local coq = require('coq')
+
+lsp.rust_analyzer.setup(coq.lsp_ensure_capabilities())
+EOF
+
+
 " Random key combinations
 " -----------------------
 
