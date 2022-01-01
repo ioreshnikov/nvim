@@ -254,6 +254,11 @@ noremap <leader>fe :Telescope file_browser<CR>
 noremap <leader>fp :Telescope project<CR>
 noremap <leader>fb :Telescope buffers<CR>
 
+hi link TelescopeNormal NormalFloat
+hi link TelescopeBorder FloatBorder
+hi link TelescopePreviewNormal NormalFloat
+hi link TelescopeResultsNormal NormalFloat
+
 
 " Terminal
 " --------
