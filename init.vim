@@ -67,6 +67,9 @@ Plug 'nvim-lualine/lualine.nvim'
 " Toggleable terminal
 Plug 'akinsho/toggleterm.nvim'
 
+" Which key
+Plug 'folke/which-key.nvim'
+
 " Commenting
 Plug 'numToStr/Comment.nvim'
 
@@ -291,6 +294,12 @@ nnoremap <leader>t  :ToggleTerm<CR>
 nnoremap <leader>ts :ToggleTerm direction=horizontal<CR>
 nnoremap <leader>tv :ToggleTerm direction=vertical<CR>
 nnoremap <leader>tt :ToggleTerm direction=tab<CR>
+
+
+" Which key
+" ---------
+
+lua require('which-key').setup()
 
 
 " Status line
