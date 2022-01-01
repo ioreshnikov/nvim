@@ -73,6 +73,9 @@ Plug 'numToStr/Comment.nvim'
 " Auto-pairing
 Plug 'windwp/nvim-autopairs'
 
+" Sub-word motion
+Plug 'bkad/CamelCaseMotion'
+
 call plug#end()
 
 
@@ -336,10 +339,38 @@ EOF
 
 lua require('Comment').setup()
 
+
 " Pairing
 " -------
 
 lua require('nvim-autopairs').setup()
+
+
+" Subword navigation
+" ------------------
+
+" This is a really cool plugin that allow one to navigate based on a subword,
+" i.e. it treats 'Camel' and 'Case' in 'CamelCase', 'snake' and 'case' in
+" 'snake_case' and 'kebab' and 'case' in 'kebab-case' as separate words.
+
+map <silent> w <Plug>CamelCaseMotion_w
+map <silent> b <Plug>CamelCaseMotion_b
+map <silent> e <Plug>CamelCaseMotion_e
+map <silent> ge <Plug>CamelCaseMotion_ge
+sunmap w
+sunmap b
+sunmap e
+sunmap ge
+
+omap <silent> iw <Plug>CamelCaseMotion_iw
+xmap <silent> iw <Plug>CamelCaseMotion_iw
+omap <silent> ib <Plug>CamelCaseMotion_ib
+xmap <silent> ib <Plug>CamelCaseMotion_ib
+omap <silent> ie <Plug>CamelCaseMotion_ie
+xmap <silent> ie <Plug>CamelCaseMotion_ie
+
+imap <silent> <S-Left> <C-o><Plug>CamelCaseMotion_b
+imap <silent> <S-Right> <C-o><Plug>CamelCaseMotion_w
 
 
 " Code completion
