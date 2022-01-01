@@ -146,6 +146,12 @@ set shiftwidth=4
 autocmd BufWritePre * :%s/\s\+$//e
 
 
+" Use mouse
+" ---------
+
+set mouse=a
+
+
 " Show ruler at 80th column
 " -------------------------
 set colorcolumn=80
