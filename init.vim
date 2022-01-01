@@ -58,6 +58,9 @@ Plug 'neovim/nvim-lspconfig'
 Plug 'ms-jpq/coq_nvim', {'branch': 'coq'}
 Plug 'ms-jpq/coq.artifacts', {'branch': 'artifacts'}
 
+" Additional UI goodies for LSP
+Plug 'glepnir/lspsaga.nvim'
+
 " Automatically set `cwd` to the root of the current project
 Plug 'airblade/vim-rooter'
 
@@ -223,6 +226,7 @@ nnoremap <expr> ^ v:count ? '^' : 'g^'
 nnoremap <expr> 0 v:count ? '0' : 'g0'
 nnoremap <expr> $ v:count ? '$' : 'g$'
 
+
 " Telescope
 " ---------
 
@@ -351,6 +355,11 @@ lua require('nvim-autopairs').setup()
 let g:coq_settings = {
 \ 'auto_start': 'shut-up',
 \ 'display.pum.fast_close': v:false }
+
+
+" LSP Saga
+" --------
+lua require('lspsaga').init_lsp_saga()
 
 
 " VIM
