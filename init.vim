@@ -71,7 +71,7 @@ Plug 'akinsho/toggleterm.nvim'
 Plug 'numToStr/Comment.nvim'
 
 " Auto-pairing
-Plug 'jiangmiao/auto-pairs'
+Plug 'windwp/nvim-autopairs'
 
 call plug#end()
 
@@ -329,17 +329,17 @@ require('nvim-treesitter.configs').setup {
 }
 EOF
 
-set foldmethod=expr
-set foldminlines=3
-set foldexpr=nvim_treesitter#foldexpr()
-
 
 " Commenting
 " ----------
 
-lua << EOF
-require("Comment").setup {}
-EOF
+lua require('Comment').setup()
+
+" Pairing
+" -------
+
+lua require('nvim-autopairs').setup()
+
 
 " Code completion
 " ---------------
