@@ -58,9 +58,6 @@ Plug 'neovim/nvim-lspconfig'
 Plug 'ms-jpq/coq_nvim', {'branch': 'coq'}
 Plug 'ms-jpq/coq.artifacts', {'branch': 'artifacts'}
 
-" Additional UI goodies for LSP
-Plug 'glepnir/lspsaga.nvim'
-
 " Automatically set `cwd` to the root of the current project
 Plug 'airblade/vim-rooter'
 
@@ -357,9 +354,15 @@ let g:coq_settings = {
 \ 'display.pum.fast_close': v:false }
 
 
-" LSP Saga
-" --------
-lua require('lspsaga').init_lsp_saga()
+" General LSP setup
+" -----------------
+command! LspGotoDeclaration    lua vim.lsp.buf.declaration()<CR>
+command! LspGotoDefinition     lua vim.lsp.buf.definition()<CR>
+command! LspHover              lua vim.lsp.buf.hover()<CR>
+command! LpsGotoImplementation lua vim.lsp.buf.implentation()<CR>
+command! LspSignature          lua vim.lsp.buf.signature_help()<CR>
+command! LspRename             lua vim.lsp.buf.rename()<CR>
+command! LspCodeAction         lua vim.lsp.buf.code_action()<CR>
 
 
 " VIM
