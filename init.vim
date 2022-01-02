@@ -334,7 +334,11 @@ EOF
 " Almost no setup required
 lua << EOF
 require('neogit').setup {
-    disable_commit_confirmation = true
+    disable_commit_confirmation = true,
+    signs = {
+        section = {'' , ''},
+        item = {'' , ''},
+    }
 }
 EOF
 
