@@ -284,8 +284,8 @@ hi link TelescopeResultsNormal NormalFloat
 
 " Automatically enter insert mode when entering a terminal window.
 " Automatically switch to normal on exit.
-autocmd BufRead,BufEnter,WinEnter term://* startinsert
-autocmd BufLeave term://* stopinsert
+autocmd WinEnter term://* startinsert  " SEE: https://github.com/neovim/neovim/pull/16596
+autocmd WinLeave term://* stopinsert
 
 " Open terminal in a toggle
 lua << EOF
