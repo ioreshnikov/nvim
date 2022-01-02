@@ -51,6 +51,9 @@ Plug 'nvim-telescope/telescope-project.nvim'
 " Modern syntax highlight with `tree-sitter`
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 
+" Managing Git repos
+Plug 'TimUntersberger/neogit'
+
 " Code completion backend through LSP servers
 Plug 'neovim/nvim-lspconfig'
 
@@ -320,6 +323,13 @@ require('lualine').setup {
     }
 }
 EOF
+
+
+" Git
+" ---
+
+" A simple key combination for opening git status anywhere
+noremap <leader>g :Neogit<CR>
 
 
 " Tree sitter
