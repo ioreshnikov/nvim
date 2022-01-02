@@ -57,15 +57,9 @@ Plug 'TimUntersberger/neogit'
 " Code completion backend through LSP servers
 Plug 'neovim/nvim-lspconfig'
 
-" Completion frontend through cmp
-Plug 'hrsh7th/cmp-nvim-lsp'
-Plug 'hrsh7th/nvim-cmp'
-Plug 'hrsh7th/cmp-buffer'
-Plug 'hrsh7th/cmp-cmdline'
-Plug 'hrsh7th/cmp-buffer'
-
-" Icons for the completion frontend
-Plug 'onsails/lspkind-nvim'
+" Code completion frontend with `coq` (ridiculously fast!)
+Plug 'ms-jpq/coq_nvim', {'branch': 'coq'}
+Plug 'ms-jpq/coq.artifacts', {'branch': 'artifacts'}
 
 " Automatically set `cwd` to the root of the current project
 Plug 'airblade/vim-rooter'
@@ -398,40 +392,16 @@ imap <silent> <S-Left> <C-o><Plug>CamelCaseMotion_b
 imap <silent> <S-Right> <C-o><Plug>CamelCaseMotion_w
 
 
-" Completion
-" ----------
+" Code completion
+" ---------------
 
-set completeopt=menu,menuone,noselect
-lua << EOF
-local cmp = require('cmp')
-local lspkind = require('lspkind')
-
-cmp.setup {
-    formatting = {
-        format = lspkind.cmp_format({
-            with_text = true,
-            maxwidth = 80
-        }),
-    },
-    sources = cmp.config.sources({
-        { name = 'nvim_lsp' }
-    })
-}
-
-cmp.setup.cmdline('/', {
-    sources = {
-        { name = 'buffer' }
-    }
-})
-
-cmp.setup.cmdline(':', {
-    sources = cmp.config.sources({
-        { name = 'path' }
-    }, {
-        { name = 'cmdline' }
-    })
-})
-EOF
+" Completion backend is handed by the LSP servers of choice. We configure them
+" in the corresponding language section. UI is provided by a brilliant and
+" blazing-fast COQ. It does not require any additional setup, except that we
+" would like it to start automatically once we open a buffer.
+let g:coq_settings = {
+\ 'auto_start': 'shut-up',
+\ 'display.pum.fast_close': v:false }
 
 
 " General LSP setup
@@ -450,13 +420,12 @@ command! LspCodeAction         lua vim.lsp.buf.code_action()<CR>
 
 " It would be cool if editing this very config was done with the help of an
 " LSP server. Thankfully, there is such a server!
-lua << EOF
-require('lspconfig').vimls.setup{
-    capabilities = require('cmp_nvim_lsp').update_capabilities(
-        vim.lsp.protocol.make_client_capabilities()
-    )
-}
-EOF
+lua << EOG
+local lsp = require('lspconfig')
+local coq = require('coq')
+
+lsp.vimls.setup(coq.lsp_ensure_capabilities())
+EOG
 
 
 " Python
@@ -464,7 +433,12 @@ EOF
 
 " I am mostly paid for writing python. Thankfully, with LSP and `tree-sitter`
 " being set up not a lot is left to do in terms of configuratoin.
-lua require('lspconfig').pyright.setup{}
+lua << EOF
+local lsp = require('lspconfig')
+local coq = require('coq')
+
+lsp.pyright.setup(coq.lsp_ensure_capabilities())
+EOF
 
 
 " TeX
@@ -472,7 +446,12 @@ lua require('lspconfig').pyright.setup{}
 
 " Occasionally I write LaTeX. It turns out there is an LSP mode for that as
 " well.
-lua require('lspconfig').texlab.setup{}
+lua << EOF
+local lsp = require('lspconfig')
+local coq = require('coq')
+
+lsp.texlab.setup(coq.lsp_ensure_capabilities())
+EOF
 
 
 " Rust
@@ -480,7 +459,12 @@ lua require('lspconfig').texlab.setup{}
 
 " I need to learn a system programming language and it's definitely not C/C++
 " :)
-lua require('lspconfig').rust_analyzer.setup{}
+lua << EOF
+local lsp = require('lspconfig')
+local coq = require('coq')
+
+lsp.rust_analyzer.setup(coq.lsp_ensure_capabilities())
+EOF
 
 
 " Random key combinations
