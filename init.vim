@@ -61,6 +61,9 @@ Plug 'neovim/nvim-lspconfig'
 Plug 'ms-jpq/coq_nvim', {'branch': 'coq'}
 Plug 'ms-jpq/coq.artifacts', {'branch': 'artifacts'}
 
+" Better search UI
+Plug 'kevinhwang91/nvim-hlslens'
+
 " Automatically set `cwd` to the root of the current project
 Plug 'airblade/vim-rooter'
 
