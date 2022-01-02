@@ -331,6 +331,13 @@ EOF
 " Git
 " ---
 
+" Almost no setup required
+lua << EOF
+require('neogit').setup {
+    disable_commit_confirmation = true
+}
+EOF
+
 " A simple key combination for opening git status anywhere
 noremap <leader>g :Neogit<CR>
 
