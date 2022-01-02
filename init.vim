@@ -334,6 +334,7 @@ EOF
 " Almost no setup required
 lua << EOF
 require('neogit').setup {
+    commit_popup = { kind = 'vsplit' },
     disable_commit_confirmation = true,
     signs = {
         section = {'' , ''},
