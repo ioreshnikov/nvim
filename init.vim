@@ -80,7 +80,7 @@ Plug 'akinsho/toggleterm.nvim'
 Plug 'folke/which-key.nvim'
 
 " Commenting
-Plug 'numToStr/Comment.nvim'
+Plug 'tpope/vim-commentary'
 
 " Auto-pairing
 Plug 'windwp/nvim-autopairs'
@@ -363,12 +363,6 @@ require('nvim-treesitter.configs').setup {
     }
 }
 EOF
-
-
-" Commenting
-" ----------
-
-lua require('Comment').setup()
 
 
 " Pairing
