@@ -488,6 +488,7 @@ EOF
 " -----------------------
 
 nnoremap <C-l> :noh<CR>zz
+inoremap <C-l> <ESC>:noh<CR>zza
 
 
 " TODOs
