@@ -79,6 +79,9 @@ Plug 'folke/which-key.nvim'
 " Commenting
 Plug 'tpope/vim-commentary'
 
+" Surround
+Plug 'tpope/vim-surround'
+
 " Auto-pairing
 Plug 'windwp/nvim-autopairs'
 
