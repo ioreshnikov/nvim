@@ -39,6 +39,7 @@ Plug 'junegunn/vim-plug'
 
 " Some of my favourite color themes
 Plug 'folke/tokyonight.nvim'
+Plug 'lifepillar/vim-solarized8'
 
 " Text icons
 Plug 'kyazdani42/nvim-web-devicons'
@@ -119,6 +120,7 @@ set ignorecase
 " -------------------
 
 colorscheme tokyonight
+colorscheme solarized8_flat
 
 
 " Line numbers and sign column
@@ -423,6 +425,7 @@ let g:coq_settings = {
 
 " General LSP setup
 " -----------------
+
 command! LspGotoDeclaration    lua vim.lsp.buf.declaration()<CR>
 command! LspGotoDefinition     lua vim.lsp.buf.definition()<CR>
 command! LspHover              lua vim.lsp.buf.hover()<CR>
