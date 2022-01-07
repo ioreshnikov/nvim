@@ -89,6 +89,9 @@ Plug 'windwp/nvim-autopairs'
 " Sub-word motion
 Plug 'bkad/CamelCaseMotion'
 
+" TeX
+Plug 'lervag/vimtex'
+
 call plug#end()
 
 
