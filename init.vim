@@ -91,6 +91,9 @@ Plug 'bkad/CamelCaseMotion'
 " TeX
 Plug 'lervag/vimtex'
 
+" LSP errors
+Plug 'folke/trouble.nvim'
+
 call plug#end()
 
 
@@ -435,6 +438,16 @@ command! LpsGotoImplementation lua vim.lsp.buf.implentation()<CR>
 command! LspSignature          lua vim.lsp.buf.signature_help()<CR>
 command! LspRename             lua vim.lsp.buf.rename()<CR>
 command! LspCodeAction         lua vim.lsp.buf.code_action()<CR>
+
+
+" Error diagnostics
+" -----------------
+
+lua require('trouble').setup()
+
+noremap <leader>l  :Trouble document_diagnostics<CR>
+noremap <leader>lf :Trouble document_diagnostics<CR>
+noremap <leader>lw :Trouble workspace_diagnostics<CR>
 
 
 " VIM
