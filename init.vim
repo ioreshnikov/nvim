@@ -39,7 +39,6 @@ Plug 'junegunn/vim-plug'
 
 " Some of my favourite color themes
 Plug 'folke/tokyonight.nvim'
-Plug 'lifepillar/vim-solarized8'
 
 " Text icons
 Plug 'kyazdani42/nvim-web-devicons'
@@ -123,7 +122,6 @@ set ignorecase
 " -------------------
 
 colorscheme tokyonight
-colorscheme solarized8_flat
 
 
 " Line numbers and sign column
