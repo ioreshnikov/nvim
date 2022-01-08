@@ -489,6 +489,18 @@ lsp.rust_analyzer.setup(coq.lsp_ensure_capabilities())
 EOF
 
 
+" GO
+" --
+
+" Eh, why not
+lua << EOF
+local lsp = require('lspconfig')
+local coq = require('coq')
+
+lsp.gopls.setup(coq.lsp_ensure_capabilities())
+EOF
+
+
 " Random key combinations
 " -----------------------
 
