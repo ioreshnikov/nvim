@@ -451,9 +451,9 @@ command! LspCodeAction         lua vim.lsp.buf.code_action()<CR>
 
 lua require('trouble').setup()
 
-noremap <leader>l  :Trouble document_diagnostics<CR>
-noremap <leader>lf :Trouble document_diagnostics<CR>
-noremap <leader>lw :Trouble workspace_diagnostics<CR>
+noremap <leader>d  :Trouble document_diagnostics<CR>
+noremap <leader>df :Trouble document_diagnostics<CR>
+noremap <leader>dw :Trouble workspace_diagnostics<CR>
 
 
 " TODO comments
@@ -461,7 +461,7 @@ noremap <leader>lw :Trouble workspace_diagnostics<CR>
 
 lua require('todo-comments').setup()
 
-noremap <leader>lt :TodoTrouble<CR>
+noremap <leader>dt :TodoTrouble<CR>
 
 
 " VIM
