@@ -91,6 +91,9 @@ Plug 'bkad/CamelCaseMotion'
 " TeX
 Plug 'lervag/vimtex'
 
+" Unicode symbols entry
+Plug 'joom/latex-unicoder.vim'
+
 " LSP errors
 Plug 'folke/trouble.nvim'
 
@@ -498,6 +501,10 @@ local coq = require('coq')
 
 lsp.texlab.setup(coq.lsp_ensure_capabilities())
 EOF
+
+nnoremap <C-\> :call unicoder#start(0)<CR>
+inoremap <C-\> <Esc>:call unicoder#start(1)<CR>
+vnoremap <C-\> :<C-u>call unicoder#selection()<CR>
 
 
 " Rust
