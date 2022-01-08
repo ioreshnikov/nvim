@@ -94,6 +94,9 @@ Plug 'lervag/vimtex'
 " LSP errors
 Plug 'folke/trouble.nvim'
 
+" TODO marks
+Plug 'folke/todo-comments.nvim'
+
 call plug#end()
 
 
@@ -450,6 +453,14 @@ noremap <leader>lf :Trouble document_diagnostics<CR>
 noremap <leader>lw :Trouble workspace_diagnostics<CR>
 
 
+" TODO comments
+" -------------
+
+lua require('todo-comments').setup()
+
+noremap <leader>lt :TodoTrouble<CR>
+
+
 " VIM
 " ---
 
@@ -527,5 +538,4 @@ inoremap <C-l> <ESC>:noh<CR>zza
 " A short list of things I would like to have set up.
 
 " TODO: LSP function signature
-" TODO: Maybe prettier tabs
 " TODO: Switch default devicons icon for a smaller one
