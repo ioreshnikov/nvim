@@ -489,9 +489,9 @@ command! LspCodeAction         lua vim.lsp.buf.code_action()<CR>
 
 lua require('trouble').setup()
 
-noremap <leader>d  :Trouble document_diagnostics<CR>
-noremap <leader>df :Trouble document_diagnostics<CR>
-noremap <leader>dw :Trouble workspace_diagnostics<CR>
+noremap <leader>d  :TroubleToggle document_diagnostics<CR>
+noremap <leader>df :TroubleToggle document_diagnostics<CR>
+noremap <leader>dw :TroubleToggle workspace_diagnostics<CR>
 
 hi link TroubleNormal DarkenedPanel
 
