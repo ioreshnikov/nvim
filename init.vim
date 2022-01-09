@@ -547,7 +547,7 @@ require('todo-comments').setup {
         },
         PERF = {
             icon = ' ',
-            alt = { 'OPTIM', 'PERFORMANCE', 'OPTIMIZE' }
+            alt = { 'OPTIM', 'OPTIMIZE', 'PERFORMANCE' }
         },
         NOTE = {
             icon = ' ',
