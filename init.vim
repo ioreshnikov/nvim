@@ -515,6 +515,7 @@ local coq = require('coq')
 lsp.texlab.setup(coq.lsp_ensure_capabilities())
 EOF
 
+let g:unicoder_no_map=v:true
 nnoremap <C-\> :call unicoder#start(0)<CR>
 inoremap <C-\> <Esc>:call unicoder#start(1)<CR>
 vnoremap <C-\> :<C-u>call unicoder#selection()<CR>
