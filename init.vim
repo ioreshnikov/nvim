@@ -116,8 +116,8 @@ call plug#end()
 " When editing this config we need to re-evaluate parts of it. We define two
 " additional commands. The first one evaluates the current line. The second
 " one -- the active visual selection.
-nnoremap <leader>vs :source %<CR>
-vnoremap <leader>vs y:@"<CR>
+nnoremap <silent> <leader>vs :source %<CR>
+vnoremap <silent> <leader>vs y:@"<CR>
 
 
 " Backups
@@ -194,63 +194,63 @@ set colorcolumn=80
 " you a bit slow when using it. Here are more conventional ones.
 
 " Quick navigation between the tabs
-noremap <C-t> :tabnew<CR>
-noremap <C-w> :tabclose<CR>
+noremap <silent> <C-t> :tabnew<CR>
+noremap <silent> <C-w> :tabclose<CR>
 
-inoremap <C-t> <ESC>:tabnew<CR>
-inoremap <C-w> <ESC>:tabclose<CR>
+inoremap <silent> <C-t> <ESC>:tabnew<CR>
+inoremap <silent> <C-w> <ESC>:tabclose<CR>
 
-tnoremap <C-t> <C-\><C-n>:tabnew<CR>
-tnoremap <C-w> <C-\><C-n>:tabclose<CR>
+tnoremap <silent> <C-t> <C-\><C-n>:tabnew<CR>
+tnoremap <silent> <C-w> <C-\><C-n>:tabclose<CR>
 
-noremap <A-1> 1gt
-noremap <A-2> 2gt
-noremap <A-3> 3gt
-noremap <A-4> 4gt
-noremap <A-5> 5gt
-noremap <A-6> 6gt
-noremap <A-7> 7gt
-noremap <A-8> 8gt
-noremap <A-9> 9gt
+noremap <silent> <A-1> 1gt
+noremap <silent> <A-2> 2gt
+noremap <silent> <A-3> 3gt
+noremap <silent> <A-4> 4gt
+noremap <silent> <A-5> 5gt
+noremap <silent> <A-6> 6gt
+noremap <silent> <A-7> 7gt
+noremap <silent> <A-8> 8gt
+noremap <silent> <A-9> 9gt
 
-inoremap <A-1> <ESC>1gt
-inoremap <A-2> <ESC>2gt
-inoremap <A-3> <ESC>3gt
-inoremap <A-4> <ESC>4gt
-inoremap <A-5> <ESC>5gt
-inoremap <A-6> <ESC>6gt
-inoremap <A-7> <ESC>7gt
-inoremap <A-8> <ESC>8gt
-inoremap <A-9> <ESC>9gt
+inoremap <silent> <A-1> <ESC>1gt
+inoremap <silent> <A-2> <ESC>2gt
+inoremap <silent> <A-3> <ESC>3gt
+inoremap <silent> <A-4> <ESC>4gt
+inoremap <silent> <A-5> <ESC>5gt
+inoremap <silent> <A-6> <ESC>6gt
+inoremap <silent> <A-7> <ESC>7gt
+inoremap <silent> <A-8> <ESC>8gt
+inoremap <silent> <A-9> <ESC>9gt
 
-tnoremap <A-1> <C-\><C-n>1gt
-tnoremap <A-2> <C-\><C-n>2gt
-tnoremap <A-3> <C-\><C-n>3gt
-tnoremap <A-4> <C-\><C-n>4gt
-tnoremap <A-5> <C-\><C-n>5gt
-tnoremap <A-6> <C-\><C-n>6gt
-tnoremap <A-7> <C-\><C-n>7gt
-tnoremap <A-8> <C-\><C-n>8gt
-tnoremap <A-9> <C-\><C-n>9gt
+tnoremap <silent> <A-1> <C-\><C-n>1gt
+tnoremap <silent> <A-2> <C-\><C-n>2gt
+tnoremap <silent> <A-3> <C-\><C-n>3gt
+tnoremap <silent> <A-4> <C-\><C-n>4gt
+tnoremap <silent> <A-5> <C-\><C-n>5gt
+tnoremap <silent> <A-6> <C-\><C-n>6gt
+tnoremap <silent> <A-7> <C-\><C-n>7gt
+tnoremap <silent> <A-8> <C-\><C-n>8gt
+tnoremap <silent> <A-9> <C-\><C-n>9gt
 
 " Quick navigation between the splits
-noremap <A-v> :vsp<CR>
-noremap <A-s> :split<CR>
-noremap <A-q> :q<CR>
+noremap <silent> <A-v> :vsp<CR>
+noremap <silent> <A-s> :split<CR>
+noremap <silent> <A-q> :q<CR>
 
-tnoremap <A-v> <C-\><C-n>:vsp<CR>
-tnoremap <A-s> <C-\><C-n>:split<CR>
-tnoremap <A-q> <C-\><C-n>:q<CR>
+tnoremap <silent> <A-v> <C-\><C-n>:vsp<CR>
+tnoremap <silent> <A-s> <C-\><C-n>:split<CR>
+tnoremap <silent> <A-q> <C-\><C-n>:q<CR>
 
-noremap <A-h> <C-w>h
-noremap <A-j> <C-w>j
-noremap <A-k> <C-w>k
-noremap <A-l> <C-w>l
+noremap <silent> <A-h> <C-w>h
+noremap <silent> <A-j> <C-w>j
+noremap <silent> <A-k> <C-w>k
+noremap <silent> <A-l> <C-w>l
 
-tnoremap <A-h> <C-\><C-n><C-w>h
-tnoremap <A-j> <C-\><C-n><C-w>j
-tnoremap <A-k> <C-\><C-n><C-w>k
-tnoremap <A-l> <C-\><C-n><C-w>l
+tnoremap <silent> <A-h> <C-\><C-n><C-w>h
+tnoremap <silent> <A-j> <C-\><C-n><C-w>j
+tnoremap <silent> <A-k> <C-\><C-n><C-w>k
+tnoremap <silent> <A-l> <C-\><C-n><C-w>l
 
 
 " Movement on wrapped lines
@@ -259,11 +259,11 @@ tnoremap <A-l> <C-\><C-n><C-w>l
 " I am using soft line-wrap everywhere. The default navigation commands in vim
 " work on physical lines, not wrapped ones. This is really inconvinient. This
 " should fix it.
-nnoremap <expr> j v:count ? 'j' : 'gj'
-nnoremap <expr> k v:count ? 'k' : 'gk'
-nnoremap <expr> ^ v:count ? '^' : 'g^'
-nnoremap <expr> 0 v:count ? '0' : 'g0'
-nnoremap <expr> $ v:count ? '$' : 'g$'
+nnoremap <silent> <expr> j v:count ? 'j' : 'gj'
+nnoremap <silent> <expr> k v:count ? 'k' : 'gk'
+nnoremap <silent> <expr> ^ v:count ? '^' : 'g^'
+nnoremap <silent> <expr> 0 v:count ? '0' : 'g0'
+nnoremap <silent> <expr> $ v:count ? '$' : 'g$'
 
 
 " Telescope
@@ -306,11 +306,11 @@ telescope.setup {
 }
 EOF
 
-noremap <leader>ff :Telescope find_files<CR>
-noremap <leader>fe :Telescope file_browser<CR>
-noremap <leader>fp :Telescope project<CR>
-noremap <leader>fb :Telescope buffers<CR>
-noremap <leader>fg :Telescope live_grep<CR>
+noremap <silent> <leader>ff :Telescope find_files<CR>
+noremap <silent> <leader>fe :Telescope file_browser<CR>
+noremap <silent> <leader>fp :Telescope project<CR>
+noremap <silent> <leader>fb :Telescope buffers<CR>
+noremap <silent> <leader>fg :Telescope live_grep<CR>
 
 hi link TelescopeNormal NormalFloat
 hi link TelescopeBorder FloatBorder
@@ -342,10 +342,10 @@ require('toggleterm').setup {
 }
 EOF
 
-nnoremap <leader>t  :ToggleTerm<CR>
-nnoremap <leader>ts :ToggleTerm direction=horizontal<CR>
-nnoremap <leader>tv :ToggleTerm direction=vertical<CR>
-nnoremap <leader>tt :ToggleTerm direction=tab<CR>
+nnoremap <silent> <leader>t  :ToggleTerm<CR>
+nnoremap <silent> <leader>ts :ToggleTerm direction=horizontal<CR>
+nnoremap <silent> <leader>tv :ToggleTerm direction=vertical<CR>
+nnoremap <silent> <leader>tt :ToggleTerm direction=tab<CR>
 
 
 " Which key
@@ -405,7 +405,7 @@ require('neogit').setup {
 EOF
 
 " A simple key combination for opening git status anywhere
-noremap <leader>g :Neogit<CR>
+noremap <silent> <leader>g :Neogit<CR>
 
 
 " Tree sitter
@@ -515,9 +515,9 @@ require('trouble').setup {
 }
 EOF
 
-noremap <leader>e  :TroubleToggle document_diagnostics<CR>
-noremap <leader>ef :TroubleToggle document_diagnostics<CR>
-noremap <leader>ew :TroubleToggle workspace_diagnostics<CR>
+noremap <silent> <leader>e  :TroubleToggle document_diagnostics<CR>
+noremap <silent> <leader>ef :TroubleToggle document_diagnostics<CR>
+noremap <silent> <leader>ew :TroubleToggle workspace_diagnostics<CR>
 
 hi link TroubleNormal DarkenedPanel
 
@@ -559,7 +559,7 @@ require('todo-comments').setup {
 }
 EOF
 
-noremap <leader>et :TodoTrouble<CR>
+noremap <silent> <leader>et :TodoTrouble<CR>
 
 
 " Filesystem tree
@@ -597,7 +597,7 @@ hi link NeoTreeDirectoryIcon Normal
 hi link NeoTreeNormal DarkenedPanel
 hi link NeoTreeNormalNC DarkenedPanel
 
-nnoremap <leader>d :NeoTreeShowToggle<CR>
+nnoremap <silent> <leader>d :NeoTreeShowToggle<CR>
 
 
 " VIM
@@ -639,9 +639,9 @@ lsp.texlab.setup(coq.lsp_ensure_capabilities())
 EOF
 
 let g:unicoder_no_map=v:true
-nnoremap <C-\> :call unicoder#start(0)<CR>
-inoremap <C-\> <Esc>:call unicoder#start(1)<CR>
-vnoremap <C-\> :<C-u>call unicoder#selection()<CR>
+nnoremap <silent> <C-\> :call unicoder#start(0)<CR>
+inoremap <silent> <C-\> <Esc>:call unicoder#start(1)<CR>
+vnoremap <silent> <C-\> :<C-u>call unicoder#selection()<CR>
 
 
 " Rust
@@ -672,8 +672,8 @@ EOF
 " Random key combinations
 " -----------------------
 
-nnoremap <C-l> :noh<CR>zz
-inoremap <C-l> <ESC>:noh<CR>zza
+nnoremap <silent> <C-l> :noh<CR>zz
+inoremap <silent> <C-l> <ESC>:noh<CR>zza
 
 
 " Neovide specific GUI settings
@@ -690,7 +690,7 @@ else
 endif
 endfunction
 
-map <F11> :call Neovide_fullscreen()<CR>
+map <silent> <F11> :call Neovide_fullscreen()<CR>
 
 
 " TODOs
