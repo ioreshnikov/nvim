@@ -159,7 +159,8 @@ set cursorline
 " ----------
 
 " Show whitespace characters
-set list
+set listchars=tab:→\ ,trail:⋅
+
 
 " Automatically expand tabs to 4 spaces. Indent by 4 spaces.
 set expandtab
@@ -360,8 +361,7 @@ EOF
 " Indentation guide
 " -----------------
 
-lua require("indent_blankline").setup{}
-
+lua require("indent_blankline").setup {}
 
 " Git
 " ---
