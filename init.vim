@@ -305,6 +305,7 @@ noremap <leader>ff :Telescope find_files<CR>
 noremap <leader>fe :Telescope file_browser<CR>
 noremap <leader>fp :Telescope project<CR>
 noremap <leader>fb :Telescope buffers<CR>
+noremap <leader>fg :Telescope live_grep<CR>
 
 hi link TelescopeNormal NormalFloat
 hi link TelescopeBorder FloatBorder
