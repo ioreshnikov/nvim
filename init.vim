@@ -606,6 +606,23 @@ nnoremap <C-l> :noh<CR>zz
 inoremap <C-l> <ESC>:noh<CR>zza
 
 
+" Neovide specific GUI settings
+" -----------------------------
+
+set guifont=JetBrainsMono\ Nerd\ Font:h13
+let g:neovide_cursor_animation_length = 0.01
+
+function Neovide_fullscreen()
+if g:neovide_fullscreen == v:false
+    let g:neovide_fullscreen=v:true
+else
+    let g:neovide_fullscreen=v:false
+endif
+endfunction
+
+map <F11> :call Neovide_fullscreen()<CR>
+
+
 " TODOs
 " -----
 
