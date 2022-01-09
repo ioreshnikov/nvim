@@ -355,8 +355,8 @@ lua << EOF
 require('neogit').setup {
     disable_commit_confirmation = true,
     signs = {
-        section = {'' , ''},
-        item = {'' , ''},
+        section = {' ' , ' '},
+        item = {' ' , ' '},
     }
 }
 EOF
