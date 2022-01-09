@@ -100,8 +100,12 @@ Plug 'folke/trouble.nvim'
 " TODO marks
 Plug 'folke/todo-comments.nvim'
 
-" Indentation guide
+" Indentation guides
 Plug 'lukas-reineke/indent-blankline.nvim'
+
+" Tree viewer
+Plug 'MunifTanjim/nui.nvim'
+Plug 'nvim-neo-tree/neo-tree.nvim'
 
 call plug#end()
 
@@ -369,7 +373,9 @@ EOF
 lua << EOF
 require('indent_blankline').setup {
     filetype_exclude = {
+        'help',
         'markdown',
+        'neo-tree',
         'NeogitStatus',
         'tex',
         'toggleterm',
@@ -504,9 +510,9 @@ require('trouble').setup {
 }
 EOF
 
-noremap <leader>d  :TroubleToggle document_diagnostics<CR>
-noremap <leader>df :TroubleToggle document_diagnostics<CR>
-noremap <leader>dw :TroubleToggle workspace_diagnostics<CR>
+noremap <leader>e  :TroubleToggle document_diagnostics<CR>
+noremap <leader>ef :TroubleToggle document_diagnostics<CR>
+noremap <leader>ew :TroubleToggle workspace_diagnostics<CR>
 
 hi link TroubleNormal DarkenedPanel
 
@@ -548,20 +554,55 @@ require('todo-comments').setup {
 }
 EOF
 
-noremap <leader>dt :TodoTrouble<CR>
+noremap <leader>et :TodoTrouble<CR>
 
+
+" Filesystem tree
+" ---------------
+"
+lua << EOF
+require('neo-tree').setup {
+    filesystem = {
+        renderers = {
+            directory = {
+                {
+                    'icon',
+                    folder_closed = '',
+                    folder_open = '',
+                    padding = ' '
+                },
+                { 'current_filter' },
+                { 'name' }
+            },
+            file = {
+                {
+                    'icon',
+                    default = '',
+                    padding = ' '
+                },
+                { 'name' },
+            }
+        }
+    }
+}
+EOF
+
+hi link NeoTreeFileIcon Normal
+hi link NeoTreeDirectoryIcon Normal
+
+nnoremap <leader>d :NeoTreeShowToggle<CR>
 
 " VIM
 " ---
 
 " It would be cool if editing this very config was done with the help of an
 " LSP server. Thankfully, there is such a server!
-lua << EOG
+lua << EOF
 local lsp = require('lspconfig')
 local coq = require('coq')
 
 lsp.vimls.setup(coq.lsp_ensure_capabilities())
-EOG
+EOF
 
 
 " Python
