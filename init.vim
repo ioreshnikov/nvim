@@ -370,6 +370,9 @@ EOF
 " Indentation guide
 " -----------------
 
+" The setup is minimalistic -- I mostly disable the indentation guides in the
+" modes I don't want them to see.
+
 lua << EOF
 require('indent_blankline').setup {
     filetype_exclude = {
@@ -383,6 +386,7 @@ require('indent_blankline').setup {
     }
 }
 EOF
+
 
 " Git
 " ---
@@ -589,8 +593,11 @@ EOF
 
 hi link NeoTreeFileIcon Normal
 hi link NeoTreeDirectoryIcon Normal
+hi link NeoTreeNormal DarkenedPanel
+hi link NeoTreeNormalNC DarkenedPanel
 
 nnoremap <leader>d :NeoTreeShowToggle<CR>
+
 
 " VIM
 " ---
@@ -691,4 +698,4 @@ map <F11> :call Neovide_fullscreen()<CR>
 " A short list of things I would like to have set up.
 
 " TODO: LSP function signature
-" TODO: Switch default devicons icon for a smaller one
+" FIX: Signcolumn is cool, but I wish I could disable it with autocmd.
