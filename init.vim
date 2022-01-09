@@ -265,6 +265,9 @@ nnoremap <expr> $ v:count ? '$' : 'g$'
 
 lua << EOF
 local telescope = require('telescope')
+
+telescope.load_extension('project')
+
 telescope.setup {
     defaults = {
         borderchars = { '─', '│', '─', '│', '┌', '┐', '┘', '└'},
@@ -281,13 +284,17 @@ telescope.setup {
         prompt_prefix = '  ',
         selection_caret = '  '
     },
+    extensions = {
+        project = {
+            base_dirs = {'/home/me/Code/'}
+        }
+    },
     pickers = {
         file_browser = {
             hidden = true
         }
-    }
+    },
 }
-telescope.load_extension('project')
 EOF
 
 noremap <leader>ff :Telescope find_files<CR>
