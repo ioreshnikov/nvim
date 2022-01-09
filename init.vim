@@ -142,7 +142,7 @@ colorscheme tokyonight
 " left that I'd like to see all the time as well.
 set number
 set relativenumber
-set signcolumn=yes
+set signcolumn=yes:2
 
 
 " Current line
@@ -436,6 +436,19 @@ let g:coq_settings = {
 
 " General LSP setup
 " -----------------
+
+lua << EOF
+local signs = {
+    Error = ' ',
+    Warn = ' ',
+    Hint = ' ',
+    Info = ' ',
+}
+for type, icon in pairs(signs) do
+  local hl = 'DiagnosticSign' .. type
+  vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = hl })
+end
+EOF
 
 command! LspGotoDeclaration    lua vim.lsp.buf.declaration()<CR>
 command! LspGotoDefinition     lua vim.lsp.buf.definition()<CR>
