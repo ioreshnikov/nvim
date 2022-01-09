@@ -265,7 +265,11 @@ local telescope = require('telescope')
 telescope.setup {
     defaults = {
         borderchars = { '─', '│', '─', '│', '┌', '┐', '┘', '└'},
-        file_ignore_patterns = {'__pycache__/', '%.pyc'},
+        file_ignore_patterns = {
+            '__pycache__/',
+            '%.pyc',
+            'target/'
+        },
         layout_config = {
             height = 0.5,
             width = 80
