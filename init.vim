@@ -489,6 +489,8 @@ noremap <leader>d  :Trouble document_diagnostics<CR>
 noremap <leader>df :Trouble document_diagnostics<CR>
 noremap <leader>dw :Trouble workspace_diagnostics<CR>
 
+hi link TroubleNormal DarkenedPanel
+
 
 " TODO comments
 " -------------
