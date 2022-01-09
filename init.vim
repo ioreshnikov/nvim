@@ -498,7 +498,11 @@ command! LspCodeAction         lua vim.lsp.buf.code_action()<CR>
 " Error diagnostics
 " -----------------
 
-lua require('trouble').setup()
+lua << EOF
+require('trouble').setup {
+    indent_lines = false
+}
+EOF
 
 noremap <leader>d  :TroubleToggle document_diagnostics<CR>
 noremap <leader>df :TroubleToggle document_diagnostics<CR>
