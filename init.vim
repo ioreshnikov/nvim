@@ -572,9 +572,9 @@ require('neo-tree').setup {
             directory = {
                 {
                     'icon',
-                    folder_closed = '',
-                    folder_open = '',
-                    padding = ' '
+                    folder_closed = '',
+                    folder_open = '',
+                    padding = '  '
                 },
                 { 'current_filter' },
                 { 'name' }
