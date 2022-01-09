@@ -366,7 +366,17 @@ EOF
 " Indentation guide
 " -----------------
 
-lua require("indent_blankline").setup {}
+lua << EOF
+require('indent_blankline').setup {
+    filetype_exclude = {
+        'markdown',
+        'NeogitStatus',
+        'tex',
+        'toggleterm',
+        'Trouble',
+    }
+}
+EOF
 
 " Git
 " ---
