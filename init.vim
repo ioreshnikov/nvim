@@ -287,7 +287,10 @@ telescope.setup {
     },
     extensions = {
         project = {
-            base_dirs = {'/home/me/Code/'}
+            base_dirs = {
+                '/home/me/Code/',
+                '/home/me/.local/share/nvim/plugged/'
+            }
         }
     },
     pickers = {
