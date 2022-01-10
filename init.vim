@@ -710,7 +710,7 @@ inoremap <silent> <C-l> <ESC>:noh<CR>zza
 " Neovide specific GUI settings
 " -----------------------------
 
-let g:neovide_cursor_animation_length = 0.05
+let g:neovide_cursor_animation_length = 0.03
 set guifont=JetBrainsMono\ Nerd\ Font:h14
 
 function Neovide_fullscreen()
