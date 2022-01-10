@@ -149,6 +149,11 @@ colorscheme tokyonight
 " well.
 
 function ShouldEnableLeftColumns()
+    " We should enable the line numbers and the sign column if:
+    " 1. The buffer is tied to a file
+    " 2. The buffer is not a terminal (terminals have filename 'term://...')
+    " 3. The buffer is not a nofile (e.g. Neogit commit message is bound to a
+    "    temporary file, but hast a &buftype == 'nofile')
     return expand('%:p') != ''
       \ && &buftype != 'terminal'
       \ && &buftype != 'nofile'
