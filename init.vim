@@ -107,9 +107,6 @@ Plug 'lukas-reineke/indent-blankline.nvim'
 Plug 'MunifTanjim/nui.nvim'
 Plug 'nvim-neo-tree/neo-tree.nvim'
 
-" XXX: Temporary
-Plug 'rcarriga/nvim-notify'
-
 call plug#end()
 
 
