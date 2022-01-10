@@ -479,7 +479,8 @@ let g:coq_settings = {
 \ 'display.pum.fast_close': v:false }
 
 " XXX: However, there are some conflicts with `nvim-autopairs`.
-" The snippet below fixes them.
+" The snippet below fixes them. Taken directly from
+"     https://github.com/windwp/nvim-autopairs (scroll to coq_nvim)
 lua << EOF
 local remap = vim.api.nvim_set_keymap
 local npairs = require('nvim-autopairs')
