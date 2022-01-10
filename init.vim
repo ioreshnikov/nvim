@@ -120,6 +120,20 @@ nnoremap <silent> <leader>vs :source %<CR>
 vnoremap <silent> <leader>vs y:@"<CR>
 
 
+" Use mouse
+" ---------
+
+set mouse=a
+
+
+" Scroll
+" ------
+
+" I love when there's a bit of space between the current line and the end of
+" the window. 5 lines feels like sweet spot.
+set scrolloff=5
+
+
 " Backups
 " -------
 
@@ -182,7 +196,9 @@ set cursorline
 set listchars=tab:→\ ,trail:⋅
 
 
-" Automatically expand tabs to 4 spaces. Indent by 4 spaces.
+" Automatically expand tabs to 4 spaces. Indent by 4 spaces. Those are default
+" settings. They can be easily overriden by editing a specific after/ftplugin
+" file.
 set expandtab
 set tabstop=4
 set shiftwidth=4
@@ -191,18 +207,13 @@ set shiftwidth=4
 autocmd BufWritePre * :%s/\s\+$//e
 
 
-" Use mouse
-" ---------
+" Folds
+" -----
 
-set mouse=a
-
-
-" Scroll
-" ------
-
-" I love when there's a bit of space between the current line and the end of
-" the window. 5 lines feels like sweet spot.
-set scrolloff=5
+" Folds are occasionally useful. I wish I could use tree-sitter aware folds,
+" but as of now they're glitchy and tend to randomly collapse when you edit a
+" region. Therefore I resort to good old fold by marker.
+set foldmethod=marker
 
 
 " Tabs and splits
@@ -211,7 +222,7 @@ set scrolloff=5
 " `vim` has a quite powerful window system, but the default keybindings make
 " you a bit slow when using it. Here are more conventional ones.
 
-" Quick navigation between the tabs
+" Quick navigation between the tabs {{{
 noremap <silent> <C-t> :tabnew<CR>
 noremap <silent> <C-w> :tabclose<CR>
 
@@ -250,8 +261,9 @@ tnoremap <silent> <A-6> <C-\><C-n>6gt
 tnoremap <silent> <A-7> <C-\><C-n>7gt
 tnoremap <silent> <A-8> <C-\><C-n>8gt
 tnoremap <silent> <A-9> <C-\><C-n>9gt
+" }}}
 
-" Quick navigation between the splits
+" Quick navigation between the splits {{{
 noremap <silent> <A-v> :vsp<CR>
 noremap <silent> <A-s> :split<CR>
 noremap <silent> <A-q> :q<CR>
@@ -269,6 +281,7 @@ tnoremap <silent> <A-h> <C-\><C-n><C-w>h
 tnoremap <silent> <A-j> <C-\><C-n><C-w>j
 tnoremap <silent> <A-k> <C-\><C-n><C-w>k
 tnoremap <silent> <A-l> <C-\><C-n><C-w>l
+" }}}
 
 
 " Movement on wrapped lines
@@ -703,6 +716,7 @@ EOF
 " Random key combinations
 " -----------------------
 
+" Remove search highlight and center the current line on screen.
 nnoremap <silent> <C-l> :noh<CR>zz
 inoremap <silent> <C-l> <ESC>:noh<CR>zza
 
