@@ -519,7 +519,7 @@ noremap <silent> <leader>e  :TroubleToggle document_diagnostics<CR>
 noremap <silent> <leader>ef :TroubleToggle document_diagnostics<CR>
 noremap <silent> <leader>ew :TroubleToggle workspace_diagnostics<CR>
 
-hi link TroubleNormal DarkenedPanel
+hi link TroubleNormal LspTroubleNormal
 
 
 " TODO comments
@@ -592,10 +592,10 @@ require('neo-tree').setup {
 }
 EOF
 
-hi link NeoTreeFileIcon Normal
-hi link NeoTreeDirectoryIcon Normal
-hi link NeoTreeNormal DarkenedPanel
-hi link NeoTreeNormalNC DarkenedPanel
+hi link NeoTreeFileIcon NormalSB
+hi link NeoTreeDirectoryIcon NormalSB
+hi link NeoTreeNormal NormalSB
+hi link NeoTreeNormalNC NormalSB
 
 nnoremap <silent> <leader>d :NeoTreeShowToggle<CR>
 
