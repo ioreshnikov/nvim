@@ -123,6 +123,8 @@ vnoremap <silent> <leader>vs y:@"<CR>
 " Backups
 " -------
 
+" Didn't really have to use the backups once, but always annoyed by seeing the
+" files on disk.
 set nobackup
 set nowritebackup
 set noswapfile
@@ -131,6 +133,7 @@ set noswapfile
 " Case sensitivity
 " ----------------
 
+" I don't really care about case sensitivity when searching.
 set ignorecase
 
 
