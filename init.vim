@@ -373,7 +373,6 @@ EOF
 
 " The setup is minimalistic -- I mostly disable the indentation guides in the
 " modes I don't want them to see.
-
 lua << EOF
 require('indent_blankline').setup {
     filetype_exclude = {
@@ -567,6 +566,7 @@ hi link TroubleNormal LspTroubleNormal
 " TODO comments
 " -------------
 
+" A neat utility for highlighting the comment-keywords.
 lua << EOF
 require('todo-comments').setup {
     keywords = {
