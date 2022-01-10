@@ -143,13 +143,19 @@ colorscheme tokyonight
 " Line numbers and sign column
 " ----------------------------
 
-" I'd love to see line numbers only in the programming-related files (but not
-" in markdown or LaTeX, for example), but I will be also fine if it's shown
-" everywhere. Also, even an empty sign column provides a nice margin to the
-" left that I'd like to see all the time as well.
-set number
-set relativenumber
-set signcolumn=yes:2
+" I'd love to see line numbers only in the programming-related files, but I
+" will be also fine if it's shown everywhere. Also, even an empty sign column
+" provides a nice margin to the left that I'd like to see all the time as
+" well.
+
+function EnableLeftColumns() abort
+    echo "Enable things " .. expand('%:p')
+    setlocal number
+    setlocal relativenumber
+    setlocal signcolumn=yes:2
+endfunction
+
+autocmd BufEnter * if expand('%:p') != '' | call EnableLeftColumns() | endif
 
 
 " Current line
