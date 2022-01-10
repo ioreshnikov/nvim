@@ -732,4 +732,3 @@ map <silent> <F11> :call Neovide_fullscreen()<CR>
 " A short list of things I would like to have set up.
 
 " TODO: LSP function signature
-" BUG: Signcolumn is cool, but I wish I could disable it with autocmd.
