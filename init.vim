@@ -568,6 +568,7 @@ noremap <silent> <leader>et :TodoTrouble<CR>
 lua << EOF
 require('neo-tree').setup {
     filesystem = {
+        before_render = function () return end,
         renderers = {
             directory = {
                 {
@@ -583,7 +584,7 @@ require('neo-tree').setup {
                 {
                     'icon',
                     default = '',
-                    padding = ' '
+                    padding = '  '
                 },
                 { 'name' },
             }
