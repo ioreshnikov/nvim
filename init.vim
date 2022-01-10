@@ -183,7 +183,16 @@ set mouse=a
 
 " Show ruler at 80th column
 " -------------------------
+
 set colorcolumn=80
+
+
+" Scroll
+" ------
+
+" I love when there's a bit of space between the current line and the end of
+" the window. 5 lines feels like sweet spot.
+set scrolloff=5
 
 
 " Tabs and splits
