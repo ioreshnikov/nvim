@@ -647,6 +647,18 @@ lsp.pyright.setup(coq.lsp_ensure_capabilities())
 EOF
 
 
+" JavaScript and TypeScript
+" -------------------------
+
+" And sometimes I need to write frontend code as well.
+lua << EOF
+local lsp = require('lspconfig')
+local coq = require('coq')
+
+lsp.tsserver.setup(coq.lsp_ensure_capabilities())
+EOF
+
+
 " TeX
 " ---
 
