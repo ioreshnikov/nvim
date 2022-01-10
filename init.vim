@@ -148,6 +148,11 @@ colorscheme tokyonight
 " provides a nice margin to the left that I'd like to see all the time as
 " well.
 
+function ShouldEnableLeftColumns()
+    return expand('%:p') != ''
+      \ && &buftype != 'terminal'
+endfunction
+
 function EnableLeftColumns() abort
     echo "Enable things " .. expand('%:p')
     setlocal number
@@ -155,7 +160,7 @@ function EnableLeftColumns() abort
     setlocal signcolumn=yes:2
 endfunction
 
-autocmd BufEnter * if expand('%:p') != '' | call EnableLeftColumns() | endif
+autocmd BufEnter * if ShouldEnableLeftColumns() | call EnableLeftColumns() | endif
 
 
 " Current line
