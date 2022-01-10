@@ -137,6 +137,7 @@ set ignorecase
 " Color scheme
 " -------------------
 
+" The best I've seen so far
 colorscheme tokyonight
 
 
