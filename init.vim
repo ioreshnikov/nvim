@@ -153,15 +153,16 @@ function EnableSignColumn() abort
     setlocal signcolumn=yes:2
 endfunction
 
-function EnableLeftColumns() abort
+function EnableEditingHelpers() abort
     setlocal number
     setlocal relativenumber
+    setlocal colorcolumn=80
     call EnableSignColumn()
 endfunction
 
-autocmd BufReadPost * call EnableLeftColumns()
+autocmd BufReadPost * call EnableEditingHelpers()
+autocmd FileType NeogitCommitMessage call EnableEditingHelpers()
 autocmd FileType NeogitStatus call EnableSignColumn()
-autocmd FileType NeogitCommitMessage call EnableLeftColumns()
 
 
 " Current line
@@ -191,12 +192,6 @@ autocmd BufWritePre * :%s/\s\+$//e
 " ---------
 
 set mouse=a
-
-
-" Show ruler at 80th column
-" -------------------------
-
-set colorcolumn=80
 
 
 " Scroll
