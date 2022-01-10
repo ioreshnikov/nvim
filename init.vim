@@ -146,29 +146,24 @@ colorscheme tokyonight
 " Line numbers and sign column
 " ----------------------------
 
-" I'd love to see line numbers only in the programming-related files, but I
-" will be also fine if it's shown everywhere. Also, even an empty sign column
-" provides a nice margin to the left that I'd like to see all the time as
-" well.
+" For buffers that correspond to a file on disk I'd like to see relative line
+" numbers and a sign column. The latter might not have a practical use for
+" files not associated with an LSP server, but I like it purely for
+" aesthetical reasons.
 
-function ShouldEnableLeftColumns()
-    " We should enable the line numbers and the sign column if:
-    " 1. The buffer is tied to a file
-    " 2. The buffer is not a Neogit status
-    " 3. The buffer is not a terminal (terminals have filename 'term://...')
-    return expand('%:p') != ''
-      \ && expand('%:t') != 'NeogitStatus'
-      \ && &buftype != 'terminal'
-endfunction
-
-function EnableLeftColumns() abort
-    echo "Enable things " .. expand('%:p')
-    setlocal number
-    setlocal relativenumber
+function EnableSignColumn() abort
     setlocal signcolumn=yes:2
 endfunction
 
-autocmd BufReadPost * if ShouldEnableLeftColumns() | call EnableLeftColumns() | endif
+function EnableLeftColumns() abort
+    setlocal number
+    setlocal relativenumber
+    call EnableSignColumn()
+endfunction
+
+autocmd BufReadPost * call EnableLeftColumns()
+autocmd FileType NeogitStatus call EnableSignColumn()
+autocmd FileType NeogitCommitMessage call EnableLeftColumns()
 
 
 " Current line
