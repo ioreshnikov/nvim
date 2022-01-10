@@ -151,12 +151,11 @@ colorscheme tokyonight
 function ShouldEnableLeftColumns()
     " We should enable the line numbers and the sign column if:
     " 1. The buffer is tied to a file
-    " 2. The buffer is not a terminal (terminals have filename 'term://...')
-    " 3. The buffer is not a nofile (e.g. Neogit commit message is bound to a
-    "    temporary file, but hast a &buftype == 'nofile')
+    " 2. The buffer is not a Neogit status
+    " 3. The buffer is not a terminal (terminals have filename 'term://...')
     return expand('%:p') != ''
+      \ && expand('%:t') != 'NeogitStatus'
       \ && &buftype != 'terminal'
-      \ && &buftype != 'nofile'
 endfunction
 
 function EnableLeftColumns() abort
@@ -166,7 +165,7 @@ function EnableLeftColumns() abort
     setlocal signcolumn=yes:2
 endfunction
 
-autocmd BufEnter * if ShouldEnableLeftColumns() | call EnableLeftColumns() | endif
+autocmd BufReadPost * if ShouldEnableLeftColumns() | call EnableLeftColumns() | endif
 
 
 " Current line
