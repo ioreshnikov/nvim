@@ -151,6 +151,7 @@ colorscheme tokyonight
 function ShouldEnableLeftColumns()
     return expand('%:p') != ''
       \ && &buftype != 'terminal'
+      \ && &buftype != 'nofile'
 endfunction
 
 function EnableLeftColumns() abort
