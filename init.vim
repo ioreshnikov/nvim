@@ -604,8 +604,8 @@ require('neo-tree').setup {
             directory = {
                 {
                     'icon',
-                    folder_closed = '',
-                    folder_open = '',
+                    folder_closed = '',
+                    folder_open = 'ﱮ',
                     padding = '  '
                 },
                 { 'current_filter' },
@@ -614,7 +614,7 @@ require('neo-tree').setup {
             file = {
                 {
                     'icon',
-                    default = '',
+                    default = '',
                     padding = '  '
                 },
                 { 'name' },
