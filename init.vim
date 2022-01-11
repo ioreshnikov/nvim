@@ -466,12 +466,6 @@ require('nvim-treesitter.configs').setup {
 EOF
 
 
-" Pairing
-" -------
-
-lua require('nvim-autopairs').setup()
-
-
 " Subword navigation
 " ------------------
 
@@ -509,6 +503,12 @@ imap <silent> <S-Right> <C-o><Plug>CamelCaseMotion_w
 let g:coq_settings = {
 \ 'auto_start': 'shut-up',
 \ 'display.pum.fast_close': v:false }
+
+
+" Automatic delimiter pairing
+" ---------------------------
+
+lua require('nvim-autopairs').setup {}
 
 
 " General LSP setup
