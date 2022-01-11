@@ -64,9 +64,6 @@ Plug 'ms-jpq/coq.artifacts', {'branch': 'artifacts'}
 " Better search UI
 Plug 'kevinhwang91/nvim-hlslens'
 
-" Automatically set `cwd` to the root of the current project
-Plug 'airblade/vim-rooter'
-
 " Use a custom statusline
 Plug 'nvim-lualine/lualine.nvim'
 
@@ -156,7 +153,6 @@ set ignorecase
 
 " The best I've seen so far
 colorscheme tokyonight
-
 
 " Line numbers and sign column
 " ----------------------------
