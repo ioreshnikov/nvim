@@ -670,6 +670,19 @@ lsp.tsserver.setup(coq.lsp_ensure_capabilities())
 EOF
 
 
+" HTML and CSS
+" ------------
+
+" Well, that's obvious
+lua << EOF
+local lsp = require('lspconfig')
+local coq = require('coq')
+
+lsp.html.setup(coq.lsp_ensure_capabilities())
+lsp.cssls.setup(coq.lsp_ensure_capabilities())
+EOF
+
+
 " TeX
 " ---
 
