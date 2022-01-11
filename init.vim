@@ -40,9 +40,6 @@ Plug 'junegunn/vim-plug'
 " Some of my favourite color themes
 Plug 'folke/tokyonight.nvim'
 
-" Lightspeed!
-Plug 'ggandor/lightspeed.nvim'
-
 " Text icons
 Plug 'kyazdani42/nvim-web-devicons'
 
@@ -118,13 +115,6 @@ call plug#end()
 " one -- the active visual selection.
 nnoremap <silent> <leader>vs :source %<CR>
 vnoremap <silent> <leader>vs y:@"<CR>
-
-
-" Lightspeed
-" ----------
-
-" Quick navigation. So good it's the first thing we set up in the config.
-lua require('lightspeed').setup {}
 
 
 " Use mouse
