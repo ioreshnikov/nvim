@@ -319,7 +319,10 @@ telescope.setup {
             height = 0.55,
             prompt_position = 'top'
         },
-        prompt_prefix = '   ',
+        path_display = function (opts, path)
+            return ' ' .. path
+        end,
+        prompt_prefix = '    ',
         selection_caret = '  ',
         sorting_strategy = 'ascending'
     },
