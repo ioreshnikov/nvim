@@ -734,7 +734,7 @@ inoremap <silent> <C-l> <ESC>:noh<CR>zza
 " -----------------------------
 
 let g:neovide_cursor_animation_length = 0.03
-set guifont=JetBrainsMono\ Nerd\ Font:h14
+set guifont=JetBrainsMono\ Nerd\ Font:h13
 
 function Neovide_fullscreen()
 if g:neovide_fullscreen == v:false
