@@ -304,6 +304,7 @@ lua << EOF
 local telescope = require('telescope')
 
 telescope.load_extension('project')
+telescope.load_extension('file_browser')
 
 telescope.setup {
     defaults = {
@@ -317,12 +318,14 @@ telescope.setup {
         layout_strategy = 'bottom_pane',
         layout_config = {
             height = 0.55,
-            prompt_position = 'top'
+            prompt_position = 'top',
         },
         path_display = function (opts, path)
             return ' ' .. path
         end,
         prompt_prefix = '    ',
+        prompt_title = false,
+        results_title = ' ',
         selection_caret = '  ',
         sorting_strategy = 'ascending'
     },
@@ -336,18 +339,18 @@ telescope.setup {
     },
     pickers = {
         file_browser = {
-            hidden = true
+            hidden = true,
         }
     },
 }
 EOF
 
-noremap <silent> <leader>ff :Telescope find_files<CR>
-noremap <silent> <leader>fe :Telescope file_browser<CR>
-noremap <silent> <leader>fp :Telescope project<CR>
-noremap <silent> <leader>fb :Telescope buffers<CR>
-noremap <silent> <leader>fg :Telescope live_grep<CR>
-noremap <silent> <leader>fl :Telescope lsp_workspace_symbols<CR>
+noremap <silent> <leader>ff :Telescope find_files results_title= preview_title= <CR>
+noremap <silent> <leader>fe :Telescope file_browser results_title= preview_title= <CR>
+noremap <silent> <leader>fp :Telescope project results_title= preview_title= <CR>
+noremap <silent> <leader>fb :Telescope buffers results_title= preview_title= <CR>
+noremap <silent> <leader>fg :Telescope live_grep results_title= preview_title= <CR>
+noremap <silent> <leader>fl :Telescope lsp_workspace_symbols results_title= preview_title= <CR>
 
 hi link TelescopeNormal NormalFloat
 hi link TelescopeBorder FloatBorder
