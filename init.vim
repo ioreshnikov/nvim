@@ -47,6 +47,7 @@ Plug 'kyazdani42/nvim-web-devicons'
 Plug 'nvim-lua/plenary.nvim'
 Plug 'nvim-telescope/telescope.nvim'
 Plug 'nvim-telescope/telescope-project.nvim'
+Plug 'nvim-telescope/telescope-file-browser.nvim'
 
 " Modern syntax highlight with `tree-sitter`
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
@@ -303,19 +304,21 @@ telescope.load_extension('project')
 
 telescope.setup {
     defaults = {
-        borderchars = { '─', '│', '─', '│', '┌', '┐', '┘', '└'},
+        border = true,
+        borderchars = { ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '},
         file_ignore_patterns = {
             '__pycache__/',
             '%.pyc',
             'target/'
         },
+        layout_strategy = 'bottom_pane',
         layout_config = {
-            height = 0.5,
-            width = 80
+            height = 0.55,
+            prompt_position = 'top'
         },
-        layout_strategy = 'vertical',
-        prompt_prefix = '  ',
-        selection_caret = '  '
+        prompt_prefix = '   ',
+        selection_caret = '  ',
+        sorting_strategy = 'ascending'
     },
     extensions = {
         project = {
@@ -338,11 +341,13 @@ noremap <silent> <leader>fe :Telescope file_browser<CR>
 noremap <silent> <leader>fp :Telescope project<CR>
 noremap <silent> <leader>fb :Telescope buffers<CR>
 noremap <silent> <leader>fg :Telescope live_grep<CR>
+noremap <silent> <leader>fl :Telescope lsp_workspace_symbols<CR>
 
 hi link TelescopeNormal NormalFloat
 hi link TelescopeBorder FloatBorder
 hi link TelescopePreviewNormal NormalFloat
 hi link TelescopeResultsNormal NormalFloat
+hi link TelescopePromptPrefix Comment
 
 
 " Terminal
@@ -407,6 +412,7 @@ require('indent_blankline').setup {
         'markdown',
         'neo-tree',
         'NeogitStatus',
+        'TelescopePrompt',
         'tex',
         'toggleterm',
         'Trouble',
