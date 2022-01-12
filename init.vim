@@ -825,6 +825,9 @@ EOF
 " Random key combinations
 " -----------------------
 
+" A faster way to save files
+noremap <silent> <leader>w :w<CR>
+
 " Remove search highlight and center the current line on screen.
 nnoremap <silent> <C-l> :noh<CR>zz
 inoremap <silent> <C-l> <ESC>:noh<CR>zza
