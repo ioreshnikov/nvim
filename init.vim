@@ -733,6 +733,7 @@ inoremap <silent> <C-l> <ESC>:noh<CR>zza
 " Neovide specific GUI settings
 " -----------------------------
 
+let g:neovide_hide_mouse_when_typing = 1
 let g:neovide_cursor_animation_length = 0.03
 set guifont=JetBrainsMono\ Nerd\ Font:h13
 
