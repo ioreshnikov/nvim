@@ -496,9 +496,35 @@ imap <silent> <S-Right> <C-o><Plug>CamelCaseMotion_w
 " in the corresponding language section. UI is provided by a brilliant and
 " blazing-fast COQ. It does not require any additional setup, except that we
 " would like it to start automatically once we open a buffer.
-let g:coq_settings = {
-\ 'auto_start': 'shut-up',
-\ 'display.pum.fast_close': v:false }
+
+lua << EOF
+vim.g.coq_settings = {
+    auto_start = 'shut-up',
+    display = {
+        pum = {
+            fast_close = false
+        }
+    },
+    clients = {
+        lsp = {
+            enabled = true,
+            weight_adjust = 1.50
+        },
+        snippets = {
+            enabled = true,
+            weight_adjust = 1.25
+        },
+        tree_sitter = {
+            enabled = true,
+            weight_adjust = 1.00
+        },
+        buffers = {
+            enabled = false,  -- there's no way I can make it rank below everything
+            weight_adjust = -2.00,
+        },
+    }
+}
+EOF
 
 
 " Automatic delimiter pairing
