@@ -101,6 +101,9 @@ Plug 'folke/todo-comments.nvim'
 " Indentation guides
 Plug 'lukas-reineke/indent-blankline.nvim'
 
+" Automatically change cwd to the root of the project
+Plug 'airblade/vim-rooter'
+
 " Tree viewer
 Plug 'MunifTanjim/nui.nvim'
 Plug 'nvim-neo-tree/neo-tree.nvim'
