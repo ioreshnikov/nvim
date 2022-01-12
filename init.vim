@@ -79,11 +79,11 @@ Plug 'tpope/vim-commentary'
 " Surround
 Plug 'tpope/vim-surround'
 
-" Auto-pairing
-Plug 'windwp/nvim-autopairs'
-
 " Sub-word motion
 Plug 'bkad/CamelCaseMotion'
+
+" Auto-pairing
+Plug 'windwp/nvim-autopairs'
 
 " TeX
 Plug 'lervag/vimtex'
@@ -500,11 +500,6 @@ imap <silent> <S-Right> <C-o><Plug>CamelCaseMotion_w
 lua << EOF
 vim.g.coq_settings = {
     auto_start = 'shut-up',
-    display = {
-        pum = {
-            fast_close = false
-        }
-    },
     clients = {
         lsp = {
             enabled = true,
@@ -522,6 +517,15 @@ vim.g.coq_settings = {
             enabled = false,  -- there's no way I can make it rank below everything
             weight_adjust = -2.00,
         },
+    },
+    display = {
+        pum = {
+            fast_close = false
+        }
+    },
+    -- To work-around auto-pairs we're going to setup up keys by hand
+    keymap = {
+        recommended = false
     }
 }
 EOF
@@ -530,7 +534,73 @@ EOF
 " Automatic delimiter pairing
 " ---------------------------
 
-lua require('nvim-autopairs').setup {}
+" We start with disabling backspace and enter bindings, since we need to treat
+" in a special way when COQ is active (which is almost always).
+"
+" More details:
+"     https://github.com/ms-jpq/coq_nvim/issues/91 (the issue)
+"     https://github.com/windwp/nvim-autopairs (search coq_nvim)
+"
+lua << EOF
+require('nvim-autopairs').setup {
+    map_bs = false,
+    map_cr = false
+}
+EOF
+
+
+lua << EOF
+local remap = vim.api.nvim_set_keymap
+local pairs = require('nvim-autopairs')
+
+-- Those are standard bindings from COQ. The bindings for enter and backspace
+-- we need to customize.
+remap(
+    'i', '<esc>', [[pumvisible() ? '<c-e><esc>' : '<esc>']],
+    { expr = true, noremap = true }
+)
+remap(
+    'i', '<c-c>', [[pumvisible() ? '<c-e><c-c>' : '<c-c>']],
+    { expr = true, noremap = true }
+)
+remap(
+    'i', '<tab>', [[pumvisible() ? '<c-n>' : '<tab>']],
+    { expr = true, noremap = true }
+)
+remap(
+    'i', '<s-tab>', [[pumvisible() ? '<c-p>' : '<bs>']],
+    { expr = true, noremap = true }
+)
+
+_G.utils = {}
+
+_G.utils.cr = function ()
+    if vim.fn.pumvisible() ~= 0 then
+        if vim.fn.complete_info({ 'selected' }).selected ~= -1 then
+            return pairs.esc('<c-y>')
+        else
+            return pairs.esc('<c-e>') .. pairs.autopairs_cr()
+        end
+    else
+        return pairs.autopairs_cr()
+    end
+end
+
+_G.utils.bs = function ()
+    if vim.fn.pumvisible() ~= 0 and vim.fn.complete_info({ 'mode' }).mode == 'eval' then
+        return pairs.esc('<c-e>') .. pairs.autopairs_bs()
+    else
+        return pairs.autopairs_bs()
+    end
+end
+
+remap(
+    'i', '<cr>', 'v:lua.utils.cr()',
+    { expr = true, noremap = true })
+remap(
+    'i', '<bs>', 'v:lua.utils.bs()',
+    { expr = true, noremap = true })
+EOF
 
 
 " General LSP setup
