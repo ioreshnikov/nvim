@@ -345,18 +345,17 @@ telescope.setup {
 }
 EOF
 
-noremap <silent> <leader>ff :Telescope find_files results_title= preview_title= <CR>
-noremap <silent> <leader>fe :Telescope file_browser results_title= preview_title= <CR>
-noremap <silent> <leader>fp :Telescope project results_title= preview_title= <CR>
-noremap <silent> <leader>fb :Telescope buffers results_title= preview_title= <CR>
-noremap <silent> <leader>fg :Telescope live_grep results_title= preview_title= <CR>
-noremap <silent> <leader>fl :Telescope lsp_workspace_symbols results_title= preview_title= <CR>
+noremap <silent> <leader>ff :Telescope find_files<CR>
+noremap <silent> <leader>fe :Telescope file_browser<CR>
+noremap <silent> <leader>fp :Telescope project<CR>
+noremap <silent> <leader>fb :Telescope buffers<CR>
+noremap <silent> <leader>fg :Telescope live_grep<CR>
+noremap <silent> <leader>fl :Telescope lsp_workspace_symbols<CR>
 
 hi link TelescopeNormal NormalFloat
 hi link TelescopeBorder FloatBorder
-hi link TelescopePreviewNormal NormalFloat
-hi link TelescopeResultsNormal NormalFloat
 hi link TelescopePromptPrefix Comment
+hi link TelescopeTitle Ignore
 
 
 " Terminal
