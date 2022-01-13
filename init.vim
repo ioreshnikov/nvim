@@ -108,6 +108,9 @@ Plug 'airblade/vim-rooter'
 Plug 'MunifTanjim/nui.nvim'
 Plug 'nvim-neo-tree/neo-tree.nvim'
 
+" Theming
+Plug 'rktjmp/lush.nvim'
+
 call plug#end()
 
 
