@@ -862,7 +862,8 @@ nnoremap <silent> <C-l> :noh<CR>zz
 inoremap <silent> <C-l> <ESC>:noh<CR>zza
 
 " Clear message area after a timeout
- autocmd CursorHold * echon ''
+set updatetime=2000
+autocmd CursorHold * echon ''
 
 
 " Neovide specific GUI settings
