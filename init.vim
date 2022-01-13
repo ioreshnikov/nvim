@@ -751,6 +751,18 @@ lsp.vimls.setup(coq.lsp_ensure_capabilities())
 EOF
 
 
+" LUA
+" ---
+
+" Some of the editing is done in Lua
+lua << EOF
+local lsp = require('lspconfig')
+local coq = require('coq')
+
+lsp.sumneko_lua.setup(coq.lsp_ensure_capabilities())
+EOF
+
+
 " Python
 " ------
 
