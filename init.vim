@@ -47,6 +47,7 @@ Plug 'kyazdani42/nvim-web-devicons'
 Plug 'nvim-lua/plenary.nvim'
 Plug 'nvim-telescope/telescope.nvim'
 Plug 'nvim-telescope/telescope-project.nvim'
+Plug 'nvim-telescope/telescope-file-browser.nvim'
 
 " Modern syntax highlight with `tree-sitter`
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
@@ -64,9 +65,6 @@ Plug 'ms-jpq/coq.artifacts', {'branch': 'artifacts'}
 " Better search UI
 Plug 'kevinhwang91/nvim-hlslens'
 
-" Automatically set `cwd` to the root of the current project
-Plug 'airblade/vim-rooter'
-
 " Use a custom statusline
 Plug 'nvim-lualine/lualine.nvim'
 
@@ -79,11 +77,39 @@ Plug 'folke/which-key.nvim'
 " Commenting
 Plug 'tpope/vim-commentary'
 
-" Auto-pairing
-Plug 'windwp/nvim-autopairs'
+" Surround
+Plug 'tpope/vim-surround'
 
 " Sub-word motion
 Plug 'bkad/CamelCaseMotion'
+
+" Auto-pairing
+Plug 'windwp/nvim-autopairs'
+
+" TeX
+Plug 'lervag/vimtex'
+
+" Unicode symbols entry
+Plug 'joom/latex-unicoder.vim'
+
+" LSP errors
+Plug 'folke/trouble.nvim'
+
+" TODO marks
+Plug 'folke/todo-comments.nvim'
+
+" Indentation guides
+Plug 'lukas-reineke/indent-blankline.nvim'
+
+" Automatically change cwd to the root of the project
+Plug 'airblade/vim-rooter'
+
+" Tree viewer
+Plug 'MunifTanjim/nui.nvim'
+Plug 'nvim-neo-tree/neo-tree.nvim'
+
+" Theming
+Plug 'rktjmp/lush.nvim'
 
 call plug#end()
 
@@ -94,13 +120,29 @@ call plug#end()
 " When editing this config we need to re-evaluate parts of it. We define two
 " additional commands. The first one evaluates the current line. The second
 " one -- the active visual selection.
-nnoremap <leader>vs :source %<CR>
-vnoremap <leader>vs y:@"<CR>
+nnoremap <silent> <leader>vs :source %<CR>
+vnoremap <silent> <leader>vs y:@"<CR>
+
+
+" Use mouse
+" ---------
+
+set mouse=a
+
+
+" Scroll
+" ------
+
+" I love when there's a bit of space between the current line and the end of
+" the window. 5 lines feels like sweet spot.
+set scrolloff=5
 
 
 " Backups
 " -------
 
+" Didn't really have to use the backups once, but always annoyed by seeing the
+" files on disk.
 set nobackup
 set nowritebackup
 set noswapfile
@@ -109,25 +151,38 @@ set noswapfile
 " Case sensitivity
 " ----------------
 
+" I don't really care about case sensitivity when searching.
 set ignorecase
 
 
 " Color scheme
 " -------------------
 
+" The best I've seen so far
 colorscheme tokyonight
-
 
 " Line numbers and sign column
 " ----------------------------
 
-" I'd love to see line numbers only in the programming-related files (but not
-" in markdown or LaTeX, for example), but I will be also fine if it's shown
-" everywhere. Also, even an empty sign column provides a nice margin to the
-" left that I'd like to see all the time as well.
-set number
-set relativenumber
-set signcolumn=yes
+" For buffers that correspond to a file on disk I'd like to see relative line
+" numbers and a sign column. The latter might not have a practical use for
+" files not associated with an LSP server, but I like it purely for
+" aesthetical reasons.
+
+function EnableSignColumn() abort
+    setlocal signcolumn=yes:2
+endfunction
+
+function EnableEditingHelpers() abort
+    setlocal number
+    setlocal relativenumber
+    setlocal colorcolumn=80
+    call EnableSignColumn()
+endfunction
+
+autocmd BufReadPost * call EnableEditingHelpers()
+autocmd FileType NeogitCommitMessage call EnableEditingHelpers()
+autocmd FileType NeogitStatus call EnableSignColumn()
 
 
 " Current line
@@ -141,9 +196,12 @@ set cursorline
 " ----------
 
 " Show whitespace characters
-set list
+set listchars=tab:→\ ,trail:⋅
 
-" Automatically expand tabs to 4 spaces. Indent by 4 spaces.
+
+" Automatically expand tabs to 4 spaces. Indent by 4 spaces. Those are default
+" settings. They can be easily overriden by editing a specific after/ftplugin
+" file.
 set expandtab
 set tabstop=4
 set shiftwidth=4
@@ -152,15 +210,13 @@ set shiftwidth=4
 autocmd BufWritePre * :%s/\s\+$//e
 
 
-" Use mouse
-" ---------
+" Folds
+" -----
 
-set mouse=a
-
-
-" Show ruler at 80th column
-" -------------------------
-set colorcolumn=80
+" Folds are occasionally useful. I wish I could use tree-sitter aware folds,
+" but as of now they're glitchy and tend to randomly collapse when you edit a
+" region. Therefore I resort to good old fold by marker.
+set foldmethod=marker
 
 
 " Tabs and splits
@@ -169,64 +225,66 @@ set colorcolumn=80
 " `vim` has a quite powerful window system, but the default keybindings make
 " you a bit slow when using it. Here are more conventional ones.
 
-" Quick navigation between the tabs
-noremap <C-t> :tabnew<CR>
-noremap <C-w> :tabclose<CR>
+" Quick navigation between the tabs {{{
+noremap <silent> <C-t> :tabnew<CR>
+noremap <silent> <C-w> :tabclose<CR>
 
-inoremap <C-t> <ESC>:tabnew<CR>
-inoremap <C-w> <ESC>:tabclose<CR>
+inoremap <silent> <C-t> <ESC>:tabnew<CR>
+inoremap <silent> <C-w> <ESC>:tabclose<CR>
 
-tnoremap <C-t> <C-\><C-n>:tabnew<CR>
-tnoremap <C-w> <C-\><C-n>:tabclose<CR>
+tnoremap <silent> <C-t> <C-\><C-n>:tabnew<CR>
+tnoremap <silent> <C-w> <C-\><C-n>:tabclose<CR>
 
-noremap <A-1> 1gt
-noremap <A-2> 2gt
-noremap <A-3> 3gt
-noremap <A-4> 4gt
-noremap <A-5> 5gt
-noremap <A-6> 6gt
-noremap <A-7> 7gt
-noremap <A-8> 8gt
-noremap <A-9> 9gt
+noremap <silent> <A-1> 1gt
+noremap <silent> <A-2> 2gt
+noremap <silent> <A-3> 3gt
+noremap <silent> <A-4> 4gt
+noremap <silent> <A-5> 5gt
+noremap <silent> <A-6> 6gt
+noremap <silent> <A-7> 7gt
+noremap <silent> <A-8> 8gt
+noremap <silent> <A-9> 9gt
 
-inoremap <A-1> <ESC>1gt
-inoremap <A-2> <ESC>2gt
-inoremap <A-3> <ESC>3gt
-inoremap <A-4> <ESC>4gt
-inoremap <A-5> <ESC>5gt
-inoremap <A-6> <ESC>6gt
-inoremap <A-7> <ESC>7gt
-inoremap <A-8> <ESC>8gt
-inoremap <A-9> <ESC>9gt
+inoremap <silent> <A-1> <ESC>1gt
+inoremap <silent> <A-2> <ESC>2gt
+inoremap <silent> <A-3> <ESC>3gt
+inoremap <silent> <A-4> <ESC>4gt
+inoremap <silent> <A-5> <ESC>5gt
+inoremap <silent> <A-6> <ESC>6gt
+inoremap <silent> <A-7> <ESC>7gt
+inoremap <silent> <A-8> <ESC>8gt
+inoremap <silent> <A-9> <ESC>9gt
 
-tnoremap <A-1> <C-\><C-n>1gt
-tnoremap <A-2> <C-\><C-n>2gt
-tnoremap <A-3> <C-\><C-n>3gt
-tnoremap <A-4> <C-\><C-n>4gt
-tnoremap <A-5> <C-\><C-n>5gt
-tnoremap <A-6> <C-\><C-n>6gt
-tnoremap <A-7> <C-\><C-n>7gt
-tnoremap <A-8> <C-\><C-n>8gt
-tnoremap <A-9> <C-\><C-n>9gt
+tnoremap <silent> <A-1> <C-\><C-n>1gt
+tnoremap <silent> <A-2> <C-\><C-n>2gt
+tnoremap <silent> <A-3> <C-\><C-n>3gt
+tnoremap <silent> <A-4> <C-\><C-n>4gt
+tnoremap <silent> <A-5> <C-\><C-n>5gt
+tnoremap <silent> <A-6> <C-\><C-n>6gt
+tnoremap <silent> <A-7> <C-\><C-n>7gt
+tnoremap <silent> <A-8> <C-\><C-n>8gt
+tnoremap <silent> <A-9> <C-\><C-n>9gt
+" }}}
 
-" Quick navigation between the splits
-noremap <A-v> :vsp<CR>
-noremap <A-s> :split<CR>
-noremap <A-q> :q<CR>
+" Quick navigation between the splits {{{
+noremap <silent> <A-v> :vsp<CR>
+noremap <silent> <A-s> :split<CR>
+noremap <silent> <A-q> :q<CR>
 
-tnoremap <A-v> <C-\><C-n>:vsp<CR>
-tnoremap <A-s> <C-\><C-n>:split<CR>
-tnoremap <A-q> <C-\><C-n>:q<CR>
+tnoremap <silent> <A-v> <C-\><C-n>:vsp<CR>
+tnoremap <silent> <A-s> <C-\><C-n>:split<CR>
+tnoremap <silent> <A-q> <C-\><C-n>:q<CR>
 
-noremap <A-h> <C-w>h
-noremap <A-j> <C-w>j
-noremap <A-k> <C-w>k
-noremap <A-l> <C-w>l
+noremap <silent> <A-h> <C-w>h
+noremap <silent> <A-j> <C-w>j
+noremap <silent> <A-k> <C-w>k
+noremap <silent> <A-l> <C-w>l
 
-tnoremap <A-h> <C-\><C-n><C-w>h
-tnoremap <A-j> <C-\><C-n><C-w>j
-tnoremap <A-k> <C-\><C-n><C-w>k
-tnoremap <A-l> <C-\><C-n><C-w>l
+tnoremap <silent> <A-h> <C-\><C-n><C-w>h
+tnoremap <silent> <A-j> <C-\><C-n><C-w>j
+tnoremap <silent> <A-k> <C-\><C-n><C-w>k
+tnoremap <silent> <A-l> <C-\><C-n><C-w>l
+" }}}
 
 
 " Movement on wrapped lines
@@ -235,11 +293,11 @@ tnoremap <A-l> <C-\><C-n><C-w>l
 " I am using soft line-wrap everywhere. The default navigation commands in vim
 " work on physical lines, not wrapped ones. This is really inconvinient. This
 " should fix it.
-nnoremap <expr> j v:count ? 'j' : 'gj'
-nnoremap <expr> k v:count ? 'k' : 'gk'
-nnoremap <expr> ^ v:count ? '^' : 'g^'
-nnoremap <expr> 0 v:count ? '0' : 'g0'
-nnoremap <expr> $ v:count ? '$' : 'g$'
+nnoremap <silent> <expr> j v:count ? 'j' : 'gj'
+nnoremap <silent> <expr> k v:count ? 'k' : 'gk'
+nnoremap <silent> <expr> ^ v:count ? '^' : 'g^'
+nnoremap <silent> <expr> 0 v:count ? '0' : 'g0'
+nnoremap <silent> <expr> $ v:count ? '$' : 'g$'
 
 
 " Telescope
@@ -247,36 +305,60 @@ nnoremap <expr> $ v:count ? '$' : 'g$'
 
 lua << EOF
 local telescope = require('telescope')
+
+telescope.load_extension('project')
+telescope.load_extension('file_browser')
+
 telescope.setup {
     defaults = {
-        borderchars = { '─', '│', '─', '│', '┌', '┐', '┘', '└'},
-        file_ignore_patterns = {'__pycache__/', '%.pyc'},
-        layout_config = {
-            height = 0.5,
-            width = 80
+        border = true,
+        borderchars = { ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '},
+        file_ignore_patterns = {
+            '__pycache__/',
+            '%.pyc',
+            'target/'
         },
-        layout_strategy = 'vertical',
-        prompt_prefix = '  ',
-        selection_caret = '  '
+        layout_strategy = 'bottom_pane',
+        layout_config = {
+            height = 0.55,
+            prompt_position = 'top',
+        },
+        path_display = function (opts, path)
+            return ' ' .. path
+        end,
+        prompt_prefix = '    ',
+        prompt_title = false,
+        results_title = ' ',
+        selection_caret = '  ',
+        sorting_strategy = 'ascending'
+    },
+    extensions = {
+        project = {
+            base_dirs = {
+                '/home/me/Code/',
+                '/home/me/.local/share/nvim/plugged/'
+            }
+        }
     },
     pickers = {
         file_browser = {
-            hidden = true
+            hidden = true,
         }
-    }
+    },
 }
-telescope.load_extension('project')
 EOF
 
-noremap <leader>ff :Telescope find_files<CR>
-noremap <leader>fe :Telescope file_browser<CR>
-noremap <leader>fp :Telescope project<CR>
-noremap <leader>fb :Telescope buffers<CR>
+noremap <silent> <leader>ff :Telescope find_files<CR>
+noremap <silent> <leader>fe :Telescope file_browser<CR>
+noremap <silent> <leader>fp :Telescope project<CR>
+noremap <silent> <leader>fb :Telescope buffers<CR>
+noremap <silent> <leader>fg :Telescope live_grep<CR>
+noremap <silent> <leader>fl :Telescope lsp_workspace_symbols<CR>
 
 hi link TelescopeNormal NormalFloat
 hi link TelescopeBorder FloatBorder
-hi link TelescopePreviewNormal NormalFloat
-hi link TelescopeResultsNormal NormalFloat
+hi link TelescopePromptPrefix Comment
+hi link TelescopeTitle Ignore
 
 
 " Terminal
@@ -284,8 +366,9 @@ hi link TelescopeResultsNormal NormalFloat
 
 " Automatically enter insert mode when entering a terminal window.
 " Automatically switch to normal on exit.
-autocmd WinEnter term://* startinsert  " SEE: https://github.com/neovim/neovim/pull/16596
+autocmd WinEnter term://* startinsert
 autocmd WinLeave term://* stopinsert
+" SEE: https://github.com/neovim/neovim/pull/16596
 
 " Open terminal in a toggle
 lua << EOF
@@ -302,10 +385,10 @@ require('toggleterm').setup {
 }
 EOF
 
-nnoremap <leader>t  :ToggleTerm<CR>
-nnoremap <leader>ts :ToggleTerm direction=horizontal<CR>
-nnoremap <leader>tv :ToggleTerm direction=vertical<CR>
-nnoremap <leader>tt :ToggleTerm direction=tab<CR>
+nnoremap <silent> <leader>t  :ToggleTerm<CR>
+nnoremap <silent> <leader>ts :ToggleTerm direction=horizontal<CR>
+nnoremap <silent> <leader>tv :ToggleTerm direction=vertical<CR>
+nnoremap <silent> <leader>tt :ToggleTerm direction=tab<CR>
 
 
 " Which key
@@ -328,6 +411,27 @@ require('lualine').setup {
 EOF
 
 
+" Indentation guide
+" -----------------
+
+" The setup is minimalistic -- I mostly disable the indentation guides in the
+" modes I don't want them to see.
+lua << EOF
+require('indent_blankline').setup {
+    filetype_exclude = {
+        'help',
+        'markdown',
+        'neo-tree',
+        'NeogitStatus',
+        'TelescopePrompt',
+        'tex',
+        'toggleterm',
+        'Trouble',
+    }
+}
+EOF
+
+
 " Git
 " ---
 
@@ -336,15 +440,16 @@ lua << EOF
 require('neogit').setup {
     commit_popup = { kind = 'vsplit' },
     disable_commit_confirmation = true,
+    disable_hint = true,
     signs = {
-        section = {'' , ''},
-        item = {'' , ''},
+        section = {' ' , ' '},
+        item = {' ' , ' '},
     }
 }
 EOF
 
 " A simple key combination for opening git status anywhere
-noremap <leader>g :Neogit<CR>
+noremap <silent> <leader>g :Neogit<CR>
 
 
 " Tree sitter
@@ -368,16 +473,11 @@ require('nvim-treesitter.configs').setup {
         }
     },
     indent = {
-        enable = true
+        enable = true,
+        disable = { 'python' }
     }
 }
 EOF
-
-
-" Pairing
-" -------
-
-lua require('nvim-autopairs').setup()
 
 
 " Subword navigation
@@ -414,13 +514,129 @@ imap <silent> <S-Right> <C-o><Plug>CamelCaseMotion_w
 " in the corresponding language section. UI is provided by a brilliant and
 " blazing-fast COQ. It does not require any additional setup, except that we
 " would like it to start automatically once we open a buffer.
-let g:coq_settings = {
-\ 'auto_start': 'shut-up',
-\ 'display.pum.fast_close': v:false }
+
+lua << EOF
+vim.g.coq_settings = {
+    auto_start = 'shut-up',
+    clients = {
+        lsp = {
+            enabled = true,
+            weight_adjust = 1.50
+        },
+        snippets = {
+            enabled = true,
+            weight_adjust = 1.25
+        },
+        tree_sitter = {
+            enabled = true,
+            weight_adjust = 1.00
+        },
+        buffers = {
+            enabled = false,  -- there's no way I can make it rank below everything
+            weight_adjust = -2.00,
+        },
+    },
+    display = {
+        pum = {
+            fast_close = false
+        }
+    },
+    -- To work-around auto-pairs we're going to setup up keys by hand
+    keymap = {
+        recommended = false
+    }
+}
+EOF
+
+
+" Automatic delimiter pairing
+" ---------------------------
+
+" We start with disabling backspace and enter bindings, since we need to treat
+" in a special way when COQ is active (which is almost always).
+"
+" More details:
+"     https://github.com/ms-jpq/coq_nvim/issues/91 (the issue)
+"     https://github.com/windwp/nvim-autopairs (search coq_nvim)
+"
+lua << EOF
+require('nvim-autopairs').setup {
+    map_bs = false,
+    map_cr = false
+}
+EOF
+
+
+lua << EOF
+local remap = vim.api.nvim_set_keymap
+local pairs = require('nvim-autopairs')
+
+-- Those are standard bindings from COQ. The bindings for enter and backspace
+-- we need to customize.
+remap(
+    'i', '<esc>', [[pumvisible() ? '<c-e><esc>' : '<esc>']],
+    { expr = true, noremap = true }
+)
+remap(
+    'i', '<c-c>', [[pumvisible() ? '<c-e><c-c>' : '<c-c>']],
+    { expr = true, noremap = true }
+)
+remap(
+    'i', '<tab>', [[pumvisible() ? '<c-n>' : '<tab>']],
+    { expr = true, noremap = true }
+)
+remap(
+    'i', '<s-tab>', [[pumvisible() ? '<c-p>' : '<bs>']],
+    { expr = true, noremap = true }
+)
+
+_G.utils = {}
+
+_G.utils.cr = function ()
+    if vim.fn.pumvisible() ~= 0 then
+        if vim.fn.complete_info({ 'selected' }).selected ~= -1 then
+            return pairs.esc('<c-y>')
+        else
+            return pairs.esc('<c-e>') .. pairs.autopairs_cr()
+        end
+    else
+        return pairs.autopairs_cr()
+    end
+end
+
+_G.utils.bs = function ()
+    if vim.fn.pumvisible() ~= 0 and vim.fn.complete_info({ 'mode' }).mode == 'eval' then
+        return pairs.esc('<c-e>') .. pairs.autopairs_bs()
+    else
+        return pairs.autopairs_bs()
+    end
+end
+
+remap(
+    'i', '<cr>', 'v:lua.utils.cr()',
+    { expr = true, noremap = true })
+remap(
+    'i', '<bs>', 'v:lua.utils.bs()',
+    { expr = true, noremap = true })
+EOF
 
 
 " General LSP setup
 " -----------------
+
+lua << EOF
+local signs = {
+    Error = ' ',
+    Warn = ' ',
+    Hint = ' ',
+    Info = ' ',
+}
+for type, icon in pairs(signs) do
+  local hl = 'DiagnosticSign' .. type
+  vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = hl })
+end
+EOF
+
 command! LspGotoDeclaration    lua vim.lsp.buf.declaration()<CR>
 command! LspGotoDefinition     lua vim.lsp.buf.definition()<CR>
 command! LspHover              lua vim.lsp.buf.hover()<CR>
@@ -430,17 +646,125 @@ command! LspRename             lua vim.lsp.buf.rename()<CR>
 command! LspCodeAction         lua vim.lsp.buf.code_action()<CR>
 
 
+" Error diagnostics
+" -----------------
+
+lua << EOF
+require('trouble').setup {
+    indent_lines = false
+}
+EOF
+
+noremap <silent> <leader>e  :TroubleToggle document_diagnostics<CR>
+noremap <silent> <leader>ef :TroubleToggle document_diagnostics<CR>
+noremap <silent> <leader>ew :TroubleToggle workspace_diagnostics<CR>
+
+hi link TroubleNormal LspTroubleNormal
+
+
+" TODO comments
+" -------------
+
+" A neat utility for highlighting the comment-keywords.
+lua << EOF
+require('todo-comments').setup {
+    keywords = {
+        FIX = {
+            icon = ' ',
+            color = 'error',
+            alt = { 'FIXME', 'BUG', 'FIXIT', 'ISSUE' },
+        },
+        TODO = {
+            icon = ' ',
+            color = 'info'
+        },
+        HACK = {
+            icon = ' ',
+            color = 'warning'
+        },
+        WARN = {
+            icon = ' ',
+            color = 'warning',
+            alt = { 'WARNING', 'XXX' }
+        },
+        PERF = {
+            icon = ' ',
+            alt = { 'OPTIM', 'OPTIMIZE', 'PERFORMANCE' }
+        },
+        NOTE = {
+            icon = ' ',
+            color = 'hint',
+            alt = { 'INFO' }
+        },
+    }
+}
+EOF
+
+noremap <silent> <leader>et :TodoTrouble<CR>
+
+
+" Filesystem tree
+" ---------------
+"
+lua << EOF
+require('neo-tree').setup {
+    filesystem = {
+        before_render = function () return end,
+        renderers = {
+            directory = {
+                {
+                    'icon',
+                    folder_closed = '',
+                    folder_open = 'ﱮ',
+                    padding = '  '
+                },
+                { 'current_filter' },
+                { 'name' }
+            },
+            file = {
+                {
+                    'icon',
+                    default = '',
+                    padding = '  '
+                },
+                { 'name' },
+            }
+        }
+    }
+}
+EOF
+
+hi link NeoTreeFileIcon NormalSB
+hi link NeoTreeDirectoryIcon NormalSB
+hi link NeoTreeNormal NormalSB
+hi link NeoTreeNormalNC NormalSB
+
+nnoremap <silent> <leader>d :NeoTreeShowToggle<CR>
+
+
 " VIM
 " ---
 
 " It would be cool if editing this very config was done with the help of an
 " LSP server. Thankfully, there is such a server!
-lua << EOG
+lua << EOF
 local lsp = require('lspconfig')
 local coq = require('coq')
 
 lsp.vimls.setup(coq.lsp_ensure_capabilities())
-EOG
+EOF
+
+
+" LUA
+" ---
+
+" Some of the editing is done in Lua
+lua << EOF
+local lsp = require('lspconfig')
+local coq = require('coq')
+
+lsp.sumneko_lua.setup(coq.lsp_ensure_capabilities())
+EOF
 
 
 " Python
@@ -452,7 +776,36 @@ lua << EOF
 local lsp = require('lspconfig')
 local coq = require('coq')
 
-lsp.pyright.setup(coq.lsp_ensure_capabilities())
+-- lsp.pyright.setup(coq.lsp_ensure_capabilities())
+lsp.pylsp.setup {
+    cmd = { '/home/me/.pyls.sh' },
+    unpack(coq.lsp_ensure_capabilities())
+}
+EOF
+
+
+" JavaScript and TypeScript
+" -------------------------
+
+" And sometimes I need to write frontend code as well.
+lua << EOF
+local lsp = require('lspconfig')
+local coq = require('coq')
+
+lsp.tsserver.setup(coq.lsp_ensure_capabilities())
+EOF
+
+
+" HTML and CSS
+" ------------
+
+" Well, that's obvious
+lua << EOF
+local lsp = require('lspconfig')
+local coq = require('coq')
+
+lsp.html.setup(coq.lsp_ensure_capabilities())
+lsp.cssls.setup(coq.lsp_ensure_capabilities())
 EOF
 
 
@@ -468,6 +821,11 @@ local coq = require('coq')
 lsp.texlab.setup(coq.lsp_ensure_capabilities())
 EOF
 
+let g:unicoder_no_map=v:true
+nnoremap <silent> <C-\> :call unicoder#start(0)<CR>
+inoremap <silent> <C-\> <Esc>:call unicoder#start(1)<CR>
+vnoremap <silent> <C-\> :<C-u>call unicoder#selection()<CR>
+
 
 " Rust
 " ----
@@ -482,10 +840,49 @@ lsp.rust_analyzer.setup(coq.lsp_ensure_capabilities())
 EOF
 
 
-" Random key combinations
-" -----------------------
+" GO
+" --
 
-nnoremap <C-l> :noh<CR>zz
+" Eh, why not
+lua << EOF
+local lsp = require('lspconfig')
+local coq = require('coq')
+
+lsp.gopls.setup(coq.lsp_ensure_capabilities())
+EOF
+
+
+" Random things
+" -------------
+
+" A faster way to save files
+noremap <silent> <leader>w :w<CR>
+
+" Remove search highlight and center the current line on screen.
+nnoremap <silent> <C-l> :noh<CR>zz
+inoremap <silent> <C-l> <ESC>:noh<CR>zza
+
+" Clear message area after a timeout
+set updatetime=2000
+autocmd CursorHold * echon ''
+
+
+" Neovide specific GUI settings
+" -----------------------------
+
+let g:neovide_hide_mouse_when_typing = 1
+let g:neovide_cursor_animation_length = 0.03
+set guifont=JetBrainsMono\ Nerd\ Font:h13
+
+function Neovide_fullscreen()
+if g:neovide_fullscreen == v:false
+    let g:neovide_fullscreen=v:true
+else
+    let g:neovide_fullscreen=v:false
+endif
+endfunction
+
+map <silent> <F11> :call Neovide_fullscreen()<CR>
 
 
 " TODOs
@@ -494,5 +891,4 @@ nnoremap <C-l> :noh<CR>zz
 " A short list of things I would like to have set up.
 
 " TODO: LSP function signature
-" TODO: Maybe prettier tabs
-" TODO: Switch default devicons icon for a smaller one
+" BUG: Neogit log has been broken for a month. Should I do the bugfix?
