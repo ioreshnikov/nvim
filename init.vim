@@ -111,6 +111,9 @@ Plug 'nvim-neo-tree/neo-tree.nvim'
 " Theming
 Plug 'rktjmp/lush.nvim'
 
+" REST client
+Plug 'NTBBloodbath/rest.nvim'
+
 call plug#end()
 
 
@@ -873,6 +876,14 @@ local coq = require('coq')
 
 lsp.gopls.setup(coq.lsp_ensure_capabilities())
 EOF
+
+
+" REST client
+" -----------
+
+lua require('rest-nvim').setup()
+
+nmap <leader>rr <Plug>RestNvim<CR>
 
 
 " Random things
