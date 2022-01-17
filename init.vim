@@ -732,6 +732,7 @@ require('neo-tree').setup {
     filesystem = {
         before_render = function () return end,
         follow_current_file = true,
+        use_libuv_file_watcher = true,
         renderers = {
             directory = {
                 {
