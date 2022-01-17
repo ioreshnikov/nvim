@@ -710,6 +710,7 @@ lua << EOF
 require('neo-tree').setup {
     filesystem = {
         before_render = function () return end,
+        follow_current_file = true,
         renderers = {
             directory = {
                 {
