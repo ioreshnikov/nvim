@@ -124,6 +124,27 @@ nnoremap <silent> <leader>vs :source %<CR>
 vnoremap <silent> <leader>vs y:@"<CR>
 
 
+" Logging
+" -------
+
+" Sometimtes I need to debug things. This is where logging comes handy.
+lua << EOF
+function log(message)
+    local date = os.date()
+    local info = debug.getinfo(2, "Sl")
+    local line = info.short_src .. ":" .. info.currentline
+    local output = string.format("%s %s %s\n", date, line, message)
+
+    local file = io.open("/home/me/nvim.log", "a")
+    file:write(output)
+    file:close()
+end
+
+_G.ioextra = {}  -- io are my initials, not I/O
+_G.ioextra.log = log
+EOF
+
+
 " Use mouse
 " ---------
 
