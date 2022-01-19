@@ -78,7 +78,7 @@ Plug 'folke/which-key.nvim'
 Plug 'tpope/vim-commentary'
 
 " Surround
-Plug 'tpope/vim-surround'
+Plug 'machakann/vim-sandwich'
 
 " Sub-word motion
 Plug 'bkad/CamelCaseMotion'
