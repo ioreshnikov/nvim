@@ -802,11 +802,11 @@ lua << EOF
 local lsp = require('lspconfig')
 local coq = require('coq')
 
--- lsp.pyright.setup(coq.lsp_ensure_capabilities())
-lsp.pylsp.setup {
-    cmd = { '/home/me/.pyls.sh' },
-    unpack(coq.lsp_ensure_capabilities())
-}
+lsp.pyright.setup(coq.lsp_ensure_capabilities())
+-- lsp.pylsp.setup {
+--     cmd = { '/home/me/.pyls.sh' },
+--     unpack(coq.lsp_ensure_capabilities())
+-- }
 EOF
 
 
