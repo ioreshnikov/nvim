@@ -614,9 +614,7 @@ remap(
     { expr = true, noremap = true }
 )
 
-_G.utils = {}
-
-_G.utils.cr = function ()
+_G.ioextra.cr = function ()
     if vim.fn.pumvisible() ~= 0 then
         if vim.fn.complete_info({ 'selected' }).selected ~= -1 then
             return pairs.esc('<c-y>')
@@ -628,7 +626,7 @@ _G.utils.cr = function ()
     end
 end
 
-_G.utils.bs = function ()
+_G.ioextra.bs = function ()
     if vim.fn.pumvisible() ~= 0 and vim.fn.complete_info({ 'mode' }).mode == 'eval' then
         return pairs.esc('<c-e>') .. pairs.autopairs_bs()
     else
@@ -637,10 +635,10 @@ _G.utils.bs = function ()
 end
 
 remap(
-    'i', '<cr>', 'v:lua.utils.cr()',
+    'i', '<cr>', 'v:lua.ioextra.cr()',
     { expr = true, noremap = true })
 remap(
-    'i', '<bs>', 'v:lua.utils.bs()',
+    'i', '<bs>', 'v:lua.ioextra.bs()',
     { expr = true, noremap = true })
 EOF
 
@@ -658,6 +656,29 @@ local signs = {
 for type, icon in pairs(signs) do
   local hl = 'DiagnosticSign' .. type
   vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = hl })
+end
+
+_G.ioextra.on_attach = function(client, buffer)
+    vim.api.nvim_buf_set_keymap(
+        buffer,
+        'n', 'gD', '<cmd>lua vim.lsp.buf.declaration()<CR>',
+        { noremap = true, silent = true })
+    vim.api.nvim_buf_set_keymap(
+        buffer,
+        'n', 'gd', '<cmd>lua vim.lsp.buf.definition()<CR>',
+        { noremap = true, silent = true })
+    vim.api.nvim_buf_set_keymap(
+        buffer,
+        'n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<CR>',
+        { noremap = true, silent = true })
+    vim.api.nvim_buf_set_keymap(
+        buffer,
+        'n', 'gr', '<cmd>lua vim.lsp.buf.references()<CR>',
+        { noremap = true, silent = true })
+    vim.api.nvim_buf_set_keymap(
+        buffer,
+        'n', 'ca', '<cmd>lua vim.lsp.buf.code_action()<CR>',
+        { noremap = true, silent = true })
 end
 EOF
 
@@ -719,7 +740,7 @@ require('todo-comments').setup {
             icon = ' ',
             color = 'hint',
             alt = { 'INFO' }
-        },
+        }
     }
 }
 EOF
@@ -802,11 +823,10 @@ lua << EOF
 local lsp = require('lspconfig')
 local coq = require('coq')
 
-lsp.pyright.setup(coq.lsp_ensure_capabilities())
--- lsp.pylsp.setup {
---     cmd = { '/home/me/.pyls.sh' },
---     unpack(coq.lsp_ensure_capabilities())
--- }
+lsp.pyright.setup{
+    on_attach=ioextra.on_attach,
+    unpack(coq.lsp_ensure_capabilities())
+}
 EOF
 
 
@@ -818,7 +838,10 @@ lua << EOF
 local lsp = require('lspconfig')
 local coq = require('coq')
 
-lsp.tsserver.setup(coq.lsp_ensure_capabilities())
+lsp.tsserver.setup{
+    on_attach=ioextra.on_attach,
+    unpack(coq.lsp_ensure_capabilities())
+}
 EOF
 
 
@@ -830,8 +853,14 @@ lua << EOF
 local lsp = require('lspconfig')
 local coq = require('coq')
 
-lsp.html.setup(coq.lsp_ensure_capabilities())
-lsp.cssls.setup(coq.lsp_ensure_capabilities())
+lsp.html.setup{
+    on_attach=ioextra.on_attach,
+    unpack(coq.lsp_ensure_capabilities())
+}
+lsp.cssls.setup{
+    on_attach=ioextra.on_attach,
+    unpack(coq.lsp_ensure_capabilities())
+}
 EOF
 
 
@@ -844,7 +873,10 @@ lua << EOF
 local lsp = require('lspconfig')
 local coq = require('coq')
 
-lsp.texlab.setup(coq.lsp_ensure_capabilities())
+lsp.texlab.setup{
+    on_attach=ioextra.on_attach,
+    unpack(coq.lsp_ensure_capabilities())
+}
 EOF
 
 let g:unicoder_no_map=v:true
@@ -862,7 +894,10 @@ lua << EOF
 local lsp = require('lspconfig')
 local coq = require('coq')
 
-lsp.rust_analyzer.setup(coq.lsp_ensure_capabilities())
+lsp.rust_analyzer.setup{
+    on_attach=ioextra.on_attach,
+    unpack(coq.lsp_ensure_capabilities())
+}
 EOF
 
 
@@ -874,7 +909,10 @@ lua << EOF
 local lsp = require('lspconfig')
 local coq = require('coq')
 
-lsp.gopls.setup(coq.lsp_ensure_capabilities())
+lsp.gopls.setup{
+    on_attach=ioextra.on_attach,
+    unpack(coq.lsp_ensure_capabilities())
+}
 EOF
 
 
