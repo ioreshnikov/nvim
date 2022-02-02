@@ -39,6 +39,7 @@ Plug 'junegunn/vim-plug'
 
 " Some of my favourite color themes
 Plug 'folke/tokyonight.nvim'
+Plug 'sainnhe/gruvbox-material'
 
 " Text icons
 Plug 'kyazdani42/nvim-web-devicons'
@@ -183,7 +184,12 @@ set ignorecase
 " -------------------
 
 " The best I've seen so far
-colorscheme tokyonight
+
+" colorscheme tokyonight
+
+" Though sometimes I like something more groovy
+let g:gruvbox_material_palette = 'original'
+colorscheme gruvbox-material
 
 " Line numbers and sign column
 " ----------------------------
