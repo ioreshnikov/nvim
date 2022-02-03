@@ -39,7 +39,7 @@ Plug 'junegunn/vim-plug'
 
 " Some of my favourite color themes
 Plug 'folke/tokyonight.nvim'
-Plug 'sainnhe/gruvbox-material'
+Plug 'ioreshnikov/solarized'
 
 " Text icons
 Plug 'kyazdani42/nvim-web-devicons'
@@ -184,12 +184,8 @@ set ignorecase
 " -------------------
 
 " The best I've seen so far
-
-" colorscheme tokyonight
-
-" Though sometimes I like something more groovy
-let g:gruvbox_material_palette = 'original'
-colorscheme gruvbox-material
+colorscheme tokyonight
+" colorscheme solarized
 
 " Line numbers and sign column
 " ----------------------------
@@ -211,6 +207,7 @@ function EnableEditingHelpers() abort
 endfunction
 
 autocmd BufReadPost * call EnableEditingHelpers()
+autocmd BufWritePost * call EnableEditingHelpers()
 autocmd FileType NeogitCommitMessage call EnableEditingHelpers()
 autocmd FileType NeogitStatus call EnableSignColumn()
 
@@ -340,41 +337,40 @@ telescope.load_extension('project')
 telescope.load_extension('file_browser')
 
 telescope.setup {
-    defaults = {
-        border = true,
-        borderchars = { ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '},
-        file_ignore_patterns = {
-            '__pycache__/',
-            '%.pyc',
-            'target/'
-        },
-        layout_strategy = 'bottom_pane',
-        layout_config = {
-            height = 0.55,
-            prompt_position = 'top',
-        },
-        path_display = function (opts, path)
-            return ' ' .. path
-        end,
-        prompt_prefix = '    ',
-        prompt_title = false,
-        results_title = ' ',
-        selection_caret = '  ',
-        sorting_strategy = 'ascending'
-    },
-    extensions = {
-        project = {
-            base_dirs = {
-                '/home/me/Code/',
-                '/home/me/.local/share/nvim/plugged/'
-            }
-        }
-    },
-    pickers = {
-        file_browser = {
-            hidden = true,
-        }
-    },
+   defaults = {
+       border = true,
+       borderchars = { ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '},
+       file_ignore_patterns = {
+           '__pycache__/',
+           '%.pyc',
+           'target/'
+       },
+       layout_strategy = 'bottom_pane',
+       layout_config = {
+           height = 0.55,
+           prompt_position = 'top',
+       },
+       path_display = function (opts, path)
+           return ' ' .. path
+       end,
+       prompt_prefix = '    ',
+       prompt_title = false,
+       results_title = ' ',
+       selection_caret = '  ',
+       sorting_strategy = 'ascending'
+   },
+   extensions = {
+       file_browser = {
+           dir_icon = '',
+           hidden = true,
+       },
+       project = {
+           base_dirs = {
+               '/home/me/Code/',
+               '/home/me/.local/share/nvim/plugged/'
+           }
+       }
+   },
 }
 EOF
 
@@ -434,8 +430,8 @@ lua require('which-key').setup()
 lua << EOF
 require('lualine').setup {
     options = {
-        section_separators = '',
         component_separators = '',
+        section_separators = '',
     }
 }
 EOF
