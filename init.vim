@@ -190,8 +190,10 @@ set ignorecase
 set termguicolors
 
 " The best I've seen so far
-" colorscheme tokyonight
-colorscheme solarized
+colorscheme tokyonight
+
+" set background=light
+" colorscheme solarized
 
 
 " Line numbers and sign column
