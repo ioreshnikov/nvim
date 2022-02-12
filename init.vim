@@ -186,9 +186,13 @@ set ignorecase
 " Color scheme
 " -------------------
 
+" Enable GUI colors in terminal
+set termguicolors
+
 " The best I've seen so far
-colorscheme tokyonight
-" colorscheme solarized
+" colorscheme tokyonight
+colorscheme solarized
+
 
 " Line numbers and sign column
 " ----------------------------
