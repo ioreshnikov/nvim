@@ -53,9 +53,6 @@ Plug 'nvim-telescope/telescope-file-browser.nvim'
 " Modern syntax highlight with `tree-sitter`
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 
-" Advanced markdown mode
-Plug 'vim-pandoc/vim-pandoc-syntax'
-
 " Managing Git repos
 Plug 'TimUntersberger/neogit'
 
@@ -894,15 +891,6 @@ let g:unicoder_no_map=v:true
 nnoremap <silent> <C-\> :call unicoder#start(0)<CR>
 inoremap <silent> <C-\> <Esc>:call unicoder#start(1)<CR>
 vnoremap <silent> <C-\> :<C-u>call unicoder#selection()<CR>
-
-
-" Pandoc
-" ------
-
-" A more convenient mode for editing markup files.
-augroup pandoc_syntax
-    au! BufNewFile,BufFilePre,BufRead *.md set filetype=markdown.pandoc
-augroup END
 
 
 " Rust
