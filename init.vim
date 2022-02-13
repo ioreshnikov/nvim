@@ -187,7 +187,11 @@ set ignorecase
 set termguicolors
 
 " The best I've seen so far
-colorscheme tokyonight
+" let g:tokyonight_style="storm"
+" colorscheme tokyonight
+
+set background=light
+colorscheme solarized
 
 " set background=light
 " colorscheme solarized
