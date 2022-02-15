@@ -439,7 +439,10 @@ lua require('which-key').setup()
 " I am using a `lualine` with almost default settings.
 lua << EOF
 local filename = require('lualine.components.filename'):extend()
+local filetype = require('lualine.components.filetype'):extend()
+
 filename.apply_icon = require('lualine.components.filetype').apply_icon
+filetype.apply_icon = nil  -- XXX: doesn't work :(
 
 require('lualine').setup {
     options = {
@@ -459,7 +462,7 @@ require('lualine').setup {
             'branch',
             'fileformat',
             'encoding',
-            'filetype',
+            filetype,
             'diff',
             'diagnostics'
         },
