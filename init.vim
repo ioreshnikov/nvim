@@ -438,10 +438,45 @@ lua require('which-key').setup()
 
 " I am using a `lualine` with almost default settings.
 lua << EOF
+local filename = require('lualine.components.filename'):extend()
+filename.apply_icon = require('lualine.components.filetype').apply_icon
+
 require('lualine').setup {
     options = {
         component_separators = '',
-        section_separators = '',
+        section_separators = ''
+    },
+    sections = {
+        lualine_a = {
+            filename
+        },
+        lualine_b = {
+            'progress',
+            'location'
+        },
+        lualine_c = {},
+        lualine_x = {
+            'branch',
+            'fileformat',
+            'encoding',
+            'filetype',
+            'diff',
+            'diagnostics'
+        },
+        lualine_y = {},
+        lualine_z = {}
+    },
+    inactive_sections = {
+        lualine_a = {},
+        lualine_b = {
+            filename,
+            'progress',
+            'location'
+        },
+        lualine_c = {},
+        lualine_x = {},
+        lualine_y = {},
+        lualine_z = {}
     }
 }
 EOF
