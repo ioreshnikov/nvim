@@ -466,7 +466,10 @@ require('lualine').setup {
             'fileformat',
             'encoding',
             filetype,
-            'diff',
+            {
+                'diff',
+                symbols = {added = '落', modified = ' ', removed = ' '}
+            },
             'diagnostics'
         },
         lualine_y = {},
