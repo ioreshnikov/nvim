@@ -704,12 +704,8 @@ _G.ioextra.bs = function ()
     end
 end
 
-remap(
-    'i', '<cr>', 'v:lua.ioextra.cr()',
-    { expr = true, noremap = true })
-remap(
-    'i', '<bs>', 'v:lua.ioextra.bs()',
-    { expr = true, noremap = true })
+remap('i', '<cr>', 'v:lua.ioextra.cr()', { expr = true, noremap = true })
+remap('i', '<bs>', 'v:lua.ioextra.bs()', { expr = true, noremap = true })
 EOF
 
 
