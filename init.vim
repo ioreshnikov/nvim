@@ -40,6 +40,7 @@ Plug 'junegunn/vim-plug'
 " Some of my favourite color themes
 Plug 'folke/tokyonight.nvim'
 Plug 'ioreshnikov/solarized'
+Plug 'morhetz/gruvbox'
 
 " Text icons
 Plug 'kyazdani42/nvim-web-devicons'
@@ -193,8 +194,8 @@ set termguicolors
 set background=light
 colorscheme solarized
 
-" set background=light
-" colorscheme solarized
+" set background=dark
+" colorscheme gruvbox
 
 
 " Line numbers and sign column
