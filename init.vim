@@ -409,6 +409,7 @@ autocmd WinLeave term://* stopinsert
 " Open terminal in a toggle
 lua << EOF
 require('toggleterm').setup {
+    shade_terminals = false,
     size = function (term)
         if term.direction == 'horizontal' then
            return vim.o.lines * 0.4
@@ -419,6 +420,16 @@ require('toggleterm').setup {
         end
     end
 }
+EOF
+
+" Setup DevIcons icon for ToggleTerm
+lua << EOF
+require('nvim-web-devicons').set_icon({
+    toggleterm = {
+        icon = '',
+        name = 'Terminal'
+    }
+})
 EOF
 
 nnoremap <silent> <leader>t  :ToggleTerm<CR>
