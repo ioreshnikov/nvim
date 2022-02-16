@@ -851,11 +851,6 @@ require('neo-tree').setup {
 }
 EOF
 
-hi link NeoTreeFileIcon NormalSB
-hi link NeoTreeDirectoryIcon NormalSB
-hi link NeoTreeNormal NormalSB
-hi link NeoTreeNormalNC NormalSB
-
 nnoremap <silent> <leader>d :NeoTreeShowToggle<CR>
 
 
