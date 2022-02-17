@@ -459,7 +459,8 @@ filetype.apply_icon = nil  -- XXX: doesn't work :(
 require('lualine').setup {
     options = {
         component_separators = '',
-        section_separators = ''
+        section_separators = '',
+        theme = 'solarized'
     },
     sections = {
         lualine_a = {
