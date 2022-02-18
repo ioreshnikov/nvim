@@ -788,17 +788,28 @@ hi link TroubleNormal LspTroubleNormal
 " -------------
 
 " A neat utility for highlighting the comment-keywords.
+
+" NOTE: Before we set it up, it's a good idea to disable a couple of builtin
+" highlight groups.
+
+hi clear Todo
+hi clear WarningMsg
+
 lua << EOF
 require('todo-comments').setup {
     keywords = {
         FIX = {
-            icon = ' ',
+            icon = ' ',
             color = 'error',
             alt = { 'FIXME', 'BUG', 'FIXIT', 'ISSUE' },
         },
         TODO = {
-            icon = ' ',
+            icon = ' ',
             color = 'info'
+        },
+        DONE = {
+            icon = ' ',
+            color = 'hint'
         },
         HACK = {
             icon = ' ',
@@ -820,7 +831,8 @@ require('todo-comments').setup {
         }
     },
     highlight = {
-        after = ""
+        after = "",
+        keyword = "fg"
     }
 }
 EOF
