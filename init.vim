@@ -101,7 +101,7 @@ Plug 'folke/trouble.nvim'
 Plug 'folke/todo-comments.nvim'
 
 " Indentation guides
-Plug 'lukas-reineke/indent-blankline.nvim'
+" Plug 'lukas-reineke/indent-blankline.nvim'
 
 " Automatically change cwd to the root of the project
 Plug 'airblade/vim-rooter'
@@ -515,22 +515,26 @@ EOF
 " Indentation guide
 " -----------------
 
+" XXX: The usability is sadly not that great due to a long-standing bug in
+" neovim:
+"     https://github.com/neovim/neovim/issues/6591
+
 " The setup is minimalistic -- I mostly disable the indentation guides in the
 " modes I don't want them to see.
-lua << EOF
-require('indent_blankline').setup {
-    filetype_exclude = {
-        'help',
-        'markdown',
-        'neo-tree',
-        'NeogitStatus',
-        'TelescopePrompt',
-        'tex',
-        'toggleterm',
-        'Trouble',
-    }
-}
-EOF
+" lua << EOF
+" require('indent_blankline').setup {
+"     filetype_exclude = {
+"         'help',
+"         'markdown',
+"         'neo-tree',
+"         'NeogitStatus',
+"         'TelescopePrompt',
+"         'tex',
+"         'toggleterm',
+"         'Trouble',
+"     }
+" }
+" EOF
 
 
 " Git
