@@ -393,7 +393,7 @@ noremap <silent> <leader>fg :Telescope live_grep<CR>
 noremap <silent> <leader>fl :Telescope lsp_workspace_symbols<CR>
 
 hi link TelescopeNormal NormalFloat
-hi link TelescopeBorder FloatBorder
+hi link TelescopeBorder NormalFloat
 hi link TelescopePromptPrefix Comment
 hi link TelescopeTitle Ignore
 
