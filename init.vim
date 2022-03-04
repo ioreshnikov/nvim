@@ -443,7 +443,6 @@ require('nvim-web-devicons').set_icon({
 })
 EOF
 
-nnoremap <silent> <leader>t  :ToggleTerm<CR>
 nnoremap <silent> <leader>ts :ToggleTerm direction=horizontal<CR>
 nnoremap <silent> <leader>tv :ToggleTerm direction=vertical<CR>
 nnoremap <silent> <leader>tt :ToggleTerm direction=tab<CR>
@@ -787,7 +786,6 @@ require('trouble').setup {
 }
 EOF
 
-noremap <silent> <leader>e  :TroubleToggle document_diagnostics<CR>
 noremap <silent> <leader>ef :TroubleToggle document_diagnostics<CR>
 noremap <silent> <leader>ew :TroubleToggle workspace_diagnostics<CR>
 
