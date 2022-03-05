@@ -191,7 +191,7 @@ set termguicolors
 " let g:tokyonight_style="storm"
 " colorscheme tokyonight
 
-set background=light
+set background=dark
 colorscheme solarized
 
 " set background=dark
@@ -474,7 +474,7 @@ require('lualine').setup {
             {
                 filename,
                 padding = { left = 2, right = 2 }
-            }
+            },
         },
         lualine_b = {
             'progress',
@@ -486,10 +486,6 @@ require('lualine').setup {
             'fileformat',
             'encoding',
             {
-                'filetype',
-                colored = false
-            },
-            {
                 'diff',
                 colored = false,
                 symbols = {added = '落', modified = ' ', removed = ' '}
@@ -497,7 +493,12 @@ require('lualine').setup {
             {
                 'diagnostics',
                 colored = false
-            }
+            },
+            {
+                'filetype',
+                colored = false,
+                padding = { left = 1, right = 2 }
+            },
         },
         lualine_y = {},
         lualine_z = {}
