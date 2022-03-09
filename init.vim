@@ -101,7 +101,7 @@ Plug 'folke/trouble.nvim'
 Plug 'folke/todo-comments.nvim'
 
 " Indentation guides
-" Plug 'lukas-reineke/indent-blankline.nvim'
+Plug 'lukas-reineke/indent-blankline.nvim'
 
 " Automatically change cwd to the root of the project
 Plug 'airblade/vim-rooter'
@@ -191,11 +191,11 @@ set ignorecase
 set termguicolors
 
 " The best I've seen so far
-" let g:tokyonight_style="storm"
-" colorscheme tokyonight
+let g:tokyonight_style="storm"
+colorscheme tokyonight
 
-set background=dark
-colorscheme solarized
+" set background=light
+" colorscheme solarized
 
 " set background=dark
 " colorscheme gruvbox
@@ -470,7 +470,7 @@ require('lualine').setup {
     options = {
         component_separators = '',
         section_separators = '',
-        theme = 'solarized'
+        theme = 'tokyonight'
     },
     sections = {
         lualine_a = {
@@ -534,20 +534,20 @@ EOF
 
 " The setup is minimalistic -- I mostly disable the indentation guides in the
 " modes I don't want them to see.
-" lua << EOF
-" require('indent_blankline').setup {
-"     filetype_exclude = {
-"         'help',
-"         'markdown',
-"         'neo-tree',
-"         'NeogitStatus',
-"         'TelescopePrompt',
-"         'tex',
-"         'toggleterm',
-"         'Trouble',
-"     }
-" }
-" EOF
+lua << EOF
+require('indent_blankline').setup {
+    filetype_exclude = {
+        'help',
+        'markdown',
+        'neo-tree',
+        'NeogitStatus',
+        'TelescopePrompt',
+        'tex',
+        'toggleterm',
+        'Trouble',
+    }
+}
+EOF
 
 
 " Git
@@ -854,7 +854,7 @@ noremap <silent> <leader>et :TodoTrouble<CR>
 
 " Filesystem tree
 " ---------------
-"
+
 lua << EOF
 require('neo-tree').setup {
     filesystem = {
