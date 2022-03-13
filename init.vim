@@ -191,11 +191,11 @@ set ignorecase
 set termguicolors
 
 " The best I've seen so far
-let g:tokyonight_style="storm"
-colorscheme tokyonight
+" let g:tokyonight_style="storm"
+" colorscheme tokyonight
 
-" set background=light
-" colorscheme solarized
+set background=light
+colorscheme solarized
 
 " set background=dark
 " colorscheme gruvbox
@@ -470,7 +470,7 @@ require('lualine').setup {
     options = {
         component_separators = '',
         section_separators = '',
-        theme = 'tokyonight'
+        theme = 'solarized'
     },
     sections = {
         lualine_a = {
