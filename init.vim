@@ -361,6 +361,7 @@ telescope.setup {
        file_ignore_patterns = {
            '__pycache__/',
            '%.pyc',
+           'node_modules/',
            'target/'
        },
        layout_strategy = 'bottom_pane',
