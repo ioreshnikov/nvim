@@ -116,8 +116,6 @@ Plug 'rktjmp/lush.nvim'
 " REST client
 Plug 'NTBBloodbath/rest.nvim'
 
-" Colorizer
-Plug 'norcalli/nvim-colorizer.lua'
 
 call plug#end()
 
@@ -1025,10 +1023,7 @@ lua require('rest-nvim').setup()
 nmap <leader>rr <Plug>RestNvim<CR>
 
 
-" Colorizer
-" ---------
 
-lua require('colorizer').setup()
 
 
 " Random things
