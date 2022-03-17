@@ -343,7 +343,8 @@ nnoremap <silent> <expr> $ v:count ? '$' : 'g$'
 
 " VIM Rooter
 " ----------
-autocmd VimEnter * let g:rooter_patterns += ['>site-packages']
+autocmd VimEnter * let g:rooter_patterns += ['>site-packages', 'package.json']
+
 
 " Telescope
 " ---------
