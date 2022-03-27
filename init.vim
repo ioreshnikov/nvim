@@ -61,7 +61,7 @@ Plug 'TimUntersberger/neogit'
 Plug 'neovim/nvim-lspconfig'
 
 " Code completion frontend with `coq` (ridiculously fast!)
-Plug 'ms-jpq/coq_nvim', {'branch': 'coq'}
+Plug 'ioreshnikov/coq_nvim', {'branch': 'coq'}
 Plug 'ms-jpq/coq.artifacts', {'branch': 'artifacts'}
 
 " Better search UI
@@ -341,7 +341,10 @@ nnoremap <silent> <expr> $ v:count ? '$' : 'g$'
 
 " VIM Rooter
 " ----------
-autocmd VimEnter * let g:rooter_patterns += ['>site-packages', 'package.json']
+autocmd VimEnter * let g:rooter_patterns += [
+    \ '>site-packages',
+    \ 'package.json',
+    \ 'LICENSE' ]
 
 
 " Telescope
@@ -639,15 +642,15 @@ vim.g.coq_settings = {
     clients = {
         lsp = {
             enabled = true,
-            weight_adjust = 1.50
+            weight_adjust=2.0,
         },
         snippets = {
             enabled = true,
-            weight_adjust = 1.25
+            weight_adjust=1.0,
         },
         tree_sitter = {
             enabled = true,
-            weight_adjust = 1.00
+            weight_adjust=0.0,
         },
         buffers = {
             enabled = false,  -- there's no way I can make it rank below everything
