@@ -905,8 +905,9 @@ require('neo-tree').setup {
                 },
                 { 'name' },
             }
-        }
-    }
+        },
+        window = { position = "right", width = 50 },
+    },
 }
 EOF
 
