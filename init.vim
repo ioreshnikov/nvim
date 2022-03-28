@@ -682,7 +682,12 @@ vim.g.coq_settings = {
     -- To work-around auto-pairs we're going to setup up keys by hand
     keymap = {
         recommended = false
-    }
+    },
+    match = {
+        fuzzy_cutoff = 0.85
+    },
+    -- A simple ranking algorithm. Works only in my fork.
+    ranking = 'stratified'
 }
 EOF
 
