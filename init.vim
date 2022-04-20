@@ -232,8 +232,7 @@ function EnableEditingHelpers() abort
     call EnableSignColumn()
 endfunction
 
-autocmd BufReadPost * call EnableEditingHelpers()
-autocmd BufWritePost * call EnableEditingHelpers()
+autocmd BufReadPost,BufWritePost,BufNewFile * call EnableEditingHelpers()
 autocmd FileType NeogitCommitMessage call EnableEditingHelpers()
 autocmd FileType NeogitStatus call EnableSignColumn()
 
