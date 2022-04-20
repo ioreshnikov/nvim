@@ -186,10 +186,7 @@ autocmd FocusGained,BufEnter,CursorHold,CursorHoldI *
     \ endif
 
 " notification after file change
-autocmd FileChangedShellPost *
-    \ echohl WarningMsg |
-    \ echo "File changed on disk. Buffer reloaded." |
-    \ echohl None
+autocmd FileChangedShellPost * echo "File changed on disk. Buffer reloaded."
 
 
 " Case sensitivity
