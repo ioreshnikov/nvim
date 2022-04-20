@@ -1045,6 +1045,10 @@ lua require('rest-nvim').setup()
 nmap <leader>rr <Plug>RestNvim<CR>
 
 
+" Docker
+" ------
+
+autocmd BufRead,BufNewFile Dockerfile.* set filetype=dockerfile
 
 
 
