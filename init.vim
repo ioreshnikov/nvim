@@ -504,6 +504,8 @@ require('lualine').setup {
             'branch',
             'fileformat',
             'encoding',
+        },
+        lualine_y = {
             {
                 'diff',
                 colored = false,
@@ -513,14 +515,14 @@ require('lualine').setup {
                 'diagnostics',
                 colored = false
             },
+        },
+        lualine_z = {
             {
                 'filetype',
                 colored = false,
                 padding = { left = 1, right = 2 }
             },
-        },
-        lualine_y = {},
-        lualine_z = {}
+        }
     },
     inactive_sections = {
         lualine_a = {},
