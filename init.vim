@@ -1060,12 +1060,9 @@ autocmd BufRead,BufNewFile Dockerfile.* set filetype=dockerfile
 " A faster way to save files
 noremap <silent> <leader>w :w<CR>
 
-" Remove search highlight
-nnoremap <silent> <CR> :noh<CR>
-
-" And center the current line on screen.
-nnoremap <silent> <C-l> zz
-inoremap <silent> <C-l> zza
+" And center the current line on screen (and remove highlight)
+nnoremap <silent> <C-l> zz:noh<CR>
+inoremap <silent> <C-l> zza:noh<CR>
 
 " Clear message area after a timeout
 set updatetime=2000
