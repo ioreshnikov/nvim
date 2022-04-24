@@ -880,8 +880,8 @@ noremap <silent> <leader>et :TodoTrouble<CR>
 
 lua << EOF
 require('neo-tree').setup {
+    enable_git_status = false,
     filesystem = {
-        before_render = function () return end,
         follow_current_file = true,
         use_libuv_file_watcher = true,
         renderers = {
