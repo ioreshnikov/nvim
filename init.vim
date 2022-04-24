@@ -264,6 +264,14 @@ set shiftwidth=4
 autocmd BufWritePre * :%s/\s\+$//e
 
 
+" Wrap
+" ----
+
+" Break at a "breakeable" character when soft-wrapping lines.
+set linebreak
+set showbreak=⤷\ "
+
+
 " Folds
 " -----
 
