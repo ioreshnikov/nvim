@@ -116,6 +116,8 @@ Plug 'rktjmp/lush.nvim'
 " REST client
 Plug 'NTBBloodbath/rest.nvim'
 
+" Distraction-free writing
+Plug 'folke/zen-mode.nvim'
 
 call plug#end()
 
@@ -1052,6 +1054,19 @@ nmap <leader>rr <Plug>RestNvim<CR>
 
 autocmd BufRead,BufNewFile Dockerfile.* set filetype=dockerfile
 
+
+" Zen Mode
+" --------
+noremap <silent> <F12> :ZenMode<CR>
+inoremap <silent> <F12> <ESC>:ZenMode<CR>a
+
+lua << EOF
+require('zen-mode').setup {
+    window = {
+        width = 89
+    }
+}
+EOF
 
 
 " Random things
