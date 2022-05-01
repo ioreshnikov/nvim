@@ -496,7 +496,6 @@ require('lualine').setup {
     options = {
         component_separators = '',
         section_separators = '',
-        theme = 'solarized'
     },
     sections = {
         lualine_a = {
