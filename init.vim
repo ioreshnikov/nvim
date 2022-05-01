@@ -196,6 +196,7 @@ autocmd FileChangedShellPost * echo "File changed on disk. Buffer reloaded."
 
 " I don't really care about case sensitivity when searching.
 set ignorecase
+set smartcase
 
 
 " Color scheme
