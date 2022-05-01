@@ -382,39 +382,39 @@ telescope.load_extension('file_browser')
 
 telescope.setup {
     defaults = {
-       border = true,
-       borderchars = { ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '},
-       file_ignore_patterns = {
-           '__pycache__/',
-           '%.pyc',
-           'node_modules/',
-           'target/'
-       },
-       layout_strategy = 'bottom_pane',
-       layout_config = {
-           height = 0.55,
-           prompt_position = 'top',
-       },
-       path_display = function (opts, path)
-           return ' ' .. path
-       end,
-       prompt_prefix = '    ',
-       prompt_title = false,
-       results_title = ' ',
-       selection_caret = '  ',
-       sorting_strategy = 'ascending'
+        border = true,
+        borderchars = { ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '},
+        file_ignore_patterns = {
+            '__pycache__/',
+            '%.pyc',
+            'node_modules/',
+            'target/'
+        },
+        layout_strategy = 'bottom_pane',
+        layout_config = {
+            height = 0.55,
+            prompt_position = 'top',
+        },
+        path_display = function (opts, path)
+            return ' ' .. path
+        end,
+        prompt_prefix = '    ',
+        prompt_title = false,
+        results_title = ' ',
+        selection_caret = '  ',
+        sorting_strategy = 'ascending'
     },
     extensions = {
-       file_browser = {
-           dir_icon = '',
-           hidden = true,
-       },
-       project = {
-           base_dirs = {
-               '~/Code',
-               '~/.local/share/nvim/plugged'
-           }
-       }
+        file_browser = {
+            dir_icon = '',
+            hidden = true,
+        },
+        project = {
+            base_dirs = {
+                { '~/Code', max_depth = 2},
+                {'~/.local/share/nvim/plugged', max_depth = 2}
+            }
+        }
     },
     pickers = {
         buffers = {
