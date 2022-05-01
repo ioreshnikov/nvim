@@ -431,6 +431,7 @@ noremap <silent> <leader>fp :Telescope project<CR>
 noremap <silent> <leader>fb :Telescope buffers<CR>
 noremap <silent> <leader>fg :Telescope live_grep<CR>
 noremap <silent> <leader>fl :Telescope lsp_workspace_symbols<CR>
+noremap <silent> <leader>fo :Telescope oldfiles<CR>
 
 hi link TelescopeNormal NormalFloat
 hi link TelescopeBorder NormalFloat
