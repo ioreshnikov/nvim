@@ -913,7 +913,7 @@ require('neo-tree').setup {
                 { 'name' },
             }
         },
-        window = { position = "right", width = 50 },
+        window = { position = "left", width = 40 },
     },
 }
 EOF
