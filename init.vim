@@ -605,6 +605,7 @@ noremap <silent> <leader>g :Neogit<CR>
 lua << EOF
 require('nvim-treesitter.configs').setup {
     ensure_installed = 'all',
+    ignore_install = {'phpdoc'},
     highlight = {
         enable = true
     },
@@ -623,6 +624,12 @@ require('nvim-treesitter.configs').setup {
     }
 }
 EOF
+" NOTE: about `ignore_install` above: I want to use treesitter for everything,
+" but I want to stick to stable grammar files. Until April 2022 it was
+" possible to do this with setting `ensure_installed = 'maintained'`. Since
+" April 2022 'maintained' was marked as deprecated and I switched to 'all'.
+" Some of the grammars in 'all' are occasionally broken. One of them is
+" 'phpdoc', but the list will surely grow.
 
 
 " Subword navigation
