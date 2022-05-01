@@ -605,7 +605,7 @@ noremap <silent> <leader>g :Neogit<CR>
 " highlighting, selection, indentation and automatic delimiters pairing.
 lua << EOF
 require('nvim-treesitter.configs').setup {
-    ensure_installed = 'maintained',
+    ensure_installed = 'all',
     highlight = {
         enable = true
     },
