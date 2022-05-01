@@ -381,7 +381,7 @@ telescope.load_extension('project')
 telescope.load_extension('file_browser')
 
 telescope.setup {
-   defaults = {
+    defaults = {
        border = true,
        borderchars = { ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '},
        file_ignore_patterns = {
@@ -403,25 +403,25 @@ telescope.setup {
        results_title = ' ',
        selection_caret = '  ',
        sorting_strategy = 'ascending'
-   },
-   extensions = {
+    },
+    extensions = {
        file_browser = {
            dir_icon = '',
            hidden = true,
        },
        project = {
            base_dirs = {
-               '/home/me/Code/',
-               '/home/me/.local/share/nvim/plugged/'
+               '~/Code',
+               '~/.local/share/nvim/plugged'
            }
        }
-   },
-   pickers = {
+    },
+    pickers = {
         buffers = {
             ignore_current_buffer = true,
             sort_lastused = true
         }
-   }
+    }
 }
 EOF
 
