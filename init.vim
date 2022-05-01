@@ -40,7 +40,7 @@ Plug 'junegunn/vim-plug'
 " Some of my favourite color themes
 Plug 'folke/tokyonight.nvim'
 Plug 'ioreshnikov/solarized'
-Plug 'morhetz/gruvbox'
+Plug 'gruvbox-community/gruvbox'
 
 " Text icons
 Plug 'kyazdani42/nvim-web-devicons'
