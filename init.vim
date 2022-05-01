@@ -377,9 +377,6 @@ autocmd VimEnter * let g:rooter_patterns += [
 lua << EOF
 local telescope = require('telescope')
 
-telescope.load_extension('project')
-telescope.load_extension('file_browser')
-
 telescope.setup {
     defaults = {
         border = true,
@@ -411,8 +408,8 @@ telescope.setup {
         },
         project = {
             base_dirs = {
-                { '~/Code', max_depth = 2},
-                {'~/.local/share/nvim/plugged', max_depth = 2}
+                { '~/Code', max_depth = 2 },
+                { '~/.local/share/nvim/plugged', max_depth = 2 }
             }
         }
     },
@@ -423,6 +420,9 @@ telescope.setup {
         }
     }
 }
+
+telescope.load_extension('project')
+telescope.load_extension('file_browser')
 EOF
 
 noremap <silent> <leader>ff :Telescope find_files<CR>
