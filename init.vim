@@ -209,11 +209,11 @@ set termguicolors
 " let g:tokyonight_style="storm"
 " colorscheme tokyonight
 
-set background=light
-colorscheme solarized
-
 " set background=dark
-" colorscheme gruvbox
+" colorscheme solarized
+
+set background=dark
+colorscheme gruvbox
 
 
 " Line numbers and sign column
@@ -231,6 +231,7 @@ endfunction
 function EnableEditingHelpers() abort
     setlocal number
     setlocal relativenumber
+    setlocal numberwidth=5
     setlocal colorcolumn=80
     call EnableSignColumn()
 endfunction
@@ -1105,7 +1106,7 @@ autocmd CursorHold * echon ''
 
 let g:neovide_hide_mouse_when_typing = 1
 let g:neovide_cursor_animation_length = 0.03
-set guifont=JetBrainsMono\ Nerd\ Font:h13
+set guifont=JetBrainsMono\ Nerd\ Font:h12
 
 function Neovide_fullscreen()
 if g:neovide_fullscreen == v:false
