@@ -1057,6 +1057,21 @@ lsp.gopls.setup{
 EOF
 
 
+" PHP
+" ---
+
+" I am shocked as well :)
+lua << EOF
+local lsp = require('lspconfig')
+local coq = require('coq')
+
+lsp.phpactor.setup{
+    on_attach=ioextra.on_attach,
+    unpack(coq.lsp_ensure_capabilities())
+}
+EOF
+
+
 " REST client
 " -----------
 
@@ -1073,6 +1088,7 @@ autocmd BufRead,BufNewFile Dockerfile.* set filetype=dockerfile
 
 " Zen Mode
 " --------
+
 noremap <silent> <F12> :ZenMode<CR>
 inoremap <silent> <F12> <ESC>:ZenMode<CR>a
 
