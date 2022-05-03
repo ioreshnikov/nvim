@@ -206,14 +206,14 @@ set smartcase
 set termguicolors
 
 " The best I've seen so far
-" let g:tokyonight_style="storm"
-" colorscheme tokyonight
+let g:tokyonight_style="storm"
+colorscheme tokyonight
 
 " set background=dark
 " colorscheme solarized
 
-set background=dark
-colorscheme gruvbox
+" set background=dark
+" colorscheme gruvbox
 
 
 " Line numbers and sign column
