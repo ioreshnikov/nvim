@@ -742,6 +742,9 @@ vim.fn.sign_define(
     })
 EOF
 
+" Commands
+command! DapClearBreakpoints lua require('dap').clear_breakpoints()<CR>
+
 " Keybindings
 nnoremap <silent> <leader>oc :DapContinue<CR>
 nnoremap <silent> <leader>ot :DapTerminate<CR>
@@ -749,6 +752,8 @@ nnoremap <silent> <leader>ob :DapToggleBreakpoint<CR>
 nnoremap <silent> <leader>os :DapStepOver<CR>
 nnoremap <silent> <leader>oi :DapStepInto<CR>
 nnoremap <silent> <leader>oo :DapStepOut<CR>
+nnoremap <silent> <leader>or :DapToggleRepl<CR>
+nnoremap <silent> <leader>oq :DapClearBreakpoints<CR>
 
 nnoremap <silent> <F5> :DapContinue<CR>
 nnoremap <silent> <F9> :DapToggleBreakpoint<CR>
