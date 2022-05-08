@@ -743,10 +743,6 @@ vim.fn.sign_define(
 EOF
 
 " Keybindings
-command! DapConditionalBreakpoint lua require'dap'.set_breakpoint(vim.fn.input('Breakpoint condition: '))<CR>
-
-
-nnoremap <silent> <Leader>B <Cmd>
 nnoremap <silent> <leader>oc :DapContinue<CR>
 nnoremap <silent> <leader>ot :DapTerminate<CR>
 nnoremap <silent> <leader>ob :DapToggleBreakpoint<CR>
@@ -1010,8 +1006,7 @@ EOF
 " Python
 " ------
 
-" I am mostly paid for writing python. Thankfully, with LSP and `tree-sitter`
-" being set up not a lot is left to do in terms of configuratoin.
+" LSP settings
 lua << EOF
 local lsp = require('lspconfig')
 local coq = require('coq')
