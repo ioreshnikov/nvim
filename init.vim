@@ -64,6 +64,9 @@ Plug 'neovim/nvim-lspconfig'
 Plug 'ioreshnikov/coq_nvim', {'branch': 'coq'}
 Plug 'ms-jpq/coq.artifacts', {'branch': 'artifacts'}
 
+" Interactive debugging through DAP
+Plug 'mfussenegger/nvim-dap'
+
 " Better search UI
 Plug 'kevinhwang91/nvim-hlslens'
 
@@ -709,6 +712,54 @@ vim.g.coq_settings = {
 EOF
 
 
+" Debugging with DAP
+" ------------------
+
+" General settings
+lua << EOF
+require('dap')
+
+vim.fn.sign_define(
+    'DapBreakpoint', {
+        text = ' ',
+        texthl = 'DiagnosticError',
+        linehl = '',
+        numhl = 'DiagnosticError'
+    })
+vim.fn.sign_define(
+    'DapBreakpointCondition', {
+        text = ' ',
+        texthl = 'DiagnosticWarning',
+        linehl = '',
+        numhl = 'DiagnosticWarning'
+    })
+vim.fn.sign_define(
+    'DapStopped', {
+        text = ' ',
+        texthl = 'DiagnosticHint',
+        linehl = '',
+        numhl = 'DiagnosticHint'
+    })
+EOF
+
+" Keybindings
+command! DapConditionalBreakpoint lua require'dap'.set_breakpoint(vim.fn.input('Breakpoint condition: '))<CR>
+
+
+nnoremap <silent> <Leader>B <Cmd>
+nnoremap <silent> <leader>oc :DapContinue<CR>
+nnoremap <silent> <leader>ot :DapTerminate<CR>
+nnoremap <silent> <leader>ob :DapToggleBreakpoint<CR>
+nnoremap <silent> <leader>os :DapStepOver<CR>
+nnoremap <silent> <leader>oi :DapStepInto<CR>
+nnoremap <silent> <leader>oo :DapStepOut<CR>
+
+nnoremap <silent> <F5> :DapContinue<CR>
+nnoremap <silent> <F9> :DapToggleBreakpoint<CR>
+nnoremap <silent> <F10> :DapStepOver<CR>
+nnoremap <silent> <F11> :DapStepInto<CR>
+
+
 " Automatic delimiter pairing
 " ---------------------------
 
@@ -971,11 +1022,33 @@ lsp.pyright.setup{
 }
 EOF
 
+" DAP settings
+lua << EOF
+local dap = require('dap')
+
+dap.adapters.python = {
+    type = 'executable',
+    command = '/usr/bin/env',
+    args = { 'python3', '-m', 'debugpy.adapter' }
+}
+
+dap.configurations.python = {
+    {
+        type = 'python',
+        request = 'launch',
+        name = 'Launch file',
+        program = '${file}'
+    }
+}
+EOF
+
 
 " JavaScript and TypeScript
 " -------------------------
 
 " And sometimes I need to write frontend code as well.
+
+" LSP settings
 lua << EOF
 local lsp = require('lspconfig')
 local coq = require('coq')
@@ -1132,13 +1205,13 @@ else
 endif
 endfunction
 
-map <silent> <F11> :call Neovide_fullscreen()<CR>
+map <silent> <leader><F11> :call Neovide_fullscreen()<CR>
 
 
 " Debugging highlight
 " -------------------
 
-nnoremap <F10> :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans<'
+nnoremap <leader><F10> :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans<'
 \ . synIDattr(synID(line("."),col("."),0),"name") . "> lo<"
 \ . synIDattr(synIDtrans(synID(line("."),col("."),1)),"name") . ">"<CR>
 
