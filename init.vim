@@ -48,6 +48,7 @@ Plug 'kyazdani42/nvim-web-devicons'
 " Fuzzy everything
 Plug 'nvim-lua/plenary.nvim'
 Plug 'nvim-telescope/telescope.nvim'
+Plug 'nvim-telescope/telescope-fzf-native.nvim', { 'do': 'make' }
 Plug 'nvim-telescope/telescope-project.nvim'
 Plug 'nvim-telescope/telescope-file-browser.nvim'
 
@@ -410,6 +411,11 @@ telescope.setup {
             dir_icon = '',
             hidden = true,
         },
+        fzf = {
+            fuzzy = true,
+            override_generic_sorter = true,
+            override_file_sorter = true
+        },
         project = {
             base_dirs = {
                 { '~/Code', max_depth = 2 },
@@ -427,6 +433,7 @@ telescope.setup {
 
 telescope.load_extension('project')
 telescope.load_extension('file_browser')
+telescope.load_extension('fzf')
 EOF
 
 noremap <silent> <leader>ff :Telescope find_files<CR>
