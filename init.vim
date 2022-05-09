@@ -111,7 +111,7 @@ Plug 'airblade/vim-rooter'
 
 " Tree viewer
 Plug 'MunifTanjim/nui.nvim'
-Plug 'nvim-neo-tree/neo-tree.nvim'
+Plug 'nvim-neo-tree/neo-tree.nvim', { 'branch': 'v2.x' }
 
 " Theming
 Plug 'rktjmp/lush.nvim'
@@ -952,6 +952,7 @@ noremap <silent> <leader>et :TodoTrouble<CR>
 lua << EOF
 require('neo-tree').setup {
     enable_git_status = false,
+    enable_diagnostics = false,
     filesystem = {
         follow_current_file = true,
         use_libuv_file_watcher = true,
@@ -975,12 +976,28 @@ require('neo-tree').setup {
                 { 'name' },
             }
         },
-        window = { position = "left", width = 40 },
+        window = { position = "left", width = 50 },
     },
+    window = {
+        mappings = {
+            ["<space>"] = "none",  -- I like my leader key
+            ["/"] = "none",        -- I don't like filters, and I navigate by search
+
+            ["a"] = "none",        -- I don't like tree manipulation
+            ["A"] = "none",        -- ...
+            ["d"] = "none",        -- ...
+            ["r"] = "none",        -- ...
+            ["y"] = "none",        -- ...
+            ["x"] = "none",        -- ...
+            ["p"] = "none",        -- ...
+            ["c"] = "none",        -- ...
+            ["m"] = "none",        -- ...
+        }
+    }
 }
 EOF
 
-nnoremap <silent> <leader>d :NeoTreeShowToggle<CR>
+nnoremap <silent> <leader>d :Neotree show toggle<CR>
 
 
 " VIM
