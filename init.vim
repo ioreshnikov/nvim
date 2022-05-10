@@ -391,7 +391,8 @@ telescope.setup {
             '__pycache__/',
             '%.pyc',
             'node_modules/',
-            'target/'
+            'target/',
+            'gen/'
         },
         layout_strategy = 'bottom_pane',
         layout_config = {
