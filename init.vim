@@ -108,7 +108,7 @@ Plug 'folke/todo-comments.nvim'
 Plug 'lukas-reineke/indent-blankline.nvim'
 
 " Automatically change cwd to the root of the project
-Plug 'airblade/vim-rooter'
+" Plug 'airblade/vim-rooter'
 
 " Tree viewer
 Plug 'MunifTanjim/nui.nvim'
@@ -370,11 +370,11 @@ nnoremap <silent> <expr> $ v:count ? '$' : 'g$'
 
 " VIM Rooter
 " ----------
-autocmd VimEnter * let g:rooter_patterns += [
-    \ '.git',
-    \ '>site-packages',
-    \ 'package.json',
-    \ 'LICENSE' ]
+" autocmd VimEnter * let g:rooter_patterns += [
+"     \ '.git',
+"     \ '>site-packages',
+"     \ 'package.json',
+"     \ 'LICENSE' ]
 
 
 " Telescope
@@ -515,6 +515,7 @@ require('lualine').setup {
         lualine_a = {
             {
                 filename,
+                path = 1,
                 padding = { left = 2, right = 2 }
             },
         },
