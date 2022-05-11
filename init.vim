@@ -503,6 +503,26 @@ local filename = require('lualine.components.filename'):extend()
 
 filename.apply_icon = require('lualine.components.filetype').apply_icon
 
+local modesymbol = {
+    ['NORMAL'] = '',
+    ['INSERT'] = '',
+    ['VISUAL'] = 'ﱓ',
+    ['V-LINE'] = '',
+    ['V-BLOCK'] = '',
+    ['TERMINAL'] = '',
+    ['COMMAND'] = '',
+}
+
+function mode()
+    local mode = require('lualine.utils.mode').get_mode()
+    local symb = modesymbol[mode]
+    if symb == nil then
+        return mode
+    else
+        return symb
+    end
+end
+
 require('lualine').setup {
     options = {
         component_separators = '',
@@ -510,7 +530,7 @@ require('lualine').setup {
     },
     sections = {
         lualine_a = {
-            'mode'
+            mode
         },
         lualine_b = {
             {
