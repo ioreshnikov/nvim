@@ -562,7 +562,7 @@ require('lualine').setup {
             {
                 'filetype',
                 colored = false,
-                padding = { left = 1, right = 2 }
+                padding = { left = 2, right = 2 }
             },
         }
     },
