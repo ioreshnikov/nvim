@@ -761,6 +761,13 @@ vim.fn.sign_define(
         numhl = 'DiagnosticWarning'
     })
 vim.fn.sign_define(
+    'DapBreakpointRejected', {
+        text = ' ',
+        texthl = 'Comment',
+        linehl = '',
+        numhl = 'Comment'
+    })
+vim.fn.sign_define(
     'DapStopped', {
         text = ' ',
         texthl = 'DiagnosticHint',
@@ -1119,8 +1126,10 @@ dap.configurations.javascript = {
         type = 'node2',
         request = 'attach',
         processId = require('dap.utils').pick_process
-    }
+    },
 }
+
+EOF
 
 
 " HTML and CSS
