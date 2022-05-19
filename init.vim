@@ -1272,7 +1272,7 @@ set updatetime=2000
 autocmd CursorHold * echon ''
 
 " Close a buffer
-nnoremap <silent> <leader>k :bwipeout<CR>
+nnoremap <silent> <leader>k :bp \| sp \| bn \| bd<CR>
 
 
 " Neovide specific GUI settings
