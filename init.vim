@@ -58,6 +58,9 @@ Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 " Managing Git repos
 Plug 'TimUntersberger/neogit'
 
+" Git blame
+Plug 'f-person/git-blame.nvim'
+
 " Code completion backend through LSP servers
 Plug 'neovim/nvim-lspconfig'
 
@@ -630,6 +633,11 @@ EOF
 
 " A simple key combination for opening git status anywhere
 noremap <silent> <leader>g :Neogit<CR>
+
+" Git blame as virtual text
+let g:gitblame_highlight_group = 'DiagnosticVirtualTextInfo'
+let g:gitblame_message_template = 'ﰖ <author> "<summary>" on <date>'
+noremap <silent> <leader>gt :GitBlameToggle<CR>
 
 
 " Tree sitter
