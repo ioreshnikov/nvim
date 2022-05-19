@@ -206,23 +206,6 @@ set ignorecase
 set smartcase
 
 
-" Color scheme
-" -------------------
-
-" Enable GUI colors in terminal
-set termguicolors
-
-" The best I've seen so far
-let g:tokyonight_style="storm"
-colorscheme tokyonight
-
-" set background=dark
-" colorscheme solarized
-
-" set background=dark
-" colorscheme gruvbox
-
-
 " Line numbers and sign column
 " ----------------------------
 
