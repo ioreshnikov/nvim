@@ -1301,6 +1301,28 @@ nnoremap <leader><F10> :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name
 \ . synIDattr(synIDtrans(synID(line("."),col("."),1)),"name") . ">"<CR>
 
 
+" Color scheme
+" -------------------
+
+" Enable GUI colors in terminal
+set termguicolors
+
+" The best I've seen so far
+let g:tokyonight_style="night"
+let g:tokyonight_sidebars=["terminal", "toggleterm", "qf"]
+
+hi link NeotreeNormal NormalSB
+hi link ToggleTerm1Normal NormalSB
+
+colorscheme tokyonight
+
+" set background=dark
+" colorscheme solarized
+
+" set background=dark
+" colorscheme gruvbox
+
+
 " TODOs
 " -----
 
