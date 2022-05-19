@@ -620,6 +620,7 @@ EOF
 noremap <silent> <leader>g :Neogit<CR>
 
 " Git blame as virtual text
+let g:gitblame_enabled = 0
 let g:gitblame_highlight_group = 'DiagnosticVirtualTextInfo'
 let g:gitblame_message_template = 'ﰖ <author> "<summary>" on <date>'
 noremap <silent> <leader>gt :GitBlameToggle<CR>
