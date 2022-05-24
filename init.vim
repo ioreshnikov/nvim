@@ -432,6 +432,7 @@ noremap <silent> <leader>fe :Telescope file_browser<CR>
 noremap <silent> <leader>fp :Telescope project<CR>
 noremap <silent> <leader>fb :Telescope buffers<CR>
 noremap <silent> <leader>fg :Telescope live_grep<CR>
+noremap <silent> <leader>fG :lua require('telescope.builtin').live_grep({grep_open_files=true})<CR>
 noremap <silent> <leader>fl :Telescope lsp_workspace_symbols<CR>
 noremap <silent> <leader>fh :Telescope oldfiles<CR>
 noremap <silent> <leader>fm :Telescope marks<CR>
