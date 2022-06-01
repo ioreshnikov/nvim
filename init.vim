@@ -1012,7 +1012,7 @@ require('neo-tree').setup {
                 { 'name' },
             }
         },
-        window = { position = "left", width = 50 },
+        window = { position = "left", width = 80 },
     },
     window = {
         mappings = {
