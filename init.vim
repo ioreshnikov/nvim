@@ -973,8 +973,8 @@ require('todo-comments').setup {
         }
     },
     highlight = {
-        after = "",
-        keyword = "fg"
+        after = '',
+        keyword = 'bg'
     }
 }
 EOF
