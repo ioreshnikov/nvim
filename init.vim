@@ -1300,10 +1300,11 @@ nnoremap <leader><F10> :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name
 set termguicolors
 
 " The best I've seen so far
-let g:tokyonight_style="night"
+let g:tokyonight_style="storm"
 let g:tokyonight_sidebars=["terminal", "toggleterm", "qf"]
 
 hi link NeotreeNormal NormalSB
+hi link NeotreeNormalNc NormalSB
 hi link ToggleTerm1Normal NormalSB
 
 colorscheme tokyonight
