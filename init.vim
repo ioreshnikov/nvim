@@ -71,9 +71,6 @@ Plug 'ms-jpq/coq.artifacts', {'branch': 'artifacts'}
 " Interactive debugging through DAP
 Plug 'mfussenegger/nvim-dap'
 
-" Better search UI
-Plug 'kevinhwang91/nvim-hlslens'
-
 " Use a custom statusline
 Plug 'nvim-lualine/lualine.nvim'
 
