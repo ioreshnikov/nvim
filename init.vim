@@ -73,6 +73,7 @@ Plug 'mfussenegger/nvim-dap'
 
 " Use a custom statusline
 Plug 'nvim-lualine/lualine.nvim'
+Plug 'SmiteshP/nvim-gps'
 
 " Toggleable terminal
 Plug 'akinsho/toggleterm.nvim'
@@ -516,6 +517,9 @@ function mode()
     end
 end
 
+local gps = require('nvim-gps')
+gps.setup()
+
 require('lualine').setup {
     options = {
         component_separators = '',
@@ -528,13 +532,14 @@ require('lualine').setup {
         lualine_b = {
             {
                 filename,
-                path = 1,
                 padding = { left = 2, right = 1 }
             },
             'progress',
             'location'
         },
-        lualine_c = {},
+        lualine_c = {
+            { gps.get_location, cond = gps.is_available }
+        },
         lualine_x = {
             'branch',
             'fileformat',
