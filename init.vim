@@ -454,6 +454,9 @@ autocmd WinLeave term://* stopinsert
 " Open terminal in a toggle
 lua << EOF
 require('toggleterm').setup {
+    highlights = {
+        Normal = { link = 'NormalSB' }
+    },
     shade_terminals = false,
     size = function (term)
         if term.direction == 'horizontal' then
