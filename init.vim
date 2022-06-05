@@ -64,9 +64,19 @@ Plug 'f-person/git-blame.nvim'
 " Code completion backend through LSP servers
 Plug 'neovim/nvim-lspconfig'
 
-" Code completion frontend with `coq` (ridiculously fast!)
-Plug 'ioreshnikov/coq_nvim', {'branch': 'coq'}
-Plug 'ms-jpq/coq.artifacts', {'branch': 'artifacts'}
+" Code completion frontend with `nvim-cmp`
+Plug 'hrsh7th/cmp-nvim-lsp'
+Plug 'hrsh7th/cmp-buffer'
+Plug 'hrsh7th/cmp-path'
+Plug 'hrsh7th/cmp-cmdline'
+Plug 'hrsh7th/nvim-cmp'
+
+Plug 'onsails/lspkind-nvim'
+
+" Snippets
+Plug 'rafamadriz/friendly-snippets'
+Plug 'L3MON4D3/LuaSnip'
+Plug 'saadparwaiz1/cmp_luasnip'
 
 " Interactive debugging through DAP
 Plug 'mfussenegger/nvim-dap'
@@ -696,50 +706,86 @@ imap <silent> <S-Left> <C-o><Plug>CamelCaseMotion_b
 imap <silent> <S-Right> <C-o><Plug>CamelCaseMotion_w
 
 
+" Snippets
+" --------
+
+lua << EOF
+require("luasnip.loaders.from_vscode").lazy_load()
+EOF
+
+
 " Code completion
 " ---------------
 
 " Completion backend is handed by the LSP servers of choice. We configure them
-" in the corresponding language section. UI is provided by a brilliant and
-" blazing-fast COQ. It does not require any additional setup, except that we
-" would like it to start automatically once we open a buffer.
+" in the corresponding language section. UI is provided by nvim-cmp.
+
+set completeopt=menu,menuone,noselect
 
 lua << EOF
-vim.g.coq_settings = {
-    auto_start = 'shut-up',
-    clients = {
-        lsp = {
-            enabled = true,
-            weight_adjust=2.0,
-        },
-        snippets = {
-            enabled = true,
-            weight_adjust=1.0,
-        },
-        tree_sitter = {
-            enabled = true,
-            weight_adjust=0.0,
-        },
-        buffers = {
-            enabled = false,  -- there's no way I can make it rank below everything
-            weight_adjust = -2.00,
-        },
+local cmp = require('cmp')
+local luasnip = require('luasnip')
+
+local has_words_before = function()
+  local line, col = unpack(vim.api.nvim_win_get_cursor(0))
+  return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match("%s") == nil
+end
+
+cmp.setup({
+    snippet = {
+        expand = function(args)
+            require('luasnip').lsp_expand(args.body)
+        end,
     },
-    display = {
-        pum = {
-            fast_close = false
+    mapping = cmp.mapping.preset.insert({
+        ['<C-b>'] = cmp.mapping.scroll_docs(-4),
+        ['<C-f>'] = cmp.mapping.scroll_docs(4),
+        ['<C-Space>'] = cmp.mapping.complete(),
+        ['<C-e>'] = cmp.mapping.abort(),
+        ['<CR>'] = cmp.mapping.confirm({ select = true }),
+        ['<Tab>'] = cmp.mapping(function(fallback)
+            if cmp.visible() then
+                cmp.select_next_item()
+            elseif luasnip.expand_or_jumpable() then
+                luasnip.expand_or_jump()
+            elseif has_words_before() then
+                cmp.complete()
+            else
+                fallback()
+            end
+        end, { "i", "s" }),
+        ['<S-Tab>'] = cmp.mapping(function(fallback)
+            if cmp.visible() then
+                cmp.select_prev_item()
+            elseif luasnip.jumpable(-1) then
+                luasnip.jump(-1)
+            else
+                fallback()
+            end
+        end, { "i", "s" }),
+    }),
+    sources = cmp.config.sources(
+        {
+            { name = 'nvim_lsp' },
+            { name = 'luasnip' },
+        },
+        {
+            { name = 'buffer' },
         }
-    },
-    -- To work-around auto-pairs we're going to setup up keys by hand
-    keymap = {
-        recommended = false
-    },
-    match = {
-        fuzzy_cutoff = 0.85
-    },
-    -- A simple ranking algorithm. Works only in my fork.
-    ranking = 'stratified'
-}
+    ),
+    formatting = {
+        format = require('lspkind').cmp_format({
+            mode = 'symbol_text',
+            menu = ({
+                buffer = 'Buffer',
+                nvim_lsp = 'LSP',
+                luasnip = 'SNIP',
+                nvim_lua = 'Lua',
+                latex_symbols = 'TeX'
+            })
+        })
+    }
+})
 EOF
 
 
@@ -802,66 +848,8 @@ nnoremap <silent> <F11> :DapStepInto<CR>
 " Automatic delimiter pairing
 " ---------------------------
 
-" We start with disabling backspace and enter bindings, since we need to treat
-" in a special way when COQ is active (which is almost always).
-"
-" More details:
-"     https://github.com/ms-jpq/coq_nvim/issues/91 (the issue)
-"     https://github.com/windwp/nvim-autopairs (search coq_nvim)
-"
 lua << EOF
-require('nvim-autopairs').setup {
-    map_bs = false,
-    map_cr = false
-}
-EOF
-
-
-lua << EOF
-local remap = vim.api.nvim_set_keymap
-local pairs = require('nvim-autopairs')
-
--- Those are standard bindings from COQ. The bindings for enter and backspace
--- we need to customize.
-remap(
-    'i', '<esc>', [[pumvisible() ? '<c-e><esc>' : '<esc>']],
-    { expr = true, noremap = true }
-)
-remap(
-    'i', '<c-c>', [[pumvisible() ? '<c-e><c-c>' : '<c-c>']],
-    { expr = true, noremap = true }
-)
-remap(
-    'i', '<tab>', [[pumvisible() ? '<c-n>' : '<tab>']],
-    { expr = true, noremap = true }
-)
-remap(
-    'i', '<s-tab>', [[pumvisible() ? '<c-p>' : '<bs>']],
-    { expr = true, noremap = true }
-)
-
-_G.ioextra.cr = function ()
-    if vim.fn.pumvisible() ~= 0 then
-        if vim.fn.complete_info({ 'selected' }).selected ~= -1 then
-            return pairs.esc('<c-y>')
-        else
-            return pairs.esc('<c-e>') .. pairs.autopairs_cr()
-        end
-    else
-        return pairs.autopairs_cr()
-    end
-end
-
-_G.ioextra.bs = function ()
-    if vim.fn.pumvisible() ~= 0 and vim.fn.complete_info({ 'mode' }).mode == 'eval' then
-        return pairs.esc('<c-e>') .. pairs.autopairs_bs()
-    else
-        return pairs.autopairs_bs()
-    end
-end
-
-remap('i', '<cr>', 'v:lua.ioextra.cr()', { expr = true, noremap = true })
-remap('i', '<bs>', 'v:lua.ioextra.bs()', { expr = true, noremap = true })
+require('nvim-autopairs').setup {}
 EOF
 
 
@@ -1034,10 +1022,15 @@ nnoremap <silent> <leader>d :Neotree show toggle<CR>
 " It would be cool if editing this very config was done with the help of an
 " LSP server. Thankfully, there is such a server!
 lua << EOF
-local lsp = require('lspconfig')
-local coq = require('coq')
+local config = require('lspconfig')
+local cmplsp = require('cmp_nvim_lsp')
 
-lsp.vimls.setup(coq.lsp_ensure_capabilities())
+config.vimls.setup {
+    on_attach = ioextra.on_attach,
+    capabilities = cmplsp.update_capabilities(
+        vim.lsp.protocol.make_client_capabilities()
+    )
+}
 EOF
 
 
@@ -1046,10 +1039,15 @@ EOF
 
 " Some of the editing is done in Lua
 lua << EOF
-local lsp = require('lspconfig')
-local coq = require('coq')
+local config = require('lspconfig')
+local cmplsp = require('cmp_nvim_lsp')
 
-lsp.sumneko_lua.setup(coq.lsp_ensure_capabilities())
+config.sumneko_lua.setup {
+    on_attach = ioextra.on_attach,
+    capabilities = cmplsp.update_capabilities(
+        vim.lsp.protocol.make_client_capabilities()
+    )
+}
 EOF
 
 
@@ -1058,12 +1056,14 @@ EOF
 
 " LSP settings
 lua << EOF
-local lsp = require('lspconfig')
-local coq = require('coq')
+local config = require('lspconfig')
+local cmplsp = require('cmp_nvim_lsp')
 
-lsp.pyright.setup{
-    on_attach=ioextra.on_attach,
-    unpack(coq.lsp_ensure_capabilities())
+config.pyright.setup {
+    on_attach = ioextra.on_attach,
+    capabilities = cmplsp.update_capabilities(
+        vim.lsp.protocol.make_client_capabilities()
+    )
 }
 EOF
 
@@ -1095,12 +1095,14 @@ EOF
 
 " LSP settings
 lua << EOF
-local lsp = require('lspconfig')
-local coq = require('coq')
+local config = require('lspconfig')
+local cmplsp = require('cmp_nvim_lsp')
 
-lsp.tsserver.setup{
-    on_attach=ioextra.on_attach,
-    unpack(coq.lsp_ensure_capabilities())
+config.tsserver.setup {
+    on_attach = ioextra.on_attach,
+    capabilities = cmplsp.update_capabilities(
+        vim.lsp.protocol.make_client_capabilities()
+    )
 }
 EOF
 
@@ -1141,16 +1143,20 @@ EOF
 
 " Well, that's obvious
 lua << EOF
-local lsp = require('lspconfig')
-local coq = require('coq')
+local config = require('lspconfig')
+local cmplsp = require('cmp_nvim_lsp')
 
-lsp.html.setup{
-    on_attach=ioextra.on_attach,
-    unpack(coq.lsp_ensure_capabilities())
+config.html.setup {
+    on_attach = ioextra.on_attach,
+    capabilities = cmplsp.update_capabilities(
+        vim.lsp.protocol.make_client_capabilities()
+    )
 }
-lsp.cssls.setup{
-    on_attach=ioextra.on_attach,
-    unpack(coq.lsp_ensure_capabilities())
+config.cssls.setup {
+    on_attach = ioextra.on_attach,
+    capabilities = cmplsp.update_capabilities(
+        vim.lsp.protocol.make_client_capabilities()
+    )
 }
 EOF
 
@@ -1161,12 +1167,14 @@ EOF
 " Occasionally I write LaTeX. It turns out there is an LSP mode for that as
 " well.
 lua << EOF
-local lsp = require('lspconfig')
-local coq = require('coq')
+local config = require('lspconfig')
+local cmplsp = require('cmp_nvim_lsp')
 
-lsp.texlab.setup{
-    on_attach=ioextra.on_attach,
-    unpack(coq.lsp_ensure_capabilities())
+config.texlab.setup {
+    on_attach = ioextra.on_attach,
+    capabilities = cmplsp.update_capabilities(
+        vim.lsp.protocol.make_client_capabilities()
+    )
 }
 EOF
 
@@ -1182,12 +1190,14 @@ vnoremap <silent> <C-\> :<C-u>call unicoder#selection()<CR>
 " I need to learn a system programming language and it's definitely not C/C++
 " :)
 lua << EOF
-local lsp = require('lspconfig')
-local coq = require('coq')
+local config = require('lspconfig')
+local cmplsp = require('cmp_nvim_lsp')
 
-lsp.rust_analyzer.setup{
-    on_attach=ioextra.on_attach,
-    unpack(coq.lsp_ensure_capabilities())
+config.rust_analyzer.setup {
+    on_attach = ioextra.on_attach,
+    capabilities = cmplsp.update_capabilities(
+        vim.lsp.protocol.make_client_capabilities()
+    )
 }
 EOF
 
@@ -1197,12 +1207,14 @@ EOF
 
 " Eh, why not
 lua << EOF
-local lsp = require('lspconfig')
-local coq = require('coq')
+local config = require('lspconfig')
+local cmplsp = require('cmp_nvim_lsp')
 
-lsp.gopls.setup{
-    on_attach=ioextra.on_attach,
-    unpack(coq.lsp_ensure_capabilities())
+config.gopls.setup {
+    on_attach = ioextra.on_attach,
+    capabilities = cmplsp.update_capabilities(
+        vim.lsp.protocol.make_client_capabilities()
+    )
 }
 EOF
 
@@ -1212,12 +1224,14 @@ EOF
 
 " I am shocked as well :)
 lua << EOF
-local lsp = require('lspconfig')
-local coq = require('coq')
+local config = require('lspconfig')
+local cmplsp = require('cmp_nvim_lsp')
 
-lsp.phpactor.setup{
-    on_attach=ioextra.on_attach,
-    unpack(coq.lsp_ensure_capabilities())
+config.phpactor.setup {
+    on_attach = ioextra.on_attach,
+    capabilities = cmplsp.update_capabilities(
+        vim.lsp.protocol.make_client_capabilities()
+    )
 }
 EOF
 
