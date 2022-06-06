@@ -72,6 +72,7 @@ Plug 'hrsh7th/cmp-cmdline'
 Plug 'hrsh7th/nvim-cmp'
 
 Plug 'onsails/lspkind-nvim'
+Plug 'ray-x/lsp_signature.nvim'
 
 " Snippets
 Plug 'rafamadriz/friendly-snippets'
@@ -530,6 +531,12 @@ function mode()
     end
 end
 
+function signature()
+    if not pcall(require, 'lsp_signature') then return end
+    local signature = require('lsp_signature').status_line()
+    return signature.label
+end
+
 local gps = require('nvim-gps')
 gps.setup()
 
@@ -551,7 +558,8 @@ require('lualine').setup {
             'location'
         },
         lualine_c = {
-            { gps.get_location, cond = gps.is_available }
+            { gps.get_location, cond = gps.is_available },
+            { signature }
         },
         lualine_x = {
             'branch',
@@ -723,6 +731,8 @@ EOF
 " Completion backend is handed by the LSP servers of choice. We configure them
 " in the corresponding language section. UI is provided by nvim-cmp.
 
+set pumheight=16
+set pumwidth=32
 set completeopt=menu,menuone,noselect
 
 lua << EOF
@@ -774,6 +784,9 @@ cmp.setup({
         },
         {
             { name = 'buffer' },
+        },
+        {
+            { name = 'nvim_lsp_signature_help' }
         }
     ),
     formatting = {
@@ -789,6 +802,15 @@ cmp.setup({
         })
     }
 })
+
+require('lsp_signature').setup {
+    floating_window = false,
+    floating_window_off_x = 0,
+    hint_prefix = ' ',
+    handler_opts = {
+        border = "none"
+    }
+}
 EOF
 
 
@@ -891,6 +913,10 @@ _G.ioextra.on_attach = function(client, buffer)
     vim.api.nvim_buf_set_keymap(
         buffer,
         'n', 'ca', '<cmd>lua vim.lsp.buf.code_action()<CR>',
+        { noremap = true, silent = true })
+    vim.api.nvim_buf_set_keymap(
+        buffer,
+        'n', 'K', '<cmd>lua vim.lsp.buf.hover()<CR>',
         { noremap = true, silent = true })
 end
 EOF
