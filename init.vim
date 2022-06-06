@@ -1363,7 +1363,7 @@ colorscheme tokyonight
 
 " A short list of things I would like to have set up.
 
-" TODO: LSP function signature
+" DONE: LSP function signature
 " BUG: Neogit log has been broken for a month. Should I do the bugfix?
 " DONE: Use icons for vim mode in lualine
 " TODO: Fix the terminal reopening
