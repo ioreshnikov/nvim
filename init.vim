@@ -120,7 +120,7 @@ Plug 'folke/todo-comments.nvim'
 Plug 'lukas-reineke/indent-blankline.nvim'
 
 " Automatically change cwd to the root of the project
-Plug 'airblade/vim-rooter'
+Plug 'ahmedkhalf/project.nvim'
 
 " Tree viewer
 Plug 'MunifTanjim/nui.nvim'
@@ -372,7 +372,10 @@ vnoremap <silent> <expr> $ v:count ? '$' : 'g$'
 
 " VIM Rooter
 " ----------
-autocmd VimEnter * let g:rooter_patterns = [ '.git' ]
+
+lua << EOF
+require('project_nvim').setup {}
+EOF
 
 
 " Telescope
