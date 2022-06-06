@@ -904,6 +904,10 @@ _G.ioextra.on_attach = function(client, buffer)
         { noremap = true, silent = true })
     vim.api.nvim_buf_set_keymap(
         buffer,
+        'n', 'gtd', '<cmd>lua vim.lsp.buf.type_definition()<CR>',
+        { noremap = true, silent = true })
+    vim.api.nvim_buf_set_keymap(
+        buffer,
         'n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<CR>',
         { noremap = true, silent = true })
     vim.api.nvim_buf_set_keymap(
