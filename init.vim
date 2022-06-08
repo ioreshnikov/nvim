@@ -370,8 +370,8 @@ vnoremap <silent> <expr> 0 v:count ? '0' : 'g0'
 vnoremap <silent> <expr> $ v:count ? '$' : 'g$'
 
 
-" VIM Rooter
-" ----------
+" Automatically set cwd
+" ---------------------
 
 lua << EOF
 require('project_nvim').setup {}
