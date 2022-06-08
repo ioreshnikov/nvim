@@ -1139,7 +1139,8 @@ config.tsserver.setup {
     on_attach = ioextra.on_attach,
     capabilities = cmplsp.update_capabilities(
         vim.lsp.protocol.make_client_capabilities()
-    )
+    ),
+    root_dir = config.util.root_pattern('.git')
 }
 EOF
 
