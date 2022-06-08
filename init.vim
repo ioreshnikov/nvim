@@ -1050,7 +1050,7 @@ require('neo-tree').setup {
 }
 EOF
 
-nnoremap <silent> <leader>d :Neotree show toggle<CR>
+nnoremap <silent> <leader>d :Neotree focus toggle<CR>
 
 
 " VIM
