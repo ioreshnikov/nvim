@@ -515,7 +515,7 @@ local filename = require('lualine.components.filename'):extend()
 filename.apply_icon = require('lualine.components.filetype').apply_icon
 
 local modesymbol = {
-    ['NORMAL'] = 'גּ',
+    ['NORMAL'] = '',
     ['INSERT'] = '',
     ['VISUAL'] = 'ﱓ',
     ['V-LINE'] = '',
