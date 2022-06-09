@@ -1,13 +1,14 @@
-" Leader key
-" ----------
+" Leader key {{{
+" --------------
 
 " Since `map` and `remap` evaluate `<leader>` definition eagerly (i.e. not in
 " a lazy manner), we have to set up leader key as soon as possible.
 map <Space> <Leader>
 
+" }}}
 
-" Bootstrapping
-" -------------
+" Bootstrapping {{{
+" -----------------
 
 " The section below automatically installs a plugin management system (in our
 " case `vim-plug`) if it's not present in the system already. This means that
@@ -26,9 +27,10 @@ silent execute
 autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
 endif
 
+" }}}
 
-" Plugins
-" -------
+" Plugins {{{
+" -----------
 
 " The section below imports all the plugin needed by the configuration.
 let plugdir = stdpath('data') . '/plugged'
@@ -137,9 +139,10 @@ Plug 'folke/zen-mode.nvim'
 
 call plug#end()
 
+" }}}
 
-" Evaluating
-" ----------
+" Evaluating {{{
+" --------------
 
 " When editing this config we need to re-evaluate parts of it. We define two
 " additional commands. The first one evaluates the current line. The second
@@ -147,9 +150,10 @@ call plug#end()
 nnoremap <silent> <leader>vs :source %<CR>
 vnoremap <silent> <leader>vs y:@"<CR>
 
+" }}}
 
-" Logging
-" -------
+" Logging {{{
+" -----------
 
 " Sometimtes I need to debug things. This is where logging comes handy.
 lua << EOF
@@ -168,23 +172,26 @@ _G.ioextra = {}  -- io are my initials, not I/O
 _G.ioextra.log = log
 EOF
 
+" }}}
 
-" Use mouse
-" ---------
+" Use mouse {{{
+" -------------
 
 set mouse=a
 
+" }}}
 
-" Scroll
-" ------
+" Scroll {{{
+" ----------
 
 " I love when there's a bit of space between the current line and the end of
 " the window. 5 lines feels like sweet spot.
 set scrolloff=5
 
+" }}}
 
-" Backups
-" -------
+" Backups {{{
+" -----------
 
 " Didn't really have to use the backups once, but always annoyed by seeing the
 " files on disk.
@@ -192,9 +199,10 @@ set nobackup
 set nowritebackup
 set noswapfile
 
+" }}}
 
-" Automatic file reload
-" ---------------------
+" Automatic file reload {{{
+" -------------------------
 
 " trigger `autoread` when files changes on disk
 set autoread
@@ -206,17 +214,19 @@ autocmd FocusGained,BufEnter,CursorHold,CursorHoldI *
 " notification after file change
 autocmd FileChangedShellPost * echo "File changed on disk. Buffer reloaded."
 
+" }}}
 
-" Case sensitivity
-" ----------------
+" Case sensitivity {{{
+" --------------------
 
 " I don't really care about case sensitivity when searching.
 set ignorecase
 set smartcase
 
+" }}}
 
-" Line numbers and sign column
-" ----------------------------
+" Line numbers and sign column {{{
+" --------------------------------
 
 " For buffers that correspond to a file on disk I'd like to see relative line
 " numbers and a sign column. The latter might not have a practical use for
@@ -239,16 +249,18 @@ autocmd BufReadPost,BufWritePost,BufNewFile * call EnableEditingHelpers()
 autocmd FileType NeogitCommitMessage call EnableEditingHelpers()
 autocmd FileType NeogitStatus call EnableSignColumn()
 
+" }}}
 
-" Current line
-" ------------
+" Current line {{{
+" ----------------
 
 " I like to see the current line to be highlighted
 set cursorline
 
+" }}}
 
-" Whitespace
-" ----------
+" Whitespace {{{
+" --------------
 
 " Show whitespace characters
 set listchars=tab:→\ ,trail:⋅
@@ -264,31 +276,34 @@ set shiftwidth=4
 " Automatically remove trailing whitespace when saving the file
 autocmd BufWritePre * :%s/\s\+$//e
 
+" }}}
 
-" Wrap
-" ----
+" Wrap {{{
+" --------
 
 " Break at a "breakeable" character when soft-wrapping lines.
 set linebreak
 set showbreak=⤷\ "
 
+" }}}
 
-" Folds
-" -----
+" Folds {{{
+" ---------
 
 " Folds are occasionally useful. I wish I could use tree-sitter aware folds,
 " but as of now they're glitchy and tend to randomly collapse when you edit a
 " region. Therefore I resort to good old fold by marker.
 set foldmethod=marker
 
+" }}}
 
-" Tabs and splits
-" ---------------
+" Tabs and splits {{{
+" -------------------
 
 " `vim` has a quite powerful window system, but the default keybindings make
 " you a bit slow when using it. Here are more conventional ones.
 
-" Quick navigation between the tabs {{{
+" Quick navigation between the tabs
 noremap <silent> <C-t> :tabnew<CR>
 noremap <silent> <C-w> :tabclose<CR>
 
@@ -327,9 +342,8 @@ tnoremap <silent> <A-6> <C-\><C-n>6gt
 tnoremap <silent> <A-7> <C-\><C-n>7gt
 tnoremap <silent> <A-8> <C-\><C-n>8gt
 tnoremap <silent> <A-9> <C-\><C-n>9gt
-" }}}
 
-" Quick navigation between the splits {{{
+" Quick navigation between the splits
 noremap <silent> <A-v> :vsp<CR>
 noremap <silent> <A-s> :split<CR>
 noremap <silent> <A-q> :q<CR>
@@ -349,11 +363,11 @@ tnoremap <silent> <A-h> <C-\><C-n><C-w>h
 tnoremap <silent> <A-j> <C-\><C-n><C-w>j
 tnoremap <silent> <A-k> <C-\><C-n><C-w>k
 tnoremap <silent> <A-l> <C-\><C-n><C-w>l
+
 " }}}
 
-
-" Movement on wrapped lines
-" -------------------------
+" Movement on wrapped lines {{{
+" -----------------------------
 
 " I am using soft line-wrap everywhere. The default navigation commands in vim
 " work on physical lines, not wrapped ones. This is really inconvinient. This
@@ -369,20 +383,23 @@ vnoremap <silent> <expr> ^ v:count ? '^' : 'g^'
 vnoremap <silent> <expr> 0 v:count ? '0' : 'g0'
 vnoremap <silent> <expr> $ v:count ? '$' : 'g$'
 
+" }}}
 
-" Automatically set cwd
-" ---------------------
+" Automatically set cwd {{{
+" -------------------------
 
 lua << EOF
 require('project_nvim').setup {}
 EOF
 
+" }}}
 
-" Telescope
-" ---------
+" Telescope {{{
+" -------------
 
 lua << EOF
 local telescope = require('telescope')
+local actions = require('telescope.actions')
 
 telescope.setup {
     defaults = {
@@ -463,9 +480,10 @@ hi link TelescopeBorder NormalFloat
 hi link TelescopePromptPrefix Comment
 hi link TelescopeTitle Ignore
 
+" }}}
 
-" Terminal
-" --------
+" Terminal {{{
+" ------------
 
 " Automatically enter insert mode when entering a terminal window.
 " Automatically switch to normal on exit.
@@ -506,15 +524,17 @@ nnoremap <silent> <leader>ts :ToggleTerm direction=horizontal<CR>
 nnoremap <silent> <leader>tv :ToggleTerm direction=vertical<CR>
 nnoremap <silent> <leader>tt :ToggleTerm direction=tab<CR>
 
+" }}}
 
-" Which key
-" ---------
+" Which key {{{
+" -------------
 
 lua require('which-key').setup()
 
+" }}}
 
-" Status line
-" -----------
+" Status line {{{
+" ---------------
 
 " I am using a `lualine` with almost default settings.
 lua << EOF
@@ -614,9 +634,10 @@ require('lualine').setup {
 }
 EOF
 
+" }}}
 
-" Indentation guide
-" -----------------
+" Indentation guide {{{
+" ---------------------
 
 " XXX: The usability is sadly not that great due to a long-standing bug in
 " neovim:
@@ -639,9 +660,10 @@ require('indent_blankline').setup {
 }
 EOF
 
+" }}}
 
-" Git
-" ---
+" Git {{{
+" -------
 
 " Almost no setup required
 lua << EOF
@@ -665,9 +687,10 @@ let g:gitblame_highlight_group = 'DiagnosticVirtualTextInfo'
 let g:gitblame_message_template = 'ﰖ <author> "<summary>" on <date>'
 noremap <silent> <leader>gt :GitBlameToggle<CR>
 
+" }}}
 
-" Tree sitter
-" -----------
+" Tree sitter {{{
+" ---------------
 
 " The section below configures `tree-sitter` to be used for syntax
 " highlighting, selection, indentation and automatic delimiters pairing.
@@ -700,9 +723,10 @@ EOF
 " Some of the grammars in 'all' are occasionally broken. One of them is
 " 'phpdoc', but the list will surely grow.
 
+" }}}
 
-" Subword navigation
-" ------------------
+" Subword navigation {{{
+" ----------------------
 
 " This is a really cool plugin that allow one to navigate based on a subword,
 " i.e. it treats 'Camel' and 'Case' in 'CamelCase', 'snake' and 'case' in
@@ -727,17 +751,19 @@ xmap <silent> ie <Plug>CamelCaseMotion_ie
 imap <silent> <S-Left> <C-o><Plug>CamelCaseMotion_b
 imap <silent> <S-Right> <C-o><Plug>CamelCaseMotion_w
 
+" }}}
 
-" Snippets
-" --------
+" Snippets {{{
+" ------------
 
 lua << EOF
 require("luasnip.loaders.from_vscode").lazy_load()
 EOF
 
+" }}}
 
-" Code completion
-" ---------------
+" Code completion {{{
+" -------------------
 
 " Completion backend is handed by the LSP servers of choice. We configure them
 " in the corresponding language section. UI is provided by nvim-cmp.
@@ -825,9 +851,10 @@ require('lsp_signature').setup {
 }
 EOF
 
+" }}}
 
-" Debugging with DAP
-" ------------------
+" Debugging with DAP {{{
+" ----------------------
 
 " General settings
 lua << EOF
@@ -881,17 +908,19 @@ nnoremap <silent> <F9> :DapToggleBreakpoint<CR>
 nnoremap <silent> <F10> :DapStepOver<CR>
 nnoremap <silent> <F11> :DapStepInto<CR>
 
+" }}}
 
-" Automatic delimiter pairing
-" ---------------------------
+" Automatic delimiter pairing {{{
+" -------------------------------
 
 lua << EOF
 require('nvim-autopairs').setup {}
 EOF
 
+" }}}
 
-" General LSP setup
-" -----------------
+" General LSP setup {{{
+" ---------------------
 
 lua << EOF
 local signs = {
@@ -945,9 +974,10 @@ command! LspSignature          lua vim.lsp.buf.signature_help()<CR>
 command! LspRename             lua vim.lsp.buf.rename()<CR>
 command! LspCodeAction         lua vim.lsp.buf.code_action()<CR>
 
+" }}}
 
-" Error diagnostics
-" -----------------
+" Error diagnostics {{{
+" ---------------------
 
 lua << EOF
 require('trouble').setup {
@@ -960,9 +990,10 @@ noremap <silent> <leader>ew :TroubleToggle workspace_diagnostics<CR>
 
 hi link TroubleNormal LspTroubleNormal
 
+" }}}
 
-" TODO comments
-" -------------
+" TODO comments {{{
+" -----------------
 
 " A neat utility for highlighting the comment-keywords.
 
@@ -1016,9 +1047,10 @@ EOF
 
 noremap <silent> <leader>et :TodoTrouble<CR>
 
+" }}}
 
-" Filesystem tree
-" ---------------
+" Filesystem tree {{{
+" -------------------
 
 lua << EOF
 require('neo-tree').setup {
@@ -1060,9 +1092,10 @@ EOF
 
 nnoremap <silent> <leader>d :Neotree focus toggle<CR>
 
+" }}}
 
-" VIM
-" ---
+" Language: VIM {{{
+" -----------------
 
 " It would be cool if editing this very config was done with the help of an
 " LSP server. Thankfully, there is such a server!
@@ -1078,9 +1111,10 @@ config.vimls.setup {
 }
 EOF
 
+" }}}
 
-" LUA
-" ---
+" Language: LUA {{{
+" -----------------
 
 " Some of the editing is done in Lua
 lua << EOF
@@ -1095,9 +1129,10 @@ config.sumneko_lua.setup {
 }
 EOF
 
+" }}}
 
-" Python
-" ------
+" Language: Python {{{
+" --------------------
 
 " LSP settings
 lua << EOF
@@ -1132,9 +1167,10 @@ dap.configurations.python = {
 }
 EOF
 
+" }}}
 
-" JavaScript and TypeScript
-" -------------------------
+" Language: JavaScript and TypeScript {{{
+" ---------------------------------------
 
 " And sometimes I need to write frontend code as well.
 
@@ -1183,9 +1219,25 @@ dap.configurations.javascript = {
 
 EOF
 
+" }}}
 
-" HTML and CSS
-" ------------
+" Language: Ember.js {{{
+" ----------------------
+
+" lua << EOF
+" local lsp = require('lspconfig')
+" local coq = require('coq')
+
+" lsp.ember.setup{
+"     on_attach=ioextra.on_attach,
+"     unpack(coq.lsp_ensure_capabilities())
+" }
+" EOF
+
+" }}}
+
+" Language: HTML and CSS {{{
+" --------------------------
 
 " Well, that's obvious
 lua << EOF
@@ -1206,9 +1258,10 @@ config.cssls.setup {
 }
 EOF
 
+" }}}
 
-" TeX
-" ---
+" Language: TeX {{{
+" -----------------
 
 " Occasionally I write LaTeX. It turns out there is an LSP mode for that as
 " well.
@@ -1229,9 +1282,10 @@ nnoremap <silent> <C-\> :call unicoder#start(0)<CR>
 inoremap <silent> <C-\> <Esc>:call unicoder#start(1)<CR>
 vnoremap <silent> <C-\> :<C-u>call unicoder#selection()<CR>
 
+" }}}
 
-" Rust
-" ----
+" Language: Rust {{{
+" ------------------
 
 " I need to learn a system programming language and it's definitely not C/C++
 " :)
@@ -1247,9 +1301,10 @@ config.rust_analyzer.setup {
 }
 EOF
 
+" }}}
 
-" GO
-" --
+" Language: GO {{{
+" ----------------
 
 " Eh, why not
 lua << EOF
@@ -1264,9 +1319,10 @@ config.gopls.setup {
 }
 EOF
 
+" }}}
 
-" PHP
-" ---
+" Language: PHP {{{
+" -----------------
 
 " I am shocked as well :)
 lua << EOF
@@ -1281,23 +1337,26 @@ config.phpactor.setup {
 }
 EOF
 
+" }}}
 
-" REST client
-" -----------
+" REST client {{{
+" ---------------
 
 lua require('rest-nvim').setup()
 
 nmap <leader>rr <Plug>RestNvim<CR>
 
+" }}}
 
-" Docker
-" ------
+" Docker {{{
+" ----------
 
 autocmd BufRead,BufNewFile Dockerfile.* set filetype=dockerfile
 
+" }}}
 
-" Zen Mode
-" --------
+" Zen Mode {{{
+" ------------
 
 noremap <silent> <F12> :ZenMode<CR>
 inoremap <silent> <F12> <ESC>:ZenMode<CR>a
@@ -1310,9 +1369,10 @@ require('zen-mode').setup {
 }
 EOF
 
+" }}}
 
-" Random things
-" -------------
+" Random things {{{
+" -----------------
 
 " A faster way to save files
 noremap <silent> <leader>w :w<CR>
@@ -1328,9 +1388,10 @@ autocmd CursorHold * echon ''
 " Close a buffer
 nnoremap <silent> <leader>k :bp \| sp \| bn \| bd<CR>
 
+" }}}
 
-" Neovide specific GUI settings
-" -----------------------------
+" Neovide specific GUI settings {{{
+" ---------------------------------
 
 let g:neovide_hide_mouse_when_typing = 1
 let g:neovide_cursor_animation_length = 0.03
@@ -1346,17 +1407,19 @@ endfunction
 
 map <silent> <leader><F11> :call Neovide_fullscreen()<CR>
 
+" }}}
 
-" Debugging highlight
-" -------------------
+" Debugging highlight {{{
+" -----------------------
 
 nnoremap <leader><F10> :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans<'
 \ . synIDattr(synID(line("."),col("."),0),"name") . "> lo<"
 \ . synIDattr(synIDtrans(synID(line("."),col("."),1)),"name") . ">"<CR>
 
+" }}}
 
-" Color scheme
-" -------------------
+" Color scheme {{{
+" ----------------
 
 " Enable GUI colors in terminal
 set termguicolors
@@ -1374,6 +1437,7 @@ colorscheme tokyonight
 " set background=light
 " colorscheme solarized
 
+" }}}
 
 " TODOs
 " -----
