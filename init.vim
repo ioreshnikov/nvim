@@ -429,7 +429,15 @@ telescope.setup {
     pickers = {
         buffers = {
             ignore_current_buffer = true,
-            sort_lastused = true
+            sort_lastused = true,
+            mappings = {
+                n = {
+                    ['dd'] = actions.delete_buffer
+                },
+                i = {
+                    ['<C-k>'] = actions.delete_buffer
+                },
+            }
         }
     }
 }
