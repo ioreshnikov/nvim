@@ -591,13 +591,16 @@ require('lualine').setup {
     },
     sections = {
         lualine_a = {
-            mode
-        },
-        lualine_b = {
             {
-                filename,
+                mode,
                 padding = { left = 2, right = 1 }
             },
+            {
+                filename,
+                padding = { left = 1, right = 2 }
+            },
+        },
+        lualine_b = {
             'progress',
             'location'
         },
