@@ -121,6 +121,9 @@ Plug 'folke/todo-comments.nvim'
 " Indentation guides
 Plug 'lukas-reineke/indent-blankline.nvim'
 
+" Indent level autodetection
+Plug 'timakro/vim-yadi'
+
 " Automatically change cwd to the root of the project
 Plug 'ahmedkhalf/project.nvim'
 
@@ -272,10 +275,13 @@ set cursorline
 " Show whitespace characters
 set listchars=tab:→\ ,trail:⋅
 
+" Try to autodect indent level when a file is open
+autocmd BufRead * DetectIndent
 
-" Automatically expand tabs to 4 spaces. Indent by 4 spaces. Those are default
-" settings. They can be easily overriden by editing a specific after/ftplugin
-" file.
+" Otherwise use filetype specific
+filetype plugin indent on
+
+" As a fallback, indent by 4 spaces
 set expandtab
 set tabstop=4
 set shiftwidth=4
