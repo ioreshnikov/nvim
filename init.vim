@@ -509,7 +509,9 @@ autocmd WinLeave term://* stopinsert
 lua << EOF
 require('toggleterm').setup {
     highlights = {
-        Normal = { link = 'NormalSB' }
+        Normal = { link = 'NormalFloat' },
+        StatusLine = { link = 'FloatBorder' },
+        StatusLineNC = { link = 'FloatBorder' },
     },
     shade_terminals = false,
     size = function (term)
