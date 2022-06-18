@@ -549,6 +549,14 @@ lua require('which-key').setup()
 
 " }}}
 
+" Command line {{{
+" ----------------
+
+" It's possible now to hide command line and it looks neat!
+set cmdheight=0
+
+" }}}
+
 " Status line {{{
 " ---------------
 
