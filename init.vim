@@ -591,19 +591,20 @@ require('lualine').setup {
     options = {
         component_separators = '',
         section_separators = '',
+        disabled_filetypes = { 'neo-tree', 'toggleterm' }
     },
     sections = {
         lualine_a = {
             {
                 mode,
-                padding = { left = 2, right = 1 }
-            },
-            {
-                filename,
-                padding = { left = 1, right = 2 }
+                padding = { left = 1, right = 1 }
             },
         },
         lualine_b = {
+            {
+                filename,
+                padding = { left = 2, right = 2 }
+            },
             'progress',
             'location'
         },
