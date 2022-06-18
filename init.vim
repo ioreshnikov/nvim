@@ -462,10 +462,10 @@ telescope.setup {
             sort_lastused = true,
             mappings = {
                 n = {
-                    ['dd'] = actions.delete_buffer
+                    ['d'] = actions.delete_buffer
                 },
                 i = {
-                    ['<C-k>'] = actions.delete_buffer
+                    ['<C-d>'] = actions.delete_buffer
                 },
             }
         }
@@ -481,6 +481,7 @@ noremap <silent> <leader>ff :Telescope find_files<CR>
 noremap <silent> <leader>fe :Telescope file_browser<CR>
 noremap <silent> <leader>fp :Telescope project<CR>
 noremap <silent> <leader>fb :Telescope buffers<CR>
+noremap <silent> <leader>b  :Telescope buffers<CR>
 noremap <silent> <leader>fg :Telescope live_grep<CR>
 noremap <silent> <leader>fG :lua require('telescope.builtin').live_grep({grep_open_files=true})<CR>
 noremap <silent> <leader>fl :Telescope lsp_workspace_symbols<CR>
