@@ -591,7 +591,7 @@ require('lualine').setup {
     options = {
         component_separators = '',
         section_separators = '',
-        disabled_filetypes = { 'neo-tree', 'toggleterm' }
+        disabled_filetypes = { 'toggleterm' }
     },
     sections = {
         lualine_a = {
