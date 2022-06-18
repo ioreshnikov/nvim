@@ -1442,16 +1442,16 @@ set termguicolors
 
 " The best I've seen so far
 
-let g:tokyonight_style="night"
-let g:tokyonight_sidebars=["terminal", "qf"]
+" set background=dark
+" let g:tokyonight_style="night"
+" let g:tokyonight_sidebars=["terminal", "qf"]
 
-hi link NeotreeNormal NormalSB
-hi link NeotreeNormalNc NormalSB
+" colorscheme tokyonight
 
-colorscheme tokyonight
+" hi link NeotreeNormal NormalSB
+" hi link NeotreeNormalNc NormalSB
 
-" set background=light
-" colorscheme solarized
+colorscheme solarized
 
 " }}}
 
