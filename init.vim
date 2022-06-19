@@ -567,13 +567,13 @@ local filename = require('lualine.components.filename'):extend()
 filename.apply_icon = require('lualine.components.filetype').apply_icon
 
 local modesymbol = {
-    ['NORMAL'] = '',
-    ['INSERT'] = '',
-    ['VISUAL'] = 'ﱓ',
-    ['V-LINE'] = '',
-    ['V-BLOCK'] = '',
-    ['TERMINAL'] = '',
-    ['COMMAND'] = '',
+    ['NORMAL']   = ' NOR',
+    ['INSERT']   = ' INS',
+    ['VISUAL']   = 'ﱓ VIS',
+    ['V-LINE']   = ' VIS',
+    ['V-BLOCK']  = ' VIS',
+    ['TERMINAL'] = ' TERM',
+    ['COMMAND']  = ' CMD',
 }
 
 function mode()
