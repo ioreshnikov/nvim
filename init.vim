@@ -633,14 +633,15 @@ require('lualine').setup {
             },
             {
                 'diagnostics',
-                colored = false
+                colored = false,
+                padding = { left = 2, right = 1 }
             },
         },
         lualine_z = {
             {
                 'filetype',
                 colored = false,
-                padding = { left = 2, right = 2 }
+                padding = { left = 2, right = 1 }
             },
         }
     },
