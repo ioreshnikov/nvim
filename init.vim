@@ -651,9 +651,7 @@ require('lualine').setup {
             {
                 filename,
                 padding = { left = 2, right = 2 }
-            },
-            'progress',
-            'location'
+            }
         },
         lualine_c = {},
         lualine_x = {},
