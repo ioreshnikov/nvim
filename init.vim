@@ -567,13 +567,13 @@ local filename = require('lualine.components.filename'):extend()
 filename.apply_icon = require('lualine.components.filetype').apply_icon
 
 local modesymbol = {
-    ['NORMAL']   = ' NOR',
-    ['INSERT']   = ' INS',
-    ['VISUAL']   = 'ﱓ VIS',
-    ['V-LINE']   = ' VIS',
-    ['V-BLOCK']  = ' VIS',
-    ['TERMINAL'] = ' TERM',
-    ['COMMAND']  = ' CMD',
+    ['NORMAL']   = ' NORMAL',
+    ['INSERT']   = ' INSERT',
+    ['VISUAL']   = 'ﱓ VISUAL',
+    ['V-LINE']   = ' VISUAL',
+    ['V-BLOCK']  = ' VISUAL',
+    ['TERMINAL'] = ' TERMINAM',
+    ['COMMAND']  = ' COMMAND',
 }
 
 function mode()
@@ -613,10 +613,10 @@ require('lualine').setup {
                 filename,
                 padding = { left = 2, right = 2 }
             },
-            'progress',
-            'location'
         },
         lualine_c = {
+            'progress',
+            'location',
             { gps.get_location, cond = gps.is_available },
             { signature }
         },
