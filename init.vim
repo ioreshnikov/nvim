@@ -1420,6 +1420,8 @@ nnoremap <silent> <leader>k :bp \| sp \| bn \| bd<CR>
 " Neovide specific GUI settings {{{
 " ---------------------------------
 
+let g:neovide_input_macos_alt_is_meta=v:true
+
 let g:neovide_hide_mouse_when_typing = 1
 let g:neovide_cursor_animation_length = 0.03
 set guifont=JetBrainsMono\ Nerd\ Font:h14
@@ -1431,8 +1433,6 @@ else
     let g:neovide_fullscreen=v:false
 endif
 endfunction
-
-map <silent> <leader><F11> :call Neovide_fullscreen()<CR>
 
 " }}}
 
