@@ -298,6 +298,9 @@ autocmd BufWritePre * :%s/\s\+$//e
 set linebreak
 set showbreak=⤷\ "
 
+" Do not wrap by default. This is overriden in mode-by-mode basis.
+set wrap!
+
 " }}}
 
 " Folds {{{
