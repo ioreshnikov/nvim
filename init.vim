@@ -1106,11 +1106,22 @@ require('neo-tree').setup {
                 { 'name' },
             }
         },
-        window = { position = "left", width = 80 },
+        window = {
+            position = "left",
+            width = function ()
+                local suffix = "taxify/server"
+                if vim.fn.getcwd():sub(-string.len(suffix)) == suffix then
+                    return 80
+                else
+                    return 50
+                end
+            end
+        },
     },
     window = {
         mappings = {
             ["<space>"] = "none",  -- I like my leader key
+            ["<tab>"] = "toggle_node",
             ["/"] = "none",        -- I don't like filters, and I navigate by search
         }
     }
