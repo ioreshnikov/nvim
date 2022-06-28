@@ -385,16 +385,18 @@ tnoremap <silent> <A-l> <C-\><C-n><C-w>l
 " I am using soft line-wrap everywhere. The default navigation commands in vim
 " work on physical lines, not wrapped ones. This is really inconvinient. This
 " should fix it.
-nnoremap <silent> <expr> j v:count ? 'j' : 'gj'
-nnoremap <silent> <expr> k v:count ? 'k' : 'gk'
-nnoremap <silent> <expr> ^ v:count ? '^' : 'g^'
-nnoremap <silent> <expr> 0 v:count ? '0' : 'g0'
-nnoremap <silent> <expr> $ v:count ? '$' : 'g$'
-vnoremap <silent> <expr> j v:count ? 'j' : 'gj'
-vnoremap <silent> <expr> k v:count ? 'k' : 'gk'
-vnoremap <silent> <expr> ^ v:count ? '^' : 'g^'
-vnoremap <silent> <expr> 0 v:count ? '0' : 'g0'
-vnoremap <silent> <expr> $ v:count ? '$' : 'g$'
+
+nnoremap <silent> <expr> j v:count ? 'j' : !&wrap ? 'j' : 'gj'
+nnoremap <silent> <expr> k v:count ? 'k' : !&wrap ? 'k' : 'gk'
+nnoremap <silent> <expr> ^ v:count ? '^' : !&wrap ? '^' : 'g^'
+nnoremap <silent> <expr> 0 v:count ? '0' : !&wrap ? '0' : 'g0'
+nnoremap <silent> <expr> $ v:count ? '$' : !&wrap ? '$' : 'g$'
+
+vnoremap <silent> <expr> j v:count ? 'j' : !&wrap ? 'j' : 'gj'
+vnoremap <silent> <expr> k v:count ? 'k' : !&wrap ? 'k' : 'gk'
+vnoremap <silent> <expr> ^ v:count ? '^' : !&wrap ? '^' : 'g^'
+vnoremap <silent> <expr> 0 v:count ? '0' : !&wrap ? '0' : 'g0'
+vnoremap <silent> <expr> $ v:count ? '$' : !&wrap ? '$' : 'g$'
 
 " }}}
 
