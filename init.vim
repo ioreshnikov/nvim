@@ -1317,7 +1317,7 @@ EOF
 
 let g:unicoder_no_map=v:true
 nnoremap <silent> <C-\> :call unicoder#start(0)<CR>
-inoremap <silent> <C-\> <Esc>:call unicoder#start(1)<CR>
+inoremap <silent> <C-\> <C-o>:call unicoder#start(1)<CR>
 vnoremap <silent> <C-\> :<C-u>call unicoder#selection()<CR>
 
 " }}}
@@ -1492,7 +1492,7 @@ endif
 endfunction
 
 nnoremap <silent> <F12> :call Neovide_fullscreen()<CR>
-inoremap <silent> <F12> <ESC>:call Neovide_fullscreen()<CR>
+inoremap <silent> <F12> <C-o>:call Neovide_fullscreen()<CR>
 vnoremap <silent> <F12> <ESC>:call Neovide_fullscreen()<CR>gv
 
 " }}}
