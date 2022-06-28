@@ -1525,6 +1525,18 @@ set termguicolors
 
 colorscheme solarized
 
+function ToggleBackground()
+    if &background == 'dark'
+        set background=light
+    else
+        set background=dark
+    endif
+endfunction
+
+nnoremap <silent> <F6> :call ToggleBackground()<CR>
+inoremap <silent> <F6> <C-o>:call ToggleBackground()<CR>
+vnoremap <silent> <F6> <ESC>:call ToggleBackground()<CR>
+
 " }}}
 
 " TODOs
