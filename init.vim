@@ -71,6 +71,7 @@ Plug 'hrsh7th/cmp-nvim-lsp'
 Plug 'hrsh7th/cmp-buffer'
 Plug 'hrsh7th/cmp-path'
 Plug 'hrsh7th/cmp-cmdline'
+Plug 'hrsh7th/cmp-emoji'
 Plug 'hrsh7th/nvim-cmp'
 
 Plug 'onsails/lspkind-nvim'
@@ -136,6 +137,9 @@ Plug 'rktjmp/lush.nvim'
 
 " REST client
 Plug 'NTBBloodbath/rest.nvim'
+
+" Org-mode
+Plug 'nvim-orgmode/orgmode'
 
 call plug#end()
 
@@ -724,11 +728,13 @@ noremap <silent> <leader>gt :GitBlameToggle<CR>
 " The section below configures `tree-sitter` to be used for syntax
 " highlighting, selection, indentation and automatic delimiters pairing.
 lua << EOF
+require('orgmode').setup_ts_grammar()
 require('nvim-treesitter.configs').setup {
     ensure_installed = 'all',
     ignore_install = {'phpdoc'},
     highlight = {
-        enable = true
+        enable = true,
+        additional_vim_regex_highlighting = {'org'}
     },
     incremental_selection = {
         enable = true,
@@ -854,6 +860,12 @@ cmp.setup({
         },
         {
             { name = 'nvim_lsp_signature_help' }
+        },
+        {
+            { name = 'emoji' }
+        },
+        {
+            { name = 'orgmode' }
         }
     ),
     formatting = {
@@ -1395,6 +1407,32 @@ autocmd BufRead,BufNewFile Dockerfile.* set filetype=dockerfile
 
 " }}}
 
+" Org-mode {{{
+" --------
+
+lua << EOF
+require('orgmode').setup {
+    org_default_notes_file = '~/Org/Index.org',
+    org_todo_keywords = { 'TODO', 'LIVE', '|', 'DONE', 'FAIL', 'ABRT' },
+    org_hide_emphasis_markers = true,
+    org_capture_templates = {
+        s = {
+            description = 'Standup',
+            template = '* %(return os.date("%A, %d %B %Y", os.time() + 60 * 60 * 24))\n\n  *Yesterday*\n  - %?\n\n  *Today*\n  - \n',
+            target = '~/Org/Index.org',
+            headline = 'Standups',
+        },
+        a = {
+            description = 'Code annotation',
+            template = '* %? \n\n  %a\n',
+            target = '~/Org/Index.org',
+            headline = 'Code annotations',
+        },
+    },
+}
+EOF
+
+" }}}
 
 " Random things {{{
 " -----------------
