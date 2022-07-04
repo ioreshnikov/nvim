@@ -53,12 +53,14 @@ Plug 'nvim-telescope/telescope.nvim'
 Plug 'nvim-telescope/telescope-fzf-native.nvim', { 'do': 'make' }
 Plug 'nvim-telescope/telescope-project.nvim'
 Plug 'nvim-telescope/telescope-file-browser.nvim'
+Plug 'tami5/sqlite.lua'
+Plug 'nvim-telescope/telescope-frecency.nvim'
 
 " Modern syntax highlight with `tree-sitter`
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 
 " Managing Git repos
-Plug 'TimUntersberger/neogit'
+Plug 'ioreshnikov/neogit'
 
 " Git blame
 Plug 'f-person/git-blame.nvim'
@@ -481,6 +483,7 @@ telescope.setup {
 telescope.load_extension('project')
 telescope.load_extension('file_browser')
 telescope.load_extension('fzf')
+telescope.load_extension('frecency')
 EOF
 
 noremap <silent> <leader>ff :Telescope find_files<CR>
@@ -491,7 +494,7 @@ noremap <silent> <leader>b  :Telescope buffers<CR>
 noremap <silent> <leader>fg :Telescope live_grep<CR>
 noremap <silent> <leader>fG :lua require('telescope.builtin').live_grep({grep_open_files=true})<CR>
 noremap <silent> <leader>fl :Telescope lsp_workspace_symbols<CR>
-noremap <silent> <leader>fh :Telescope oldfiles<CR>
+noremap <silent> <leader>fh :Telescope frecency<CR>
 noremap <silent> <leader>fm :Telescope marks<CR>
 noremap <silent> <leader>fr :Telescope resume<CR>
 
