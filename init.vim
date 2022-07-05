@@ -1515,6 +1515,9 @@ EOF
 nnoremap <silent> <leader>ll :lua copy_current_location_url()<CR>
 nnoremap <silent> <leader>lm :lua copy_current_location_markdown_url()<CR>
 
+" Disable startup message
+set shm+=I
+
 " }}}
 
 " Neovide specific GUI settings {{{
