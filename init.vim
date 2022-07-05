@@ -1526,7 +1526,8 @@ set shm+=I
 let g:neovide_input_macos_alt_is_meta=v:true
 
 let g:neovide_hide_mouse_when_typing = 1
-let g:neovide_cursor_animation_length = 0.03
+let g:neovide_cursor_animation_length = 0.05
+let g:neovide_cursor_vfx_mode = 'railgun'
 set guifont=JetBrainsMono\ Nerd\ Font:h14
 
 function Neovide_fullscreen()
