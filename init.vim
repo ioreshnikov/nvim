@@ -1445,7 +1445,7 @@ noremap <silent> <leader>w :w<CR>
 
 " And center the current line on screen (and remove highlight)
 nnoremap <silent> <C-l> zz:noh<CR>
-inoremap <silent> <C-l> zza:noh<CR>
+inoremap <silent> <C-l> <ESC>zz:noh<CR>a
 
 " Clear message area after a timeout
 set updatetime=2000
