@@ -60,7 +60,7 @@ Plug 'nvim-telescope/telescope-frecency.nvim'
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 
 " Managing Git repos
-Plug 'ioreshnikov/neogit'
+Plug 'TimUntersberger/neogit'
 
 " Git blame
 Plug 'f-person/git-blame.nvim'
