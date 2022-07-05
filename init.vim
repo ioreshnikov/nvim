@@ -1591,8 +1591,6 @@ vnoremap <silent> <F6> <ESC>:call ToggleBackground()<CR>
 
 " A short list of things I would like to have set up.
 
-" DONE: LSP function signature
 " BUG: Neogit log has been broken for a month. Should I do the bugfix?
-" DONE: Use icons for vim mode in lualine
 " TODO: Fix the terminal reopening
 " TODO: Fix navigating to a changed file from Neogit's status window
