@@ -365,12 +365,12 @@ tnoremap <silent> <A-9> <C-\><C-n>9gt
 " Quick navigation between the splits
 noremap <silent> <A-v> :vsp<CR>
 noremap <silent> <A-s> :split<CR>
-noremap <silent> <A-q> :q<CR>
+noremap <silent> <A-q> :close<CR>
 noremap <silent> <A-o> :only<CR>
 
 tnoremap <silent> <A-v> <C-\><C-n>:vsp<CR>
 tnoremap <silent> <A-s> <C-\><C-n>:split<CR>
-tnoremap <silent> <A-q> <C-\><C-n>:q<CR>
+tnoremap <silent> <A-q> <C-\><C-n>:close<CR>
 tnoremap <silent> <A-o> <C-\><C-n>:only<CR>
 
 noremap <silent> <A-h> <C-w>h
