@@ -326,9 +326,6 @@ set foldmethod=marker
 noremap <silent> <C-t> :tabnew<CR>
 noremap <silent> <C-w> :tabclose<CR>
 
-inoremap <silent> <C-t> <ESC>:tabnew<CR>
-inoremap <silent> <C-w> <ESC>:tabclose<CR>
-
 tnoremap <silent> <C-t> <C-\><C-n>:tabnew<CR>
 tnoremap <silent> <C-w> <C-\><C-n>:tabclose<CR>
 
@@ -341,16 +338,6 @@ noremap <silent> <A-6> 6gt
 noremap <silent> <A-7> 7gt
 noremap <silent> <A-8> 8gt
 noremap <silent> <A-9> 9gt
-
-inoremap <silent> <A-1> <ESC>1gt
-inoremap <silent> <A-2> <ESC>2gt
-inoremap <silent> <A-3> <ESC>3gt
-inoremap <silent> <A-4> <ESC>4gt
-inoremap <silent> <A-5> <ESC>5gt
-inoremap <silent> <A-6> <ESC>6gt
-inoremap <silent> <A-7> <ESC>7gt
-inoremap <silent> <A-8> <ESC>8gt
-inoremap <silent> <A-9> <ESC>9gt
 
 tnoremap <silent> <A-1> <C-\><C-n>1gt
 tnoremap <silent> <A-2> <C-\><C-n>2gt
@@ -788,6 +775,18 @@ xmap <silent> ie <Plug>CamelCaseMotion_ie
 
 imap <silent> <S-Left> <C-o><Plug>CamelCaseMotion_b
 imap <silent> <S-Right> <C-o><Plug>CamelCaseMotion_w
+
+" }}}
+
+" Emacs-like motion keys in insert mode {{{
+" -------------------------------------
+
+inoremap <silent> <C-e> <C-o>$
+inoremap <silent> <C-a> <C-o>0
+inoremap <silent> <C-f> <C-o>l
+inoremap <silent> <C-b> <C-o>h
+inoremap <silent> <M-f> <C-o><Plug>CamelCaseMotion_w
+inoremap <silent> <M-b> <C-o><Plug>CamelCaseMotion_b
 
 " }}}
 
