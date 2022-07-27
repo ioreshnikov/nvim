@@ -1421,7 +1421,7 @@ require('orgmode').setup {
     org_capture_templates = {
         s = {
             description = 'Standup',
-            template = '* %(return os.date("%A, %d %B %Y", os.time() + 60 * 60 * 24))\n\n  *Yesterday*\n  - %?\n\n  *Today*\n  - \n',
+            template = '* %(return os.date("%A, %d %B %Y", os.time() + 60 * 60 * 24))\n\n  *Yesterday*\n\n  - %?\n\n  *Today*\n\n  - \n\n',
             target = '~/Org/Index.org',
             headline = 'Standups',
         },
@@ -1429,7 +1429,7 @@ require('orgmode').setup {
             description = 'Code annotation',
             template = '* %? \n\n  %a\n',
             target = '~/Org/Index.org',
-            headline = 'Code annotations',
+            headline = 'Annotations',
         },
     },
 }
