@@ -1485,9 +1485,7 @@ local function current_location_url()
     local repo = git_current_repo()
     local hash = git_current_hash()
 
-    local cursor = vim.api.nvim_win_get_cursor(0)
-    local linenr = cursor[1]
-
+    local linenr = vim.api.nvim_win_get_cursor(0)[1]
 
     local url =
         'https://github.com/' .. repo ..
@@ -1510,10 +1508,18 @@ function copy_current_location_markdown_url(repo)
     local url = current_location_markdown_url(repo)
     vim.fn.setreg('*', url)
 end
+
+function copy_current_location_orgmode_url(repo)
+    local path = vim.api.nvim_buf_get_name(0)
+    local linenr = vim.api.nvim_win_get_cursor(0)[1]
+    local url = string.format('[[file:%s +%s]]', path, linenr);
+    vim.fn.setreg('*', url);
+end
 EOF
 
 nnoremap <silent> <leader>lgl :lua copy_current_location_url()<CR>
 nnoremap <silent> <leader>lgm :lua copy_current_location_markdown_url()<CR>
+nnoremap <silent> <leader>lgo :lua copy_current_location_orgmode_url()<CR>
 
 " Disable startup message
 set shm+=I
