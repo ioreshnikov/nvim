@@ -702,7 +702,7 @@ require('neogit').setup {
 EOF
 
 " A simple key combination for opening git status anywhere
-noremap <silent> <leader>g :Neogit<CR>
+noremap <silent> <leader>gg :Neogit<CR>
 
 " Git blame as virtual text
 let g:gitblame_enabled = 0
@@ -1124,14 +1124,7 @@ require('neo-tree').setup {
         },
         window = {
             position = "left",
-            width = function ()
-                local suffix = "taxify/server"
-                if vim.fn.getcwd():sub(-string.len(suffix)) == suffix then
-                    return 80
-                else
-                    return 50
-                end
-            end
+            width = 50
         },
     },
     window = {
@@ -1518,7 +1511,7 @@ EOF
 
 nnoremap <silent> <leader>lgl :lua copy_current_location_url()<CR>
 nnoremap <silent> <leader>lgm :lua copy_current_location_markdown_url()<CR>
-nnoremap <silent> <leader>lgo :lua copy_current_location_orgmode_url()<CR>
+nnoremap <silent> <leader>lo :lua copy_current_location_orgmode_url()<CR>
 
 " Disable startup message
 set shm+=I
