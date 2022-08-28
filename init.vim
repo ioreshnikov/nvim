@@ -541,7 +541,15 @@ nnoremap <silent> <leader>tt :ToggleTerm direction=tab<CR>
 " Which key {{{
 " -------------
 
-lua require('which-key').setup()
+lua << EOF
+require('which-key').setup({
+    icons = {
+        breadcrumbs = ">",
+        separator = "->",
+        group = "+"
+    }
+})
+EOF
 
 " }}}
 
