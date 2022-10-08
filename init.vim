@@ -419,11 +419,10 @@ telescope.setup {
             '%.pyc',
             'node_modules/',
             'target/',
-            'gen/'
         },
         layout_strategy = 'bottom_pane',
         layout_config = {
-            height = 0.55,
+            height = 0.33,
             prompt_position = 'top',
         },
         path_display = function (opts, path)
