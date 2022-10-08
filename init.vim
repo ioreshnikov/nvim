@@ -635,7 +635,7 @@ require('lualine').setup {
             {
                 'diff',
                 colored = false,
-                symbols = {added = '落', modified = ' ', removed = '  ' }
+                symbols = {added = '落', modified = ' ', removed = ' ' }
             },
             {
                 'diagnostics',
