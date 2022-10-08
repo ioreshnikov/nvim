@@ -143,6 +143,8 @@ Plug 'NTBBloodbath/rest.nvim'
 " Org-mode
 Plug 'nvim-orgmode/orgmode'
 
+Plug 'ioreshnikov/helix'
+
 call plug#end()
 
 " }}}
@@ -1576,7 +1578,8 @@ set termguicolors
 " hi link NeotreeNormal NormalSB
 " hi link NeotreeNormalNc NormalSB
 
-colorscheme solarized
+" colorscheme solarized
+colorscheme helix
 
 function ToggleBackground()
     if &background == 'dark'
