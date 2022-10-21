@@ -41,8 +41,8 @@ Plug 'junegunn/vim-plug'
 
 " Some of my favourite color themes
 Plug 'folke/tokyonight.nvim'
-Plug 'ioreshnikov/solarized'
 Plug 'gruvbox-community/gruvbox'
+Plug 'ioreshnikov/solarized'
 
 " Text icons
 Plug 'kyazdani42/nvim-web-devicons'
@@ -142,6 +142,7 @@ Plug 'NTBBloodbath/rest.nvim'
 " Org-mode
 Plug 'nvim-orgmode/orgmode'
 
+" My custom port of Helix editor color theme. Really purple
 Plug 'ioreshnikov/helix'
 
 call plug#end()
