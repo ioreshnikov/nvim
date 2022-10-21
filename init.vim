@@ -142,6 +142,9 @@ Plug 'NTBBloodbath/rest.nvim'
 " Org-mode
 Plug 'nvim-orgmode/orgmode'
 
+" Live preview commands
+Plug 'smjonas/live-command.nvim'
+
 " My custom port of Helix editor color theme. Really purple
 Plug 'ioreshnikov/helix'
 
@@ -1433,6 +1436,19 @@ require('orgmode').setup {
             headline = 'Annotations',
         },
     },
+}
+EOF
+
+" }}}
+
+" Live command preview {{{
+" --------------------
+
+lua << EOF
+require('live-command').setup {
+    commands = {
+        Norm = { cmd = "norm" }
+    }
 }
 EOF
 
