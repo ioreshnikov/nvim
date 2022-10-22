@@ -846,6 +846,8 @@ inoremap <silent> <C-e> <C-o>$
 inoremap <silent> <C-a> <C-o>0
 inoremap <silent> <C-f> <C-o>l
 inoremap <silent> <C-b> <C-o>h
+inoremap <silent> <C-n> <C-o>j
+inoremap <silent> <C-p> <C-o>k
 inoremap <silent> <M-f> <C-o><Plug>CamelCaseMotion_w
 inoremap <silent> <M-b> <C-o><Plug>CamelCaseMotion_b
 
