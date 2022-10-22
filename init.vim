@@ -58,6 +58,9 @@ Plug 'tami5/sqlite.lua'
 " Modern syntax highlight with `tree-sitter`
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 
+" Text objects with treesitter
+Plug 'nvim-treesitter/nvim-treesitter-textobjects'
+
 " Managing Git repos
 Plug 'TimUntersberger/neogit'
 
@@ -749,6 +752,53 @@ require('nvim-treesitter.configs').setup {
     indent = {
         enable = true,
         disable = { 'python' }
+    },
+    textobjects = {
+        select = {
+            enable = true,
+            lookahead = true,
+            keymaps = {
+                ["ia"] = "@parameter.inner",
+                ["aa"] = "@parameter.outer",
+                ["if"] = "@function.inner",
+                ["af"] = "@function.outer",
+                ["ic"] = "@class.inner",
+                ["ac"] = "@class.outer",
+            },
+        },
+        swap = {
+            enable = true,
+            swap_next = {
+                ["<leader>sa"] = "@parameter.inner"
+            },
+            swap_previous = {
+                ["<leader>sA"] = "@parameter.inner"
+            }
+        },
+        move = {
+            enable = true,
+            set_jumps = true,
+            goto_next_start = {
+                ["]a"] = "@parameter.inner",
+                ["]f"] = "@function.outer",
+                ["]c"] = "@class.outer",
+            },
+            goto_next_end = {
+                ["]A"] = "@parameter.outer",
+                ["]F"] = "@function.outer",
+                ["]C"] = "@class.outer",
+            },
+            goto_previous_start = {
+                ["[a"] = "@parameter.inner",
+                ["[f"] = "@function.outer",
+                ["[c"] = "@class.outer",
+            },
+            goto_previous_end = {
+                ["[A"] = "@parameter.outer",
+                ["[F"] = "@function.outer",
+                ["[C"] = "@class.outer",
+            }
+        }
     }
 }
 EOF
