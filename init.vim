@@ -61,6 +61,9 @@ Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 " Text objects with treesitter
 Plug 'nvim-treesitter/nvim-treesitter-textobjects'
 
+" Sticky context on top of buffer
+Plug 'nvim-treesitter/nvim-treesitter-context'
+
 " Managing Git repos
 Plug 'TimUntersberger/neogit'
 
@@ -91,7 +94,6 @@ Plug 'mfussenegger/nvim-dap'
 
 " Use a custom statusline
 Plug 'nvim-lualine/lualine.nvim'
-Plug 'SmiteshP/nvim-gps'
 
 " Toggleable terminal
 Plug 'akinsho/toggleterm.nvim'
@@ -602,9 +604,6 @@ function signature()
     return signature.label
 end
 
-local gps = require('nvim-gps')
-gps.setup()
-
 require('lualine').setup {
     options = {
         component_separators = '',
@@ -627,7 +626,6 @@ require('lualine').setup {
         lualine_c = {
             'progress',
             'location',
-            { gps.get_location, cond = gps.is_available },
             { signature }
         },
         lualine_x = {
@@ -669,6 +667,15 @@ require('lualine').setup {
         lualine_z = {}
     }
 }
+EOF
+
+" }}}
+
+" Context in header {{{
+" ---------------------
+
+lua << EOF
+require('treesitter-context').setup {}
 EOF
 
 " }}}
