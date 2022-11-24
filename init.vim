@@ -435,9 +435,9 @@ telescope.setup {
             prompt_position = 'top',
         },
         path_display = function (opts, path)
-            return ' ' .. path
+            return path
         end,
-        prompt_prefix = '    ',
+        prompt_prefix = '   ',
         prompt_title = false,
         results_title = ' ',
         selection_caret = '  ',
