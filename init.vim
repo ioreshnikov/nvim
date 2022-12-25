@@ -64,6 +64,9 @@ Plug 'nvim-treesitter/nvim-treesitter-textobjects'
 " Sticky context on top of buffer
 Plug 'nvim-treesitter/nvim-treesitter-context'
 
+" Structural searhc and replace
+Plug 'cshuaimin/ssr.nvim'
+
 " Managing Git repos
 Plug 'TimUntersberger/neogit'
 
@@ -816,6 +819,12 @@ EOF
 " Some of the grammars in 'all' are occasionally broken. One of them is
 " 'phpdoc', but the list will surely grow.
 
+" }}}
+
+" Structural search and replace {{{
+" -----------------------------
+nnoremap <silent> <leader>ssr :lua require('ssr').open()<CR>
+vnoremap <silent> <leader>ssr :lua require('ssr').open()<CR>
 " }}}
 
 " Subword navigation {{{
