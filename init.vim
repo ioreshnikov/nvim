@@ -119,6 +119,9 @@ Plug 'windwp/nvim-autopairs'
 " TeX
 Plug 'lervag/vimtex'
 
+" Prettier javascript
+Plug 'prettier/vim-prettier', { 'do': 'yarn install --frozen-lockfile --production' }
+
 " Unicode symbols entry
 Plug 'joom/latex-unicoder.vim'
 
