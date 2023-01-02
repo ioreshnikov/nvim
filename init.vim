@@ -61,9 +61,6 @@ Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 " Text objects with treesitter
 Plug 'nvim-treesitter/nvim-treesitter-textobjects'
 
-" Sticky context on top of buffer
-Plug 'nvim-treesitter/nvim-treesitter-context'
-
 " Structural searhc and replace
 Plug 'cshuaimin/ssr.nvim'
 
@@ -673,15 +670,6 @@ require('lualine').setup {
         lualine_z = {}
     }
 }
-EOF
-
-" }}}
-
-" Context in header {{{
-" ---------------------
-
-lua << EOF
-require('treesitter-context').setup {}
 EOF
 
 " }}}
