@@ -1662,11 +1662,3 @@ vnoremap <silent> <F6> <ESC>:call ToggleBackground()<CR>
 
 " }}}
 
-" TODOs
-" -----
-
-" A short list of things I would like to have set up.
-
-" BUG: Neogit log has been broken for a month. Should I do the bugfix?
-" TODO: Fix the terminal reopening
-" TODO: Fix navigating to a changed file from Neogit's status window
