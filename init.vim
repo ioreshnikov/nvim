@@ -437,9 +437,6 @@ telescope.setup {
             height = 0.33,
             prompt_position = 'top',
         },
-        path_display = function (opts, path)
-            return path
-        end,
         prompt_prefix = '   ',
         prompt_title = false,
         results_title = ' ',
