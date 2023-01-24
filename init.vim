@@ -1077,6 +1077,10 @@ _G.ioextra.on_attach = function(client, buffer)
         buffer,
         'n', 'K', '<cmd>lua vim.lsp.buf.hover()<CR>',
         { noremap = true, silent = true })
+    vim.api.nvim_buf_set_keymap(
+        buffer,
+        'n', 'ge', '<cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<CR>',
+        { noremap = true, silent = true })
 end
 EOF
 
