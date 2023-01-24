@@ -1223,9 +1223,7 @@ local cmplsp = require('cmp_nvim_lsp')
 
 config.vimls.setup {
     on_attach = ioextra.on_attach,
-    capabilities = cmplsp.update_capabilities(
-        vim.lsp.protocol.make_client_capabilities()
-    )
+    capabilities = cmplsp.default_capabilities()
 }
 EOF
 
@@ -1241,9 +1239,7 @@ local cmplsp = require('cmp_nvim_lsp')
 
 config.sumneko_lua.setup {
     on_attach = ioextra.on_attach,
-    capabilities = cmplsp.update_capabilities(
-        vim.lsp.protocol.make_client_capabilities()
-    )
+    capabilities = cmplsp.default_capabilities()
 }
 EOF
 
@@ -1259,9 +1255,7 @@ local cmplsp = require('cmp_nvim_lsp')
 
 config.pyright.setup {
     on_attach = ioextra.on_attach,
-    capabilities = cmplsp.update_capabilities(
-        vim.lsp.protocol.make_client_capabilities()
-    )
+    capabilities = cmplsp.default_capabilities()
 }
 EOF
 
@@ -1297,11 +1291,9 @@ lua << EOF
 local config = require('lspconfig')
 local cmplsp = require('cmp_nvim_lsp')
 
-config.tsserver.setup {
+local capabilities = config.tsserver.setup {
     on_attach = ioextra.on_attach,
-    capabilities = cmplsp.update_capabilities(
-        vim.lsp.protocol.make_client_capabilities()
-    ),
+    capabilities = cmplsp.default_capabilities(),
     root_dir = config.util.root_pattern('.git')
 }
 EOF
@@ -1364,15 +1356,11 @@ local cmplsp = require('cmp_nvim_lsp')
 
 config.html.setup {
     on_attach = ioextra.on_attach,
-    capabilities = cmplsp.update_capabilities(
-        vim.lsp.protocol.make_client_capabilities()
-    )
+    capabilities = cmplsp.default_capabilities()
 }
 config.cssls.setup {
     on_attach = ioextra.on_attach,
-    capabilities = cmplsp.update_capabilities(
-        vim.lsp.protocol.make_client_capabilities()
-    )
+    capabilities = cmplsp.default_capabilities()
 }
 EOF
 
@@ -1389,9 +1377,7 @@ local cmplsp = require('cmp_nvim_lsp')
 
 config.texlab.setup {
     on_attach = ioextra.on_attach,
-    capabilities = cmplsp.update_capabilities(
-        vim.lsp.protocol.make_client_capabilities()
-    )
+    capabilities = cmplsp.default_capabilities()
 }
 EOF
 
@@ -1413,9 +1399,7 @@ local cmplsp = require('cmp_nvim_lsp')
 
 config.rust_analyzer.setup {
     on_attach = ioextra.on_attach,
-    capabilities = cmplsp.update_capabilities(
-        vim.lsp.protocol.make_client_capabilities()
-    )
+    capabilities = cmplsp.default_capabilities()
 }
 EOF
 
@@ -1431,9 +1415,7 @@ local cmplsp = require('cmp_nvim_lsp')
 
 config.gopls.setup {
     on_attach = ioextra.on_attach,
-    capabilities = cmplsp.update_capabilities(
-        vim.lsp.protocol.make_client_capabilities()
-    )
+    capabilities = cmplsp.default_capabilities()
 }
 EOF
 
@@ -1449,12 +1431,23 @@ local cmplsp = require('cmp_nvim_lsp')
 
 config.phpactor.setup {
     on_attach = ioextra.on_attach,
-    capabilities = cmplsp.update_capabilities(
-        vim.lsp.protocol.make_client_capabilities()
-    )
+    capabilities = cmplsp.default_capabilities()
 }
 EOF
 
+" }}}
+
+" Language: SQL {{{
+" -----------------
+lua << EOF
+local config = require('lspconfig')
+local cmplsp = require('cmp_nvim_lsp')
+
+config.sqlls.setup {
+    on_attach = ioextra.on_attach,
+    capabilities = cmplsp.default_capabilities()
+}
+EOF
 " }}}
 
 " REST client {{{
