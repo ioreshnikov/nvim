@@ -182,7 +182,7 @@ function log(message)
     local line = info.short_src .. ":" .. info.currentline
     local output = string.format("%s %s %s\n", date, line, message)
 
-    local file = io.open("/home/me/nvim.log", "a")
+    local file = io.open(os.getenv('HOME') .. "/nvim.log", "a")
     file:write(output)
     file:close()
 end
