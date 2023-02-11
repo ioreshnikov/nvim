@@ -1290,7 +1290,7 @@ local cmplsp = require('cmp_nvim_lsp')
 local capabilities = config.tsserver.setup {
     on_attach = ioextra.on_attach,
     capabilities = cmplsp.default_capabilities(),
-    root_dir = config.util.root_pattern('.git')
+    root_dir = config.util.root_pattern('tsconfig.json')
 }
 EOF
 
