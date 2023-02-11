@@ -514,15 +514,16 @@ lua << EOF
 require('toggleterm').setup {
     highlights = {
         Normal = { guifg = "#ffffff", guibg = "#000000" },
+        CursorLine = { guifg = "#ffffff", guibg = "#181818" },
         StatusLine = { link = 'StatusLine' },
-        StatusLineNC = { link = 'StatusLineNC' }
+        StatusLineNC = { link = 'StatusLineNC' },
     },
     shade_terminals = false,
     size = function (term)
         if term.direction == 'horizontal' then
-           return vim.o.lines * 0.5
+            return 25
         elseif term.direction == 'vertical' then
-            return vim.o.columns * 0.5
+            return 80
         else
             return 25
         end
