@@ -431,16 +431,18 @@ telescope.setup {
             '%.pyc',
             'node_modules/',
             'target/',
+            'gen/'
         },
         layout_strategy = 'bottom_pane',
         layout_config = {
-            height = 0.33,
+            height = 0.5,
             prompt_position = 'top',
         },
         prompt_prefix = '   ',
         prompt_title = false,
         results_title = ' ',
         selection_caret = '  ',
+        sorter = sorters.get_fzy_sorter,
         sorting_strategy = 'ascending'
     },
     extensions = {
