@@ -513,14 +513,14 @@ autocmd WinLeave term://* stopinsert
 lua << EOF
 require('toggleterm').setup {
     highlights = {
-        Normal = { link = 'NormalFloat' },
-        StatusLine = { link = 'FloatBorder' },
-        StatusLineNC = { link = 'FloatBorder' },
+        Normal = { guifg = "#ffffff", guibg = "#000000" },
+        StatusLine = { link = 'StatusLine' },
+        StatusLineNC = { link = 'StatusLineNC' }
     },
     shade_terminals = false,
     size = function (term)
         if term.direction == 'horizontal' then
-           return vim.o.lines * 0.4
+           return vim.o.lines * 0.5
         elseif term.direction == 'vertical' then
             return vim.o.columns * 0.5
         else
@@ -608,7 +608,7 @@ require('lualine').setup {
     options = {
         component_separators = '',
         section_separators = '',
-        disabled_filetypes = { 'toggleterm' }
+        disabled_filetypes = {}
     },
     sections = {
         lualine_a = {
