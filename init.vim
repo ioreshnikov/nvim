@@ -635,11 +635,6 @@ require('lualine').setup {
         },
         lualine_y = {
             {
-                'diff',
-                colored = false,
-                symbols = {added = '落', modified = ' ', removed = ' ' }
-            },
-            {
                 'diagnostics',
                 colored = false,
                 padding = { left = 2, right = 1 }
