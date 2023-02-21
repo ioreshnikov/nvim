@@ -1491,82 +1491,6 @@ require('live-command').setup {
 
 -- Random things {{{
 -- -----------------
-
-
--- " Copy publically visible url to the current file
--- lua << EOF
--- local function exec(command)
---     return io.popen(command):read('*a'):gsub('%s+', '')
--- end
-
--- local function git_current_repo()
---     local origin = exec('git config --get remote.origin.url')
---     if origin:find('^https://') then
---         return origin
---     else
---         for match in string.gmatch(origin, '%S-:(%S+).git') do
---             return match
---         end
---     end
--- end
-
--- local function git_current_hash()
---     return exec('git rev-parse HEAD')
--- end
-
--- local function current_location_url()
---     local Path = require('plenary.path')
-
---     local absolute_path = vim.api.nvim_buf_get_name(0)
---     local cwd = vim.fn.getcwd()
---     local relative_path = Path:new(absolute_path):make_relative()
-
---     local repo = git_current_repo()
---     local hash = git_current_hash()
-
---     local linenr = vim.api.nvim_win_get_cursor(0)[1]
-
---     local url =
---         'https://github.com/' .. repo ..
---         '/blob/' .. hash .. '/' .. relative_path ..
---         '#L' .. linenr
---     return url
--- end
-
--- local function current_location_markdown_url(repo)
---     local url = current_location_url(repo)
---     return '[](' .. url .. ')'
--- end
-
--- function copy_current_location_url(repo)
---     local url = current_location_url(repo)
---     vim.fn.setreg('*', url)
--- end
-
--- function copy_current_location_markdown_url(repo)
---     local url = current_location_markdown_url(repo)
---     vim.fn.setreg('*', url)
--- end
-
--- function copy_current_location_orgmode_url(repo)
---     local path = vim.api.nvim_buf_get_name(0)
---     local linenr = vim.api.nvim_win_get_cursor(0)[1]
---     local url = string.format('[[file:%s +%s]]', path, linenr);
---     vim.fn.setreg('*', url);
--- end
--- EOF
-
--- nnoremap <silent> <leader>lgl :lua copy_current_location_url()<CR>
--- nnoremap <silent> <leader>lgm :lua copy_current_location_markdown_url()<CR>
--- nnoremap <silent> <leader>lo :lua copy_current_location_orgmode_url()<CR>
-
--- " Disable startup message
--- set shm+=I
-
--- " }}}
-
--- Random things {{{
--- -----------------
 -- A faster way to save files
 noremap { lhs = '<leader>w', rhs = ':w<CR>', desc = ' Write file' }
 
@@ -1587,6 +1511,73 @@ nnoremap {
 
 -- Disable startup message
 vim.opt.shm = vim.opt.shm + 'I'
+
+-- Copy publically visible url to the current file
+do
+    local function exec(command)
+        return io.popen(command):read('*a'):gsub('%s+', '')
+    end
+
+    local function git_current_repo()
+        local origin = exec('git config --get remote.origin.url')
+        if origin:find('^https://') then
+            return origin
+        else
+            for match in string.gmatch(origin, '%S-:(%S+).git') do
+                return match
+            end
+        end
+    end
+
+    local function git_current_hash()
+        return exec('git rev-parse HEAD')
+    end
+
+    local function current_location_url()
+        local Path = require('plenary.path')
+
+        local absolute_path = vim.api.nvim_buf_get_name(0)
+        local cwd = vim.fn.getcwd()
+        local relative_path = Path:new(absolute_path):make_relative()
+
+        local repo = git_current_repo()
+        local hash = git_current_hash()
+
+        local linenr = vim.api.nvim_win_get_cursor(0)[1]
+
+        local url =
+            'https://github.com/' .. repo ..
+            '/blob/' .. hash .. '/' .. relative_path ..
+            '#L' .. linenr
+        return url
+    end
+
+    local function current_location_markdown_url()
+        local url = current_location_url()
+        return '[](' .. url .. ')'
+    end
+
+    local function copy_current_location_url()
+        local url = current_location_url()
+        vim.fn.setreg('*', url)
+    end
+
+    local function copy_current_location_markdown_url()
+        local url = current_location_markdown_url()
+        vim.fn.setreg('*', url)
+    end
+
+    local function copy_current_location_orgmode_url()
+        local path = vim.api.nvim_buf_get_name(0)
+        local linenr = vim.api.nvim_win_get_cursor(0)[1]
+        local url = string.format('[[file:%s +%s]]', path, linenr);
+        vim.fn.setreg('*', url);
+    end
+
+    nnoremap { lhs = '<leader>lgl', rhs = copy_current_location_url, desc = ' GitHub link here (text)' }
+    nnoremap { lhs = '<leader>lgm', rhs = copy_current_location_markdown_url, desc = ' GitHub link here (md)' }
+    nnoremap { lhs = '<leader>lo', rhs = copy_current_location_orgmode_url, desc = ' Org-mode link here' }
+end
 -- }}}
 
 -- Neovide specific GUI settings {{{
