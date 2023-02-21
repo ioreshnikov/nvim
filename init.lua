@@ -127,6 +127,9 @@ use 'rktjmp/lush.nvim'
 use 'ioreshnikov/helix'
 use 'ioreshnikov/solarized'
 
+-- Automatically switch background on sunset/sunrise
+use 'JManch/sunset.nvim'
+
 end)
 -- }}}
 
@@ -1605,7 +1608,7 @@ noremap {
 -- Color scheme {{{
 -- ----------------
 vim.api.nvim_command([[
-    colorscheme helix
+    colorscheme solarized
 
     function ToggleBackground()
         if &background == 'dark'
@@ -1619,4 +1622,9 @@ vim.api.nvim_command([[
     inoremap <silent> <F6> <C-o>:call ToggleBackground()<CR>
     vnoremap <silent> <F6> <ESC>:call ToggleBackground()<CR>
 ]])
+
+require('sunset').setup({
+    latitude  = 52.5200,
+    longitude = 13.4050
+})
 -- }}}
