@@ -305,7 +305,7 @@ vim.opt.foldmethod = 'marker'
 
 -- Quick navigation between the tabs
 noremap { lhs = '<C-t>', rhs = ':tabnew<CR>' }
-noremap { lhs = '<C-w>', rhs = ':t abclose<CR>'}
+noremap { lhs = '<C-w>', rhs = ':tabclose<CR>'}
 tnoremap { lhs = '<C-t>', rhs = '<C-\\><C-n>:tabnew<CR>' }
 tnoremap { lhs = '<C-w>', rhs = '<C-\\><C-n>:tabclose<CR>' }
 
