@@ -1048,7 +1048,7 @@ local on_attach = function(client, buffer)
         { noremap = true, silent = true })
     vim.api.nvim_buf_set_keymap(
         buffer,
-        'n', 'ge', '<cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<CR>',
+        'n', 'ge', '<cmd>lua vim.diagnostic.open_float({ scope = "line" })<CR>',
         { noremap = true, silent = true })
 end
 
