@@ -622,12 +622,6 @@ do
         end
     end
 
-    local function signature()
-        if not pcall(require, 'lsp_signature') then return end
-        local signature = require('lsp_signature').status_line()
-        return signature.label
-    end
-
     require('lualine').setup {
         options = {
             component_separators = '',
@@ -650,7 +644,6 @@ do
             lualine_c = {
                 'progress',
                 'location',
-                { signature }
             },
             lualine_x = {
                 'branch',
@@ -660,7 +653,7 @@ do
             lualine_y = {
                 {
                     'diagnostics',
-                    colored = false,
+                    colored = true,
                     padding = { left = 2, right = 1 }
                 },
             },
