@@ -1058,15 +1058,13 @@ local on_attach = function(client, buffer)
         { noremap = true, silent = true })
 end
 
-vim.api.nvim_command([[
-    command! LspGotoDeclaration    lua vim.lsp.buf.declaration()<CR>
-    command! LspGotoDefinition     lua vim.lsp.buf.definition()<CR>
-    command! LspHover              lua vim.lsp.buf.hover()<CR>
-    command! LpsGotoImplementation lua vim.lsp.buf.implentation()<CR>
-    command! LspSignature          lua vim.lsp.buf.signature_help()<CR>
-    command! LspRename             lua vim.lsp.buf.rename()<CR>
-    command! LspCodeAction         lua vim.lsp.buf.code_action()<CR>
-]])
+vim.api.nvim_command('command! LspGotoDeclaration    lua vim.lsp.buf.declaration()<CR>')
+vim.api.nvim_command('command! LspGotoDefinition     lua vim.lsp.buf.definition()<CR>')
+vim.api.nvim_command('command! LspHover              lua vim.lsp.buf.hover()<CR>')
+vim.api.nvim_command('command! LpsGotoImplementation lua vim.lsp.buf.implentation()<CR>')
+vim.api.nvim_command('command! LspSignature          lua vim.lsp.buf.signature_help()<CR>')
+vim.api.nvim_command('command! LspRename             lua vim.lsp.buf.rename()<CR>')
+vim.api.nvim_command('command! LspCodeAction         lua vim.lsp.buf.code_action()<CR>')
 -- }}}
 
 -- Error diagnostics {{{
