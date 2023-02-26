@@ -180,8 +180,8 @@ end
 -- When editing this config we need to re-evaluate parts of it. We define two
 -- additional commands. The first one evaluates the current line. The second
 -- one -- the active visual selection.
-nnoremap { lhs = '<leader>vs', rhs = ':source %<CR>', desc = ' Evaluate buffer' }
-vnoremap { lhs = '<leader>vs', rhs = 'y:@"<CR>', desc = ' Evaluate selection' }
+nnoremap { lhs = '<leader>vs', rhs = ':source %<CR>', desc = 'Evaluate buffer' }
+vnoremap { lhs = '<leader>vs', rhs = 'y:@"<CR>', desc = 'Evaluate selection' }
 -- }}}
 
 -- Use mouse {{{
@@ -454,49 +454,50 @@ telescope.load_extension('fzf')
 noremap {
     lhs = '<leader>ff',
     rhs = require('telescope.builtin').find_files,
-    desc = ' Files'
+    desc = 'Files'
 }
 noremap {
     lhs = '<leader>fb',
     rhs = require('telescope.builtin').buffers,
-    desc = ' Buffers'
+    desc = 'Buffers'
 }
 noremap {
     lhs = '<leader>b',
     rhs = require('telescope.builtin').buffers,
-    desc = ' Buffers'
+    desc = 'Buffers'
 }
 noremap {
     lhs = '<leader>fg',
     rhs = require('telescope.builtin').live_grep,
-    desc = ' Grep'
+    desc = 'Grep'
 }
 noremap {
     lhs = '<leader>fG',
     rhs = function ()
         return require('telescope.builtin').live_grep({ grep_open_files = true })
     end,
-    desc = ' Grep open files'
+    desc = 'Grep open files'
 }
 noremap {
     lhs = '<leader>fh',
     rhs = require('telescope.builtin').oldfiles,
-    desc = '󰋚 History'
+    desc = 'History'
 }
 noremap {
     lhs = '<leader>fm',
     rhs = require('telescope.builtin').marks,
-    desc = ' Marks'
+    desc = 'Marks'
 }
 noremap {
     lhs = '<leader>fp',
     rhs = require('telescope').extensions.project.project,
-    desc = ' Project'
+    desc = 'Project'
 }
 noremap {
     lhs = '<leader>fr',
     rhs = require('telescope.builtin').resume,
-    desc = '󰦛 Resume'
+    desc = 'Resume'
+}
 }
 
 vim.api.nvim_command([[hi link TelescopeNormal NormalFloat]])
@@ -546,21 +547,21 @@ noremap {
     rhs = function ()
         require('toggleterm').toggle(1, nil, nil, 'horizontal')
     end,
-    desc = ' Terminal horizontal'
+    desc = 'Terminal horizontal'
 }
 noremap {
     lhs = '<leader>tv',
     rhs = function ()
         require('toggleterm').toggle(1, nil, nil, 'vertical')
     end,
-    desc = ' Terminal vertical'
+    desc = 'Terminal vertical'
 }
 noremap {
     lhs = '<leader>tt',
     rhs = function ()
         require('toggleterm').toggle(1, nil, nil, 'tab')
     end,
-    desc = ' Terminal in a tab'
+    desc = 'Terminal in a tab'
 }
 -- " }}}
 
@@ -723,7 +724,7 @@ require('neogit').setup {
 }
 
 -- A simple key combination for opening git status anywhere
-noremap { lhs = '<leader>g', rhs = require('neogit').open, desc = ' Neogit' }
+noremap { lhs = '<leader>g', rhs = require('neogit').open, desc = 'Neogit' }
 -- " }}}
 
 -- Tree sitter {{{
@@ -1073,8 +1074,8 @@ require('trouble').setup {
     indent_lines = false
 }
 
-noremap { lhs = '<leader>ef', rhs = ':TroubleToggle document_diagnostics<CR>', desc = '󰅚 File errors' }
-noremap { lhs = '<leader>ew', rhs = ':TroubleToggle workspace_diagnostics<CR>', desc = '󰢃 Workspace errors' }
+noremap { lhs = '<leader>ef', rhs = ':TroubleToggle document_diagnostics<CR>', desc = 'File errors' }
+noremap { lhs = '<leader>ew', rhs = ':TroubleToggle workspace_diagnostics<CR>', desc = 'Workspace errors' }
 
 vim.api.nvim_command([[hi link TroubleNormal LspTroubleNormal]])
 -- }}}
@@ -1130,7 +1131,7 @@ require('todo-comments').setup {
     }
 }
 
-noremap { lhs = '<leader>et', rhs = ':TodoTrouble<CR>', desc = '󰗡 Todo notes' }
+noremap { lhs = '<leader>et', rhs = ':TodoTrouble<CR>', desc = 'Todo notes' }
 -- }}}
 
 -- Filesystem tree {{{
@@ -1175,7 +1176,7 @@ require('neo-tree').setup {
     }
 }
 
-nnoremap { lhs = '<leader>d', rhs = ':Neotree focus toggle<CR>', desc = '󱏒 Toggle directory tree' }
+nnoremap { lhs = '<leader>d', rhs = ':Neotree focus toggle<CR>', desc = 'Toggle directory tree' }
 -- }}}
 
 -- Language: VIM {{{
@@ -1444,7 +1445,7 @@ require('rest-nvim').setup()
 noremap {
     lhs = '<leader>rr',
     rhs = '<Plug>RestNvim<CR>',
-    desc = '󱓞 Run buffer with RESTClient'
+    desc = 'Run buffer with RESTClient'
 }
 -- }}}
 
@@ -1490,7 +1491,7 @@ require('live-command').setup {
 -- Random things {{{
 -- -----------------
 -- A faster way to save files
-noremap { lhs = '<leader>w', rhs = ':w<CR>', desc = ' Write file' }
+noremap { lhs = '<leader>w', rhs = ':w<CR>', desc = 'Write file' }
 
 -- And center the current line on screen (and remove highlight)
 nnoremap { lhs = '<C-l>', rhs = 'zz:noh<CR>' }
@@ -1504,7 +1505,7 @@ vim.api.nvim_command([[autocmd CursorHold * echon '']])
 nnoremap {
     lhs = '<leader>k',
     rhs = ':bp \\| sp \\| bn \\| bd<CR>',
-    desc = '󰅚 Close buffer'
+    desc = 'Close buffer'
 }
 
 -- Disable startup message
@@ -1572,9 +1573,9 @@ do
         vim.fn.setreg('*', url);
     end
 
-    nnoremap { lhs = '<leader>lgl', rhs = copy_current_location_url, desc = ' GitHub link here (text)' }
-    nnoremap { lhs = '<leader>lgm', rhs = copy_current_location_markdown_url, desc = ' GitHub link here (md)' }
-    nnoremap { lhs = '<leader>lo', rhs = copy_current_location_orgmode_url, desc = ' Org-mode link here' }
+    nnoremap { lhs = '<leader>lgl', rhs = copy_current_location_url, desc = 'GitHub link here (text)' }
+    nnoremap { lhs = '<leader>lgm', rhs = copy_current_location_markdown_url, desc = 'GitHub link here (md)' }
+    nnoremap { lhs = '<leader>lo', rhs = copy_current_location_orgmode_url, desc = 'Org-mode link here' }
 end
 -- }}}
 
