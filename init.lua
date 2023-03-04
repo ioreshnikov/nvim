@@ -62,6 +62,9 @@ use 'mfussenegger/nvim-dap'
 -- Use a custom statusline
 use 'nvim-lualine/lualine.nvim'
 
+-- A custom tab line
+use 'alvarosevilla95/luatab.nvim'
+
 -- Toggleable terminal
 use 'akinsho/toggleterm.nvim'
 
@@ -301,8 +304,8 @@ vim.opt.wrap = true
 vim.opt.foldmethod = 'marker'
 -- }}}
 
--- Tabs and splits {{{
--- -------------------
+-- Movement in tabs and splits {{{
+-- -------------------------------
 -- `vim` has a quite powerful window system, but the default keybindings make
 -- you a bit slow when using it. Here are more conventional ones.
 
@@ -352,6 +355,44 @@ tnoremap { lhs = '<A-h>', rhs = '<C-\\><C-n><C-w>h' }
 tnoremap { lhs = '<A-j>', rhs = '<C-\\><C-n><C-w>j' }
 tnoremap { lhs = '<A-k>', rhs = '<C-\\><C-n><C-w>k' }
 tnoremap { lhs = '<A-l>', rhs = '<C-\\><C-n><C-w>l' }
+-- }}}
+
+-- Tab line look and feel {{{
+-- --------------------------
+--
+-- There are multiple fancy tabline plugins out there. I don't like any of them,
+-- since pretty much all of them inherit a highly opinionated approach to tabs
+-- by automatically creating a tab per buffer every time you open a buffer.
+--
+-- This forces you to keep only a very limited number of open buffers and this
+-- is just not how I work. I like to keep everything related to the current task
+-- in the background and I like to keep everything necessary at the moment in sight.
+--
+-- In other words, my context >> what I am focused at the moment.
+
+do
+    local luatab = require('luatab')
+
+    luatab.setup({
+        modified = function (bufnr, isSelected)
+            -- TODO: Add highlight
+            return vim.fn.getbufvar(bufnr, '&modified') == 1 and '󰇘 ' or ''
+        end,
+        cell = function(index)
+            local isSelected = vim.fn.tabpagenr() == index
+            local buflist = vim.fn.tabpagebuflist(index)
+            local winnr = vim.fn.tabpagewinnr(index)
+            local bufnr = buflist[winnr]
+            local hl = (isSelected and '%#TabLineSel#' or '%#TabLine#')
+
+            return hl .. '%' .. index .. 'T  ' ..
+                luatab.helpers.windowCount(index) ..
+                luatab.helpers.modified(bufnr, isSelected) ..
+                luatab.helpers.devicon(bufnr, isSelected) ..
+                luatab.helpers.title(bufnr) .. '  %T'
+       end
+    })
+end
 -- }}}
 
 -- Movement on wrapped lines {{{
