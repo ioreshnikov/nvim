@@ -96,6 +96,7 @@ use { 'prettier/vim-prettier', run = 'yarn install --frozen-lockfile --productio
 use 'joom/latex-unicoder.vim'
 
 -- LSP errors
+use "https://git.sr.ht/~whynothugo/lsp_lines.nvim"
 use 'folke/trouble.nvim'
 
 -- TODO marks
@@ -1104,6 +1105,30 @@ vim.api.nvim_command('command! LspCodeAction         lua vim.lsp.buf.code_action
 
 -- Error diagnostics {{{
 -- ---------------------
+-- Better rendering in virtual text
+require('lsp_lines').setup {}
+
+-- We disable it by default, but we add to a shortcut to toggle from short to
+-- long format
+local short_form_errors = true
+vim.diagnostic.config({
+    virtual_text = short_form_errors,
+    virtual_lines = not short_form_errors
+})
+
+noremap {
+    lhs = '<leader>el',
+    rhs = function ()
+        short_form_errors = not short_form_errors
+        vim.diagnostic.config({
+            virtual_text = short_form_errors,
+            virtual_lines = not short_form_errors
+        })
+    end,
+    desc = 'Toggle long-form error format'
+}
+
+-- Error view
 require('trouble').setup {
     indent_lines = false
 }
