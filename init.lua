@@ -621,12 +621,14 @@ do
     })
 
     wk.register({
-        ['<leader>e'] = { name = ' Diagnostics/' },
-        ['<leader>f'] = { name = ' Telescope/' },
-        ['<leader>fs'] = { name = ' Bolt/' },
-        ['<leader>r'] = { name = '󱓞 REST/' },
-        ['<leader>t'] = { name = '  Terminal/' },
-        ['<leader>v'] = { name = ' Evaluate/' },
+        ['<leader>e']  = { name = 'Diagnostics/' },
+        ['<leader>f']  = { name = 'Telescope/' },
+        ['<leader>fs'] = { name = 'Bolt/' },
+        ['<leader>r']  = { name = 'REST/' },
+        ['<leader>t']  = { name = 'Terminal/' },
+        ['<leader>v']  = { name = 'Evaluate/' },
+        ['<leader>l']  = { name = 'Link/' },
+        ['<leader>s']  = { name = 'Swap/' },
     })
 end
 -- }}}
