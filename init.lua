@@ -1593,12 +1593,17 @@ do
         return exec('git rev-parse HEAD')
     end
 
+    local function git_root()
+        return exec('git rev-parse --show-toplevel')
+    end
+
     local function current_location_url()
         local Path = require('plenary.path')
 
         local absolute_path = vim.api.nvim_buf_get_name(0)
-        local cwd = vim.fn.getcwd()
-        local relative_path = Path:new(absolute_path):make_relative()
+        local cwd = git_root()
+        local relative_path = Path:new(absolute_path):make_relative(cwd)
+        -- XXX: Broken and returs absolut path
 
         local repo = git_current_repo()
         local hash = git_current_hash()
