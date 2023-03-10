@@ -375,7 +375,7 @@ do
     local luatab = require('luatab')
 
     luatab.setup({
-        modified = function (bufnr, isSelected)
+        modified = function (bufnr)
             -- TODO: Add highlight
             return vim.fn.getbufvar(bufnr, '&modified') == 1 and '󰇘 ' or ''
         end,
@@ -386,12 +386,23 @@ do
             local bufnr = buflist[winnr]
             local hl = (isSelected and '%#TabLineSel#' or '%#TabLine#')
 
+            local cross = (isSelected and '%999X × ' or ' ')
+
             return hl .. '%' .. index .. 'T  ' ..
-                luatab.helpers.windowCount(index) ..
-                luatab.helpers.modified(bufnr, isSelected) ..
+                luatab.helpers.modified(bufnr) ..
                 luatab.helpers.devicon(bufnr, isSelected) ..
-                luatab.helpers.title(bufnr) .. '  %T'
-       end
+                luatab.helpers.title(bufnr) ..
+                cross ..
+                '%T'
+        end,
+        tabline = function()
+            local line = ''
+            for i = 1, vim.fn.tabpagenr('$'), 1 do
+                line = line .. luatab.helpers.cell(i)
+            end
+            line = line .. '%#TabLineFill#%='
+            return line
+        end
     })
 end
 -- }}}
