@@ -1651,13 +1651,28 @@ vim.g.neovide_input_macos_alt_is_meta = true
 vim.g.neovide_hide_mouse_when_typing = 1
 vim.g.neovide_cursor_animation_length = 0.05
 vim.g.neovide_cursor_vfx_mode = 'railgun'
-vim.opt.guifont = {'JetBrainsMono Nerd Font', ':h14'}
+
+local bigfont = false
+
+local function toggle_fontsize()
+    bigfont = not bigfont
+    if bigfont then
+        vim.opt.guifont = {'JetBrainsMono Nerd Font', ':h14'}
+    else
+        vim.opt.guifont = {'JetBrainsMono Nerd Font', ':h17'}
+    end
+end
+
 
 noremap {
     lhs = '<F12>',
     rhs = function ()
         vim.g.neovide_fullscreen = not vim.g.neovide_fullscreen
     end
+}
+noremap {
+    lhs = '<F7>',
+    rhs = toggle_fontsize
 }
 -- }}}
 
