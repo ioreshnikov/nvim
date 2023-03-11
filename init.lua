@@ -373,6 +373,7 @@ tnoremap { lhs = '<A-l>', rhs = '<C-\\><C-n><C-w>l' }
 
 do
     local luatab = require('luatab')
+    local highlight = require('luatab.highlight')
 
     luatab.setup({
         modified = function (bufnr)
@@ -384,15 +385,24 @@ do
             local buflist = vim.fn.tabpagebuflist(index)
             local winnr = vim.fn.tabpagewinnr(index)
             local bufnr = buflist[winnr]
-            local hl = (isSelected and '%#TabLineSel#' or '%#TabLine#')
 
-            local cross = (isSelected and '%999X × ' or ' ')
+            local tabhi = (isSelected and 'TabLineSel' or 'TabLine')
+            local tabhl = '%#' .. tabhi .. '#'
 
-            return hl .. '%' .. index .. 'T  ' ..
+            local crossfg = highlight.extract_highlight_colors('TabLineFill', 'fg')
+            local crossbg = highlight.extract_highlight_colors('TabLineSel', 'bg')
+            local crosshi = highlight.create_component_highlight_group(
+                {fg = crossfg, bg = crossbg},
+                'TablineClose'
+            )
+            local crosshl = crosshi and ('%#' .. crosshi .. '#') or ''
+            local cross =  crosshl .. '%999X × ' .. tabhl
+
+            return tabhl .. '%' .. index .. 'T  ' ..
                 luatab.helpers.modified(bufnr) ..
                 luatab.helpers.devicon(bufnr, isSelected) ..
                 luatab.helpers.title(bufnr) ..
-                cross ..
+                (isSelected and cross or ' ') ..
                 '%T'
         end,
         tabline = function()
