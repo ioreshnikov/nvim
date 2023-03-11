@@ -1289,7 +1289,7 @@ do
         on_attach = on_attach,
         capabilities = cmplsp.default_capabilities(),
         settings = {
-            globals = { 'vim' }
+            globals = { 'vim', 'use' }
         }
         -- settings = {
         --     Lua = {
