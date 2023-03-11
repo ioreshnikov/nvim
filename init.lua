@@ -489,7 +489,7 @@ telescope.setup {
         project = {
             base_dirs = {
                 { '~/repos/', max_depth = 3 },
-                { '~/.local/share/nvim/plugged', max_depth = 2 },
+                { '~/.local/share/nvim/site/pack/packer/start', max_depth = 2 },
                 { '~/.config/nvim' }
             },
 
