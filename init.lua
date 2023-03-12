@@ -113,7 +113,7 @@ use 'ahmedkhalf/project.nvim'
 
 -- Tree viewer
 use 'MunifTanjim/nui.nvim'
-use { 'nvim-neo-tree/neo-tree.nvim', run = 'v2.x' }
+use 'nvim-neo-tree/neo-tree.nvim'
 
 -- REST client
 use 'NTBBloodbath/rest.nvim'
