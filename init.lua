@@ -402,7 +402,7 @@ do
                 luatab.helpers.modified(bufnr) ..
                 luatab.helpers.devicon(bufnr, isSelected) ..
                 luatab.helpers.title(bufnr) ..
-                (isSelected and cross or ' ') ..
+                (isSelected and cross or '   ') ..
                 '%T'
         end,
         tabline = function()
@@ -420,7 +420,7 @@ end
 -- Movement on wrapped lines {{{
 -- -----------------------------
 -- I am using soft line-wrap everywhere. The default navigation commands in vim
--- work on physical lines, not wrapped ones. This is really inconvinient. This
+-- work on physical lines, not wrapped ones. This is really inconvenient. This
 -- should fix it.
 vim.api.nvim_command([[
     nnoremap <silent> <expr> j v:count ? 'j' : !&wrap ? 'j' : 'gj'
