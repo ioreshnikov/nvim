@@ -248,17 +248,21 @@ vim.opt.smartcase = true
 -- For buffers that correspond to a file on disk I'd like to see relative line
 -- numbers and a sign column. The latter might not have a practical use for
 -- files not associated with an LSP server, but I like it purely for
--- aesthetical reasons.
+-- aesthetic reasons.
 vim.api.nvim_command([[
     function EnableSignColumn() abort
         setlocal signcolumn=yes:2
     endfunction
 
-    function EnableEditingHelpers() abort
+    function EnableLineNumbers() abort
         setlocal number
         setlocal relativenumber
+    endfunction
+
+    function EnableEditingHelpers() abort
         setlocal numberwidth=5
         setlocal colorcolumn=80
+        call EnableLineNumbers()
         call EnableSignColumn()
     endfunction
 
@@ -299,7 +303,7 @@ vim.api.nvim_command([[autocmd BufWritePre * :%s/\s\+$//e]])
 -- Break at a "breakeable" character when soft-wrapping lines.
 vim.opt.linebreak = true
 vim.opt.showbreak='⤷ '
--- Do not wrap by default. This is overriden in mode-by-mode basis.
+-- Do not wrap by default. This is overridden in mode-by-mode basis.
 vim.opt.wrap = true
 -- }}}
 
@@ -724,7 +728,7 @@ do
             lualine_y = {
                 {
                     'diagnostics',
-                    colored = true,
+                    colored = false,
                     padding = { left = 2, right = 1 }
                 },
             },
@@ -1112,6 +1116,8 @@ for type, icon in pairs(signs) do
 end
 
 local on_attach = function(client, buffer)
+    client.server_capabilities.semanticTokensProvider = nil
+
     vim.api.nvim_buf_set_keymap(
         buffer,
         'n', 'gD', '<cmd>lua vim.lsp.buf.declaration()<CR>',
