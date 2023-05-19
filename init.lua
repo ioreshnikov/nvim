@@ -130,9 +130,15 @@ use 'rktjmp/lush.nvim'
 -- My custom port of Helix editor color theme. Really purple
 use 'ioreshnikov/helix'
 use 'ioreshnikov/solarized'
+use 'folke/tokyonight.nvim'
+use 'catppuccin/nvim'
 
 -- Automatically switch background on sunset/sunrise
 use 'JManch/sunset.nvim'
+
+-- Welp, it's time
+use 'zbirenbaum/copilot.lua'
+use 'zbirenbaum/copilot-cmp'
 
 end)
 -- }}}
@@ -917,6 +923,17 @@ inoremap { lhs = '<M-b>', rhs = '<C-o><Plug>CamelCaseMotion_b' }
 require("luasnip.loaders.from_vscode").lazy_load()
 -- }}}
 
+-- Copilot {{{
+do
+    require("copilot").setup({
+        suggestion = { enabled = true },
+        panel = { enabled = true }
+    })
+
+    require("copilot_cmp").setup({})
+end
+-- }}}
+
 -- Code completion {{{
 -- -------------------
 -- Completion backend is handed by the LSP servers of choice. We configure them
@@ -967,8 +984,24 @@ cmp.setup({
             end
         end, { "i", "s" }),
     }),
+    sorting = {
+        prioirty_weight = 2,
+        comparators = {
+            require("copilot_cmp.comparators").prioritize,
+            cmp.config.compare.offset,
+            cmp.config.compare.exact,
+            cmp.config.compare.score,
+            cmp.config.compare.recency,
+            cmp.config.compare.locality,
+            cmp.config.compare.kind,
+            cmp.config.compare.sort_text,
+            cmp.config.compare.length,
+            cmp.config.compare.order,
+        }
+    },
     sources = cmp.config.sources(
         {
+            { name = 'copilot' },
             { name = 'nvim_lsp' },
             { name = 'luasnip' },
             { name = 'path' }
@@ -989,13 +1022,9 @@ cmp.setup({
     formatting = {
         format = require('lspkind').cmp_format({
             mode = 'symbol_text',
-            menu = ({
-                buffer = 'Buffer',
-                nvim_lsp = 'LSP',
-                luasnip = 'SNIP',
-                nvim_lua = 'Lua',
-                latex_symbols = 'TeX'
-            })
+            symbol_map = {
+                Copilot = '',
+            }
         })
     }
 })
