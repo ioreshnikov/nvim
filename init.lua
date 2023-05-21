@@ -1715,13 +1715,12 @@ vim.g.neovide_cursor_animation_length = 0.05
 vim.g.neovide_cursor_vfx_mode = 'railgun'
 
 local bigfont = false
-
 local function toggle_fontsize()
     bigfont = not bigfont
     if bigfont then
-        vim.opt.guifont = {'JetBrainsMono Nerd Font', ':h14'}
+        vim.opt.guifont = {'JetBrainsMono Nerd Font', ':h18'}
     else
-        vim.opt.guifont = {'JetBrainsMono Nerd Font', ':h17'}
+        vim.opt.guifont = {'JetBrainsMono Nerd Font', ':h14'}
     end
 end
 
