@@ -8,139 +8,141 @@ vim.g.mapleader = ' ';
 -- Plugins {{{
 -- -----------
 require('packer').startup(function ()
+    -- Let packer manage itself
+    use 'wbthomason/packer.nvim'
 
--- Let packer manage itself
-use 'wbthomason/packer.nvim'
+    -- Text icons
+    use 'kyazdani42/nvim-web-devicons'
 
--- Text icons
-use 'kyazdani42/nvim-web-devicons'
+    -- Fuzzy everything
+    use 'nvim-lua/plenary.nvim'
+    use 'nvim-telescope/telescope.nvim'
+    use { 'nvim-telescope/telescope-fzf-native.nvim', run = 'make' }
+    use 'nvim-telescope/telescope-project.nvim'
+    use 'tami5/sqlite.lua'
 
--- Fuzzy everything
-use 'nvim-lua/plenary.nvim'
-use 'nvim-telescope/telescope.nvim'
-use { 'nvim-telescope/telescope-fzf-native.nvim', run = 'make' }
-use 'nvim-telescope/telescope-project.nvim'
-use 'tami5/sqlite.lua'
+    -- Modern syntax highlight with `tree-sitter`
+    use { 'nvim-treesitter/nvim-treesitter', run = ':TSUpdate' }
 
--- Modern syntax highlight with `tree-sitter`
-use { 'nvim-treesitter/nvim-treesitter', run = ':TSUpdate' }
+    -- Text objects with treesitter
+    use 'nvim-treesitter/nvim-treesitter-textobjects'
 
--- Text objects with treesitter
-use 'nvim-treesitter/nvim-treesitter-textobjects'
+    -- Structural searhc and replace
+    use 'cshuaimin/ssr.nvim'
 
--- Structural searhc and replace
-use 'cshuaimin/ssr.nvim'
+    -- Managing Git repos
+    use 'TimUntersberger/neogit'
 
--- Managing Git repos
-use 'TimUntersberger/neogit'
+    -- Code completion backend through LSP servers
+    use 'neovim/nvim-lspconfig'
 
--- Code completion backend through LSP servers
-use 'neovim/nvim-lspconfig'
+    -- Code completion frontend with `nvim-cmp`
+    use 'hrsh7th/cmp-nvim-lsp'
+    use 'hrsh7th/cmp-buffer'
+    use 'hrsh7th/cmp-path'
+    use 'hrsh7th/cmp-cmdline'
+    use 'hrsh7th/cmp-emoji'
+    use 'hrsh7th/nvim-cmp'
 
--- Code completion frontend with `nvim-cmp`
-use 'hrsh7th/cmp-nvim-lsp'
-use 'hrsh7th/cmp-buffer'
-use 'hrsh7th/cmp-path'
-use 'hrsh7th/cmp-cmdline'
-use 'hrsh7th/cmp-emoji'
-use 'hrsh7th/nvim-cmp'
+    use 'onsails/lspkind-nvim'
+    use 'ray-x/lsp_signature.nvim'
 
-use 'onsails/lspkind-nvim'
-use 'ray-x/lsp_signature.nvim'
+    -- Vim global completion in lua lsp
+    use 'folke/neodev.nvim'
 
--- Vim global completion in lua lsp
-use 'folke/neodev.nvim'
+    -- Snippets
+    use 'rafamadriz/friendly-snippets'
+    use 'L3MON4D3/LuaSnip'
+    use 'saadparwaiz1/cmp_luasnip'
 
--- Snippets
-use 'rafamadriz/friendly-snippets'
-use 'L3MON4D3/LuaSnip'
-use 'saadparwaiz1/cmp_luasnip'
+    -- Interactive debugging through DAP
+    use 'mfussenegger/nvim-dap'
 
--- Interactive debugging through DAP
-use 'mfussenegger/nvim-dap'
+    -- Use a custom statusline
+    use 'nvim-lualine/lualine.nvim'
 
--- Use a custom statusline
-use 'nvim-lualine/lualine.nvim'
+    -- A custom tab line
+    use 'alvarosevilla95/luatab.nvim'
 
--- A custom tab line
-use 'alvarosevilla95/luatab.nvim'
+    -- Toggleable terminal
+    use 'akinsho/toggleterm.nvim'
 
--- Toggleable terminal
-use 'akinsho/toggleterm.nvim'
+    -- Which key
+    use 'folke/which-key.nvim'
 
--- Which key
-use 'folke/which-key.nvim'
+    -- Commenting
+    use 'tpope/vim-commentary'
 
--- Commenting
-use 'tpope/vim-commentary'
+    -- Surround
+    use 'machakann/vim-sandwich'
 
--- Surround
-use 'machakann/vim-sandwich'
+    -- Sub-word motion
+    use 'bkad/CamelCaseMotion'
 
--- Sub-word motion
-use 'bkad/CamelCaseMotion'
+    -- Case coercion
+    use 'tpope/vim-abolish'
 
--- Case coercion
-use 'tpope/vim-abolish'
+    -- Auto-pairing
+    use 'windwp/nvim-autopairs'
 
--- Auto-pairing
-use 'windwp/nvim-autopairs'
+    -- TeX
+    use 'lervag/vimtex'
 
--- TeX
-use 'lervag/vimtex'
+    -- Prettier javascript
+    use { 'prettier/vim-prettier', run = 'yarn install --frozen-lockfile --production' }
 
--- Prettier javascript
-use { 'prettier/vim-prettier', run = 'yarn install --frozen-lockfile --production' }
+    -- Unicode symbols entry
+    use 'joom/latex-unicoder.vim'
 
--- Unicode symbols entry
-use 'joom/latex-unicoder.vim'
+    -- LSP errors
+    use "https://git.sr.ht/~whynothugo/lsp_lines.nvim"
+    use 'folke/trouble.nvim'
 
--- LSP errors
-use "https://git.sr.ht/~whynothugo/lsp_lines.nvim"
-use 'folke/trouble.nvim'
+    -- TODO marks
+    use 'folke/todo-comments.nvim'
 
--- TODO marks
-use 'folke/todo-comments.nvim'
+    -- Indentation guides
+    use 'lukas-reineke/indent-blankline.nvim'
 
--- Indentation guides
-use 'lukas-reineke/indent-blankline.nvim'
+    -- Indent level autodetection
+    use 'timakro/vim-yadi'
 
--- Indent level autodetection
-use 'timakro/vim-yadi'
+    -- Automatically change cwd to the root of the project
+    use 'ahmedkhalf/project.nvim'
 
--- Automatically change cwd to the root of the project
-use 'ahmedkhalf/project.nvim'
+    -- Tree viewer
+    use 'MunifTanjim/nui.nvim'
+    use 'nvim-neo-tree/neo-tree.nvim'
 
--- Tree viewer
-use 'MunifTanjim/nui.nvim'
-use 'nvim-neo-tree/neo-tree.nvim'
+    -- REST client
+    use 'NTBBloodbath/rest.nvim'
 
--- REST client
-use 'NTBBloodbath/rest.nvim'
+    -- Org-mode
+    use 'nvim-orgmode/orgmode'
 
--- Org-mode
-use 'nvim-orgmode/orgmode'
+    -- Live preview commands
+    use 'smjonas/live-command.nvim'
 
--- Live preview commands
-use 'smjonas/live-command.nvim'
+    -- Theming
+    use 'rktjmp/lush.nvim'
+    use 'ioreshnikov/helix'
+    use 'ioreshnikov/solarized'
+    use 'folke/tokyonight.nvim'
+    use 'lifepillar/vim-solarized8'
 
--- Theming
-use 'rktjmp/lush.nvim'
+    -- Automatically switch background on sunset/sunrise
+    use 'JManch/sunset.nvim'
 
--- My custom port of Helix editor color theme. Really purple
-use 'ioreshnikov/helix'
-use 'ioreshnikov/solarized'
-use 'folke/tokyonight.nvim'
-use 'catppuccin/nvim'
-
--- Automatically switch background on sunset/sunrise
-use 'JManch/sunset.nvim'
-
--- Welp, it's time
-use 'zbirenbaum/copilot.lua'
-use 'zbirenbaum/copilot-cmp'
-
-end)
+    -- Welp, it's time
+    use 'zbirenbaum/copilot.lua'
+    use 'zbirenbaum/copilot-cmp'
+end, {
+    config = {
+        git = {
+            default_url_format = "git://github.com/%s.git"
+        }
+    }
+})
 -- }}}
 
 -- Shortcuts {{{
@@ -586,6 +588,7 @@ vim.api.nvim_command([[hi link TelescopeTitle Ignore]])
 vim.api.nvim_command([[autocmd WinEnter term://* startinsert]])
 vim.api.nvim_command([[autocmd WinLeave term://* stopinsert]])
 -- SEE: https://github.com/neovim/neovim/pull/16596
+-- NOTE: Broken :(
 
 -- Open terminal in a toggle
 require('toggleterm').setup {
@@ -596,6 +599,7 @@ require('toggleterm').setup {
         StatusLineNC = { link = 'StatusLineNC' },
     },
     shade_terminals = false,
+    start_in_insert = false,
     size = function (term)
         if term.direction == 'horizontal' then
             return 25
@@ -936,11 +940,16 @@ require("luasnip.loaders.from_vscode").lazy_load()
 -- Copilot {{{
 do
     require("copilot").setup({
-        suggestion = { enabled = true },
-        panel = { enabled = true }
+        suggestion = {
+            enabled = true,
+            auto_trigger = true
+        }
     })
 
-    require("copilot_cmp").setup({})
+    nnoremap({
+        lhs = "<leader>ct",
+        rhs = function() require("copilot.suggestion").toggle_auto_trigger() end
+    })
 end
 -- }}}
 
@@ -976,8 +985,6 @@ cmp.setup({
         ['<Tab>'] = cmp.mapping(function(fallback)
             if cmp.visible() then
                 cmp.select_next_item()
-            elseif luasnip.expand_or_jumpable() then
-                luasnip.expand_or_jump()
             elseif has_words_before() then
                 cmp.complete()
             else
@@ -987,33 +994,14 @@ cmp.setup({
         ['<S-Tab>'] = cmp.mapping(function(fallback)
             if cmp.visible() then
                 cmp.select_prev_item()
-            elseif luasnip.jumpable(-1) then
-                luasnip.jump(-1)
             else
                 fallback()
             end
         end, { "i", "s" }),
     }),
-    sorting = {
-        prioirty_weight = 2,
-        comparators = {
-            require("copilot_cmp.comparators").prioritize,
-            cmp.config.compare.offset,
-            cmp.config.compare.exact,
-            cmp.config.compare.score,
-            cmp.config.compare.recency,
-            cmp.config.compare.locality,
-            cmp.config.compare.kind,
-            cmp.config.compare.sort_text,
-            cmp.config.compare.length,
-            cmp.config.compare.order,
-        }
-    },
     sources = cmp.config.sources(
         {
-            { name = 'copilot' },
             { name = 'nvim_lsp' },
-            { name = 'luasnip' },
             { name = 'path' }
         },
         {
@@ -1028,15 +1016,7 @@ cmp.setup({
         {
             { name = 'orgmode' }
         }
-    ),
-    formatting = {
-        format = require('lspkind').cmp_format({
-            mode = 'symbol_text',
-            symbol_map = {
-                Copilot = '',
-            }
-        })
-    }
+    )
 })
 
 require('lsp_signature').setup {
@@ -1438,22 +1418,29 @@ do
             processId = require('dap.utils').pick_process
         },
     }
+
+    local function add_configuration_bolt_service(service_name)
+        local entrypoint =
+            os.getenv('HOME')
+            .. '/repos/taxify/server/src/'
+            .. 'server-' .. service_name .. '.js'
+
+        local label = 'Bolt Server -> ' .. service_name
+        table.insert(dap.configurations.typescript, {
+            type = 'node2',
+            request = 'launch',
+            name = label,
+            program = entrypoint
+        })
+    end
+
+    add_configuration_bolt_service('rider-events')
+    add_configuration_bolt_service('driverx-events')
+    add_configuration_bolt_service('fleet-registration')
+    add_configuration_bolt_service('event')
 end
 
 -- " }}}
-
--- Language: Ember.js {{{
--- ----------------------
--- do
---     local lsp = require('lspconfig')
---     local coq = require('coq')
-
---     lsp.ember.setup{
---         on_attach=ioextra.on_attach,
---         unpack(coq.lsp_ensure_capabilities())
---     }
--- end
--- }}}
 
 -- Language: HTML and CSS {{{
 -- --------------------------
