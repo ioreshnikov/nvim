@@ -42,7 +42,10 @@ require('packer').startup(function ()
     use 'hrsh7th/cmp-path'
     use 'hrsh7th/cmp-cmdline'
     use 'hrsh7th/cmp-emoji'
-    use 'hrsh7th/nvim-cmp'
+    use {
+        'hrsh7th/nvim-cmp',
+        commit = '950d0e3a93ba61c13b031c086d11eacf4bd48d24',
+    }
 
     use 'onsails/lspkind-nvim'
     use 'ray-x/lsp_signature.nvim'
