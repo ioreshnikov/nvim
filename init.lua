@@ -1563,21 +1563,28 @@ vim.api.nvim_command([[
 -- Org-mode {{{
 -- --------
 require('orgmode').setup {
+    org_agenda_files = { '~/Org/*.org' },
     org_default_notes_file = '~/Org/Index.org',
-    org_todo_keywords = { 'TODO', 'LIVE', '|', 'DONE', 'FAIL', 'ABRT' },
+    org_todo_keywords = { 'TODO', 'LIVE', '|', 'DONE', 'FAIL', 'NOPE' },
     org_hide_emphasis_markers = true,
     org_capture_templates = {
-        s = {
-            description = 'Standup',
-            template = '* %(return os.date("%A, %d %B %Y", os.time() + 60 * 60 * 24))\n\n  *Yesterday*\n\n  - %?\n\n  *Today*\n\n  - \n\n',
-            target = '~/Org/Index.org',
-            headline = 'Standups',
-        },
         a = {
             description = 'Code annotation',
             template = '* %? \n\n  %a\n',
-            target = '~/Org/Annotations.org',
-            headline = 'Annotations',
+            target = '~/Org/Code annotations.org',
+            headline = 'Code annotations',
+        },
+        t = {
+            description = 'Daily task',
+            template = '* TODO %?\n  DEADLINE: %t\n',
+            target = '~/Org/Daily tasks.org',
+            headline = 'Daily tasks',
+        },
+        n = {
+            description = 'Random note',
+            template = '* %?\n',
+            target = '~/Org/Random notes.org',
+            headline = 'Random notes',
         },
     },
 }
