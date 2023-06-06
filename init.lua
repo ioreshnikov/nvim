@@ -1070,15 +1070,6 @@ vim.fn.sign_define(
 vim.api.nvim_command('command! DapClearBreakpoints lua require("dap").clear_breakpoints()<CR>')
 
 -- Keybindings
-nnoremap { lhs = '<leader>oc', rhs = ':DapContinue<CR>' }
-nnoremap { lhs = '<leader>ot', rhs = ':DapTerminate<CR>' }
-nnoremap { lhs = '<leader>ob', rhs = ':DapToggleBreakpoint<CR>' }
-nnoremap { lhs = '<leader>os', rhs = ':DapStepOver<CR>' }
-nnoremap { lhs = '<leader>oi', rhs = ':DapStepInto<CR>' }
-nnoremap { lhs = '<leader>oo', rhs = ':DapStepOut<CR>' }
-nnoremap { lhs = '<leader>or', rhs = ':DapToggleRepl<CR>' }
-nnoremap { lhs = '<leader>oq', rhs = ':DapClearBreakpoints<CR>' }
-
 nnoremap { lhs = '<F5>', rhs = ':DapContinue<CR>' }
 nnoremap { lhs = '<F9>', rhs = ':DapToggleBreakpoint<CR>' }
 nnoremap { lhs = '<F10>', rhs = ':DapStepOver<CR>' }
