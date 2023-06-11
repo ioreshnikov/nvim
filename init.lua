@@ -7,7 +7,7 @@ vim.g.mapleader = ' ';
 
 -- Plugins {{{
 -- -----------
-require('packer').startup(function ()
+require('packer').startup(function (use)
     -- Let packer manage itself
     use 'wbthomason/packer.nvim'
 
