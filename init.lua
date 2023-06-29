@@ -1694,32 +1694,37 @@ vim.g.neovide_hide_mouse_when_typing = 1
 vim.g.neovide_cursor_animation_length = 0.05
 vim.g.neovide_cursor_vfx_mode = 'railgun'
 
-local bigfont = false
-local function toggle_fontsize()
-    bigfont = not bigfont
-    if bigfont then
-        vim.opt.guifont = {'JetBrainsMono Nerd Font', ':h18'}
-    else
-        vim.opt.guifont = {'JetBrainsMono Nerd Font', ':h14'}
+do
+    local font_family = 'FiraCode Nerd Font Mono'
+    local font_sizes = {12, 15, 20}
+
+    local font_size_idx = 0
+
+    local function toggle_fontsize()
+        font_size_idx = (font_size_idx + 1) % #font_sizes
+        local font_size = font_sizes[font_size_idx + 1]
+        vim.opt.guifont = {font_family, ':h' .. font_size}
     end
+
+    toggle_fontsize()
+
+    noremap {
+        lhs = '<F12>',
+        rhs = function ()
+            vim.g.neovide_fullscreen = not vim.g.neovide_fullscreen
+        end
+    }
+    noremap {
+        lhs = '<F7>',
+        rhs = toggle_fontsize
+    }
 end
-
-
-noremap {
-    lhs = '<F12>',
-    rhs = function ()
-        vim.g.neovide_fullscreen = not vim.g.neovide_fullscreen
-    end
-}
-noremap {
-    lhs = '<F7>',
-    rhs = toggle_fontsize
-}
 -- }}}
 
 -- Color scheme {{{
 -- ----------------
 vim.api.nvim_command([[
+    set termguicolors
     colorscheme solarized
 
     function ToggleBackground()
