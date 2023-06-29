@@ -23,6 +23,7 @@ require('packer').startup(function (use)
 
     -- Modern syntax highlight with `tree-sitter`
     use { 'nvim-treesitter/nvim-treesitter', run = ':TSUpdate' }
+    use 'nvim-treesitter/playground'
 
     -- Text objects with treesitter
     use 'nvim-treesitter/nvim-treesitter-textobjects'
@@ -42,10 +43,7 @@ require('packer').startup(function (use)
     use 'hrsh7th/cmp-path'
     use 'hrsh7th/cmp-cmdline'
     use 'hrsh7th/cmp-emoji'
-    use {
-        'hrsh7th/nvim-cmp',
-        commit = '950d0e3a93ba61c13b031c086d11eacf4bd48d24',
-    }
+    use 'hrsh7th/nvim-cmp'
 
     use 'onsails/lspkind-nvim'
     use 'ray-x/lsp_signature.nvim'
@@ -139,13 +137,7 @@ require('packer').startup(function (use)
     -- Welp, it's time
     use 'zbirenbaum/copilot.lua'
     use 'zbirenbaum/copilot-cmp'
-end, {
-    config = {
-        git = {
-            default_url_format = "git://github.com/%s.git"
-        }
-    }
-})
+end)
 -- }}}
 
 -- Shortcuts {{{
