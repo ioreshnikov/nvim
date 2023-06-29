@@ -394,15 +394,7 @@ do
 
             local tabhi = (isSelected and 'TabLineSel' or 'TabLine')
             local tabhl = '%#' .. tabhi .. '#'
-
-            local crossfg = highlight.extract_highlight_colors('TabLineFill', 'fg')
-            local crossbg = highlight.extract_highlight_colors('TabLineSel', 'bg')
-            local crosshi = highlight.create_component_highlight_group(
-                {fg = crossfg, bg = crossbg},
-                'TablineClose'
-            )
-            local crosshl = crosshi and ('%#' .. crosshi .. '#') or ''
-            local cross =  crosshl .. '%999X × ' .. tabhl
+            local cross =  '%#TablineClose#%999X × ' .. tabhl
 
             return tabhl .. '%' .. index .. 'T  ' ..
                 luatab.helpers.modified(bufnr) ..
@@ -480,7 +472,8 @@ telescope.setup {
         results_title = ' ',
         selection_caret = '  ',
         sorter = sorters.get_fzy_sorter,
-        sorting_strategy = 'ascending'
+        sorting_strategy = 'ascending',
+        winblend = 10,
     },
     extensions = {
         file_browser = {
@@ -579,8 +572,8 @@ vim.api.nvim_command([[hi link TelescopeTitle Ignore]])
 -- ------------
 -- Automatically enter insert mode when entering a terminal window.
 -- Automatically switch to normal on exit.
-vim.api.nvim_command([[autocmd WinEnter term://* startinsert]])
-vim.api.nvim_command([[autocmd WinLeave term://* stopinsert]])
+-- vim.api.nvim_command([[autocmd WinEnter term://* startinsert]])
+-- vim.api.nvim_command([[autocmd WinLeave term://* stopinsert]])
 -- SEE: https://github.com/neovim/neovim/pull/16596
 -- NOTE: Broken :(
 
@@ -589,11 +582,11 @@ require('toggleterm').setup {
     highlights = {
         Normal = { guifg = "#ffffff", guibg = "#000000" },
         CursorLine = { guifg = "#ffffff", guibg = "#181818" },
-        StatusLine = { link = 'StatusLine' },
-        StatusLineNC = { link = 'StatusLineNC' },
+        StatusLine = { guifg = "#333333", guibg = "#000000" },
+        StatusLineNC = { guifg = "#333333", guibg = "#000000" },
     },
     shade_terminals = false,
-    start_in_insert = false,
+    start_in_insert = true,
     size = function (term)
         if term.direction == 'horizontal' then
             return 25
@@ -711,7 +704,7 @@ do
             lualine_a = {
                 {
                     mode,
-                    padding = { left = 1, right = 1 }
+                    padding = { left = 2, right = 2 }
                 },
             },
             lualine_b = {
@@ -740,7 +733,7 @@ do
                 {
                     'filetype',
                     colored = false,
-                    padding = { left = 2, right = 1 }
+                    padding = { left = 2, right = 2 }
                 },
             }
         },
@@ -871,6 +864,9 @@ require('nvim-treesitter.configs').setup {
                 ["[C"] = "@class.outer",
             }
         }
+    },
+    playground = {
+        enable = true
     }
 }
 -- NOTE: about `ignore_install` above: I want to use treesitter for everything,
@@ -954,6 +950,7 @@ end
 
 vim.opt.pumheight = 16
 vim.opt.pumwidth = 32
+vim.opt.pumblend = 10
 vim.opt.completeopt = {'menu', 'menuone', 'noselect'}
 
 local has_words_before = function()
@@ -1084,6 +1081,9 @@ local signs = {
 for type, icon in pairs(signs) do
   local hl = 'DiagnosticSign' .. type
   vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = 'LineNr' })
+end
+
+local on_init = function(client, init_result)
 end
 
 local on_attach = function(client, buffer)
@@ -1276,6 +1276,7 @@ do
     local cmplsp = require('cmp_nvim_lsp')
 
     config.vimls.setup {
+        on_init = on_init,
         on_attach = on_attach,
         capabilities = cmplsp.default_capabilities()
     }
@@ -1292,6 +1293,7 @@ do
     local cmplsp = require('cmp_nvim_lsp')
 
     config.lua_ls.setup {
+        on_init = on_init,
         on_attach = on_attach,
         capabilities = cmplsp.default_capabilities(),
         settings = {
@@ -1325,6 +1327,7 @@ do
     local cmplsp = require('cmp_nvim_lsp')
 
     config.pyright.setup {
+        on_init = on_init,
         on_attach = on_attach,
         capabilities = cmplsp.default_capabilities()
     }
@@ -1360,6 +1363,7 @@ do
     local cmplsp = require('cmp_nvim_lsp')
 
     config.tsserver.setup {
+        on_init = on_init,
         on_attach = on_attach,
         capabilities = cmplsp.default_capabilities(),
         root_dir = config.util.root_pattern('main')
@@ -1435,10 +1439,12 @@ do
     local cmplsp = require('cmp_nvim_lsp')
 
     config.html.setup {
+        on_init = on_init,
         on_attach = on_attach,
         capabilities = cmplsp.default_capabilities()
     }
     config.cssls.setup {
+        on_init = on_init,
         on_attach = on_attach,
         capabilities = cmplsp.default_capabilities()
     }
@@ -1454,6 +1460,7 @@ do
     local cmplsp = require('cmp_nvim_lsp')
 
     config.texlab.setup {
+        on_init = on_init,
         on_attach = on_attach,
         capabilities = cmplsp.default_capabilities()
     }
@@ -1474,6 +1481,7 @@ do
     local cmplsp = require('cmp_nvim_lsp')
 
     config.rust_analyzer.setup {
+        on_init = on_init,
         on_attach = on_attach,
         capabilities = cmplsp.default_capabilities()
     }
@@ -1488,6 +1496,7 @@ do
     local cmplsp = require('cmp_nvim_lsp')
 
     config.gopls.setup {
+        on_init = on_init,
         on_attach = on_attach,
         capabilities = cmplsp.default_capabilities()
     }
@@ -1502,6 +1511,7 @@ do
     local cmplsp = require('cmp_nvim_lsp')
 
     config.phpactor.setup {
+        on_init = on_init,
         on_attach = on_attach,
         capabilities = cmplsp.default_capabilities()
     }
@@ -1515,6 +1525,7 @@ do
     local cmplsp = require('cmp_nvim_lsp')
 
     config.sqlls.setup {
+        on_init = on_init,
         on_attach = on_attach,
         capabilities = cmplsp.default_capabilities()
     }
@@ -1528,6 +1539,7 @@ do
     local cmplsp = require('cmp_nvim_lsp')
 
     config.marksman.setup {
+        on_init = on_init,
         on_attach = on_attach,
         capabilities = cmplsp.default_capabilities()
     }
