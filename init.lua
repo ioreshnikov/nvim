@@ -127,9 +127,8 @@ require('packer').startup(function (use)
     -- Theming
     use 'rktjmp/lush.nvim'
     use 'ioreshnikov/helix'
-    use 'ioreshnikov/solarized'
+    use '~/repos/rest/solarized/'
     use 'folke/tokyonight.nvim'
-    use 'lifepillar/vim-solarized8'
 
     -- Automatically switch background on sunset/sunrise
     use 'JManch/sunset.nvim'
