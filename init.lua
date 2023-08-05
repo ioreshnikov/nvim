@@ -609,8 +609,8 @@ require('toggleterm').setup {
     highlights = {
         Normal = { guifg = "#ffffff", guibg = "#000000" },
         CursorLine = { guifg = "#ffffff", guibg = "#181818" },
-        StatusLine = { guifg = "#333333", guibg = "#000000" },
-        StatusLineNC = { guifg = "#333333", guibg = "#000000" },
+        StatusLine = { guifg = "#666666", guibg = "#000000" },
+        StatusLineNC = { guifg = "#666666", guibg = "#000000" },
     },
     shade_terminals = false,
     start_in_insert = true,
@@ -618,7 +618,7 @@ require('toggleterm').setup {
         if term.direction == 'horizontal' then
             return 25
         elseif term.direction == 'vertical' then
-            return 80
+            return vim.o.columns * 0.5
         else
             return 25
         end
