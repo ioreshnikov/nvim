@@ -379,7 +379,34 @@ tnoremap { lhs = '<A-l>', rhs = '<C-\\><C-n><C-w>l' }
 
 do
     local luatab = require('luatab')
-    local highlight = require('luatab.highlight')
+
+    local devicon = function(bufnr)
+        local icon
+
+        local file = vim.fn.bufname(bufnr)
+        local buftype = vim.fn.getbufvar(bufnr, '&buftype')
+        local filetype = vim.fn.getbufvar(bufnr, '&filetype')
+
+        local devicons = require'nvim-web-devicons'
+
+        if filetype == 'TelescopePrompt' then
+            icon, _ = devicons.get_icon('telescope')
+        elseif filetype == 'fugitive' then
+            icon, _ = devicons.get_icon('git')
+        elseif filetype == 'vimwiki' then
+            icon, _ = devicons.get_icon('markdown')
+        elseif buftype == 'terminal' then
+            icon, _ = devicons.get_icon('zsh')
+        else
+            icon, _ = devicons.get_icon(file, vim.fn.expand('#'..bufnr..':e'))
+        end
+
+        if icon then
+            return icon .. ' '
+        else
+            return ''
+        end
+    end
 
     luatab.setup({
         modified = function (bufnr)
@@ -398,7 +425,7 @@ do
 
             return tabhl .. '%' .. index .. 'T  ' ..
                 luatab.helpers.modified(bufnr) ..
-                luatab.helpers.devicon(bufnr, isSelected) ..
+                devicon(bufnr) ..
                 luatab.helpers.title(bufnr) ..
                 (isSelected and cross or '   ') ..
                 '%T'
