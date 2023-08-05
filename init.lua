@@ -32,7 +32,7 @@ require('packer').startup(function (use)
     use 'cshuaimin/ssr.nvim'
 
     -- Managing Git repos
-    use 'TimUntersberger/neogit'
+    use 'NeogitOrg/neogit'
 
     -- Code completion backend through LSP servers
     use 'neovim/nvim-lspconfig'
