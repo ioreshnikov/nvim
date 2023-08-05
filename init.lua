@@ -1503,22 +1503,6 @@ do
     local cmplsp = require('cmp_nvim_lsp')
 
     config.rust_analyzer.setup {
-        on_init = on_init,
-        on_attach = on_attach,
-        capabilities = cmplsp.default_capabilities()
-    }
-end
--- }}}
-
--- Language: GO {{{
--- ----------------
--- Eh, why not
-do
-    local config = require('lspconfig')
-    local cmplsp = require('cmp_nvim_lsp')
-
-    config.gopls.setup {
-        on_init = on_init,
         on_attach = on_attach,
         capabilities = cmplsp.default_capabilities()
     }
