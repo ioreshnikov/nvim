@@ -1110,12 +1110,7 @@ for type, icon in pairs(signs) do
   vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = 'LineNr' })
 end
 
-local on_init = function(client, init_result)
-end
-
 local on_attach = function(client, buffer)
-    client.server_capabilities.semanticTokensProvider = nil
-
     vim.api.nvim_buf_set_keymap(
         buffer,
         'n', 'gD', '<cmd>lua vim.lsp.buf.declaration()<CR>',
@@ -1148,6 +1143,13 @@ local on_attach = function(client, buffer)
         buffer,
         'n', 'ge', '<cmd>lua vim.diagnostic.open_float({ scope = "line" })<CR>',
         { noremap = true, silent = true })
+
+    -- Hide all semantic highlights
+    for _, group in ipairs(vim.fn.getcompletion("@lsp", "highlight")) do
+        vim.api.nvim_set_hl(0, group, {})
+    end
+
+    client.server_capabilities.semanticTokensProvider = nil
 end
 
 vim.api.nvim_command('command! LspGotoDeclaration    lua vim.lsp.buf.declaration()<CR>')
@@ -1303,7 +1305,6 @@ do
     local cmplsp = require('cmp_nvim_lsp')
 
     config.vimls.setup {
-        on_init = on_init,
         on_attach = on_attach,
         capabilities = cmplsp.default_capabilities()
     }
@@ -1320,7 +1321,6 @@ do
     local cmplsp = require('cmp_nvim_lsp')
 
     config.lua_ls.setup {
-        on_init = on_init,
         on_attach = on_attach,
         capabilities = cmplsp.default_capabilities(),
         settings = {
@@ -1354,7 +1354,6 @@ do
     local cmplsp = require('cmp_nvim_lsp')
 
     config.pyright.setup {
-        on_init = on_init,
         on_attach = on_attach,
         capabilities = cmplsp.default_capabilities()
     }
@@ -1390,7 +1389,6 @@ do
     local cmplsp = require('cmp_nvim_lsp')
 
     config.tsserver.setup {
-        on_init = on_init,
         on_attach = on_attach,
         capabilities = cmplsp.default_capabilities(),
         root_dir = config.util.root_pattern('main')
@@ -1466,12 +1464,10 @@ do
     local cmplsp = require('cmp_nvim_lsp')
 
     config.html.setup {
-        on_init = on_init,
         on_attach = on_attach,
         capabilities = cmplsp.default_capabilities()
     }
     config.cssls.setup {
-        on_init = on_init,
         on_attach = on_attach,
         capabilities = cmplsp.default_capabilities()
     }
@@ -1487,7 +1483,6 @@ do
     local cmplsp = require('cmp_nvim_lsp')
 
     config.texlab.setup {
-        on_init = on_init,
         on_attach = on_attach,
         capabilities = cmplsp.default_capabilities()
     }
@@ -1538,7 +1533,6 @@ do
     local cmplsp = require('cmp_nvim_lsp')
 
     config.phpactor.setup {
-        on_init = on_init,
         on_attach = on_attach,
         capabilities = cmplsp.default_capabilities()
     }
@@ -1552,7 +1546,6 @@ do
     local cmplsp = require('cmp_nvim_lsp')
 
     config.sqlls.setup {
-        on_init = on_init,
         on_attach = on_attach,
         capabilities = cmplsp.default_capabilities()
     }
@@ -1566,7 +1559,6 @@ do
     local cmplsp = require('cmp_nvim_lsp')
 
     config.marksman.setup {
-        on_init = on_init,
         on_attach = on_attach,
         capabilities = cmplsp.default_capabilities()
     }
