@@ -1710,7 +1710,7 @@ vim.g.neovide_cursor_vfx_mode = 'railgun'
 
 do
     local font_family = 'FiraCode Nerd Font Mono'
-    local font_sizes = {12, 15, 20}
+    local font_sizes = {12, 15, 18}
 
     local font_size_idx = 0
 
