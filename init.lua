@@ -1759,3 +1759,9 @@ require('sunset').setup({
     longitude = 13.4050
 })
 -- }}}
+
+-- TODO:
+--
+-- 1. Better copilot interaction -- ideally, complete on demand
+-- 2. Terminal UX -- doesn't start in insert mode
+-- 3. Dynamic folds based on treesitter
