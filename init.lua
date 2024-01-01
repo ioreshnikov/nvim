@@ -788,16 +788,21 @@ end
 --     https://github.com/neovim/neovim/issues/6591
 -- The setup is minimalistic -- I mostly disable the indentation guides in the
 -- modes I don't want them to see.
-require('indent_blankline').setup {
-    filetype_exclude = {
-        'help',
-        'markdown',
-        'neo-tree',
-        'NeogitStatus',
-        'TelescopePrompt',
-        'tex',
-        'toggleterm',
-        'Trouble',
+require('ibl').setup {
+    exclude = {
+        filetypes = {
+            'help',
+            'markdown',
+            'neo-tree',
+            'NeogitStatus',
+            'TelescopePrompt',
+            'tex',
+            'toggleterm',
+            'Trouble',
+        }
+    },
+    scope = {
+        enabled = false
     }
 }
 -- " }}}
