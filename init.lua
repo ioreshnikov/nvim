@@ -140,9 +140,6 @@ require('packer').startup(function (use)
 
     -- Writing mode
     use 'folke/zen-mode.nvim'
-
-    -- Jupyter
-    use 'luk400/vim-jukit'
 end)
 -- }}}
 
@@ -716,14 +713,20 @@ do
     local wk = require('which-key')
 
     wk.setup({
+        preset = "classic",
+        delay = 1000,
         icons = {
+            colors = false,
             breadcrumbs = ">",
             separator = "->",
             group = ""
+        },
+        layout = {
+            spacing = 10
         }
     })
 
-    wk.register({
+    wk.add({
         { "<leader>e", group = "Diagnostics/" },
         { "<leader>f", group = "Telescope/" },
         { "<leader>fs", group = "Bolt/" },
