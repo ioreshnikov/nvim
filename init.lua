@@ -34,6 +34,9 @@ require('packer').startup(function (use)
     -- Managing Git repos
     use 'NeogitOrg/neogit'
 
+    -- Git blame
+    use 'FabijanZulj/blame.nvim'
+
     -- Code completion backend through LSP servers
     use 'neovim/nvim-lspconfig'
 
@@ -118,14 +121,13 @@ require('packer').startup(function (use)
     -- REST client
     use 'NTBBloodbath/rest.nvim'
 
-    -- Org-mode
-    use 'nvim-orgmode/orgmode'
-
     -- Live preview commands
     use 'smjonas/live-command.nvim'
 
     -- Theming
     use 'rktjmp/lush.nvim'
+    use 'echasnovski/mini.colors'
+
     use 'ioreshnikov/helix'
     use '~/repos/rest/solarized/'
     use 'folke/tokyonight.nvim'
@@ -135,7 +137,12 @@ require('packer').startup(function (use)
 
     -- Welp, it's time
     use 'zbirenbaum/copilot.lua'
-    use 'zbirenbaum/copilot-cmp'
+
+    -- Writing mode
+    use 'folke/zen-mode.nvim'
+
+    -- Jupyter
+    use 'luk400/vim-jukit'
 end)
 -- }}}
 
@@ -308,7 +315,8 @@ vim.opt.wrap = true
 -- Folds are occasionally useful. I wish I could use tree-sitter aware folds,
 -- but as of now they're glitchy and tend to randomly collapse when you edit a
 -- region. Therefore I resort to good old fold by marker.
-vim.opt.foldmethod = 'marker'
+
+vim.opt.foldmethod = 'manual'
 -- }}}
 
 -- Movement in tabs and splits {{{
@@ -467,7 +475,12 @@ vim.api.nvim_command([[
 do
     local defaults = require('project_nvim.config').defaults
     require('project_nvim').setup {
-        patterns = { 'main', unpack(defaults.patterns) }
+        patterns = {
+            'main',
+            'tsconfig.json',
+            unpack(defaults.patterns)
+        },
+        scope_chdir = 'tab'
     }
 end
 -- }}}
@@ -518,7 +531,22 @@ telescope.setup {
                 { '~/.local/share/nvim/site/pack/packer/start', max_depth = 2 },
                 { '~/.config/nvim' }
             },
+            make_display = function (project)
+                local displayer = require("telecope.pickers.entry_display").create {
+                    separator = " ",
+                    items = {
+                        { width = 1},
+                        { width = 64 },
+                        { width = 0 }
+                    }
+                }
 
+                return displayer {
+                    { " " },
+                    { project.title },
+                    { project.display_path }
+                }
+            end
         }
     },
     pickers = {
@@ -587,6 +615,32 @@ noremap {
     rhs = require('telescope.builtin').resume,
     desc = 'Resume'
 }
+
+-- Bolt-specific additions
+noremap {
+    lhs = '<leader>fsp',
+    rhs = require('telescope_package_picker'),
+    desc = 'Bolt package'
+}
+
+noremap {
+    lhs = '<leader>fsf',
+    rhs = function ()
+        require('telescope.builtin').find_files({
+            search_dirs = { '/Users/ioreshnikov/repos/taxify/server/' }
+        })
+    end,
+    desc = 'Grep the whoe Bolt Server'
+}
+
+noremap {
+    lhs = '<leader>fsg',
+    rhs = function ()
+        require('telescope.builtin').live_grep({
+            search_dirs = { '/Users/ioreshnikov/repos/taxify/server/' }
+        })
+    end,
+    desc = 'Grep the whoe Bolt Server'
 }
 
 vim.api.nvim_command([[hi link TelescopeNormal NormalFloat]])
@@ -670,28 +724,28 @@ do
     })
 
     wk.register({
-        ['<leader>e']  = { name = 'Diagnostics/' },
-        ['<leader>f']  = { name = 'Telescope/' },
-        ['<leader>fs'] = { name = 'Bolt/' },
-        ['<leader>r']  = { name = 'REST/' },
-        ['<leader>t']  = { name = 'Terminal/' },
-        ['<leader>v']  = { name = 'Evaluate/' },
-        ['<leader>l']  = { name = 'Link/' },
-        ['<leader>s']  = { name = 'Swap/' },
+        { "<leader>e", group = "Diagnostics/" },
+        { "<leader>f", group = "Telescope/" },
+        { "<leader>fs", group = "Bolt/" },
+        { "<leader>l", group = "Link/" },
+        { "<leader>r", group = "REST/" },
+        { "<leader>s", group = "Swap/" },
+        { "<leader>t", group = "Terminal/" },
+        { "<leader>v", group = "Evaluate/" },
     })
 end
 -- }}}
 
 -- Command line {{{
 -- ----------------
--- It's possible now to hide command line and it looks neat!
-vim.opt.cmdheight = 0
+-- -- It's possible now to hide command line and it looks neat!
+-- vim.opt.cmdheight = 0
 
--- Except that it doesn't show you when you're recording a macro
-vim.api.nvim_command([[autocmd CmdlineEnter * set cmdheight=1]])
-vim.api.nvim_command([[autocmd CmdlineLeave * set cmdheight=0]])
-vim.api.nvim_command([[autocmd RecordingEnter * set cmdheight=1]])
-vim.api.nvim_command([[autocmd RecordingLeave * set cmdheight=0]])
+-- -- Except that it doesn't show you when you're recording a macro
+-- vim.api.nvim_command([[autocmd CmdlineEnter * set cmdheight=1]])
+-- vim.api.nvim_command([[autocmd CmdlineLeave * set cmdheight=0]])
+-- vim.api.nvim_command([[autocmd RecordingEnter * set cmdheight=1]])
+-- vim.api.nvim_command([[autocmd RecordingLeave * set cmdheight=0]])
 -- }}}
 
 -- Status line {{{
@@ -820,6 +874,8 @@ require('neogit').setup {
     }
 }
 
+require('blame').setup({})
+
 -- A simple key combination for opening git status anywhere
 noremap { lhs = '<leader>g', rhs = require('neogit').open, desc = 'Neogit' }
 -- " }}}
@@ -829,7 +885,6 @@ noremap { lhs = '<leader>g', rhs = require('neogit').open, desc = 'Neogit' }
 
 -- The section below configures `tree-sitter` to be used for syntax
 -- highlighting, selection, indentation and automatic delimiters pairing.
-require('orgmode').setup_ts_grammar()
 require('nvim-treesitter.configs').setup {
     ensure_installed = 'all',
     ignore_install = {'phpdoc'},
@@ -960,19 +1015,14 @@ require("luasnip.loaders.from_vscode").lazy_load()
 -- }}}
 
 -- Copilot {{{
-do
-    require("copilot").setup({
-        suggestion = {
-            enabled = true,
-            auto_trigger = true
-        }
-    })
-
-    nnoremap({
-        lhs = "<leader>ct",
-        rhs = function() require("copilot.suggestion").toggle_auto_trigger() end
-    })
-end
+-- do
+--     require("copilot").setup({
+--         suggestion = {
+--             enabled = true,
+--             auto_trigger = false
+--         }
+--     })
+-- end
 -- }}}
 
 -- Code completion {{{
@@ -1035,9 +1085,6 @@ cmp.setup({
         },
         {
             { name = 'emoji' }
-        },
-        {
-            { name = 'orgmode' }
         }
     )
 })
@@ -1286,7 +1333,7 @@ require('neo-tree').setup {
         },
         window = {
             position = "left",
-            width = 50
+            width = 0.3
         },
     },
     window = {
@@ -1396,7 +1443,8 @@ do
     config.tsserver.setup {
         on_attach = on_attach,
         capabilities = cmplsp.default_capabilities(),
-        root_dir = config.util.root_pattern('main')
+        root_dir = config.util.root_pattern('main', 'tsconfig.json'),
+        cmd = {"/Users/ioreshnikov/.nvm/versions/node/v20.12.1/bin/typescript-language-server", "--stdio"}
     }
 end
 
@@ -1571,45 +1619,6 @@ vim.api.nvim_command([[
 ]])
 -- }}}
 
--- Org-mode {{{
--- --------
-require('orgmode').setup {
-    org_agenda_files = { '~/Org/*.org' },
-    org_default_notes_file = '~/Org/Index.org',
-    org_todo_keywords = { 'TODO', 'LIVE', '|', 'DONE', 'FAIL', 'NOPE' },
-    org_hide_emphasis_markers = true,
-    org_capture_templates = {
-        a = {
-            description = 'Code annotation',
-            template = '* %? \n\n  %a\n',
-            target = '~/Org/Code annotations.org',
-            headline = 'Code annotations',
-        },
-        t = {
-            description = 'Daily task',
-            template = '* TODO %?\n  DEADLINE: %t\n',
-            target = '~/Org/Daily tasks.org',
-            headline = 'Daily tasks',
-        },
-        n = {
-            description = 'Random note',
-            template = '* %?\n',
-            target = '~/Org/Random notes.org',
-            headline = 'Random notes',
-        },
-    },
-}
--- }}}
-
--- Live command preview {{{
--- --------------------
-require('live-command').setup {
-    commands = {
-        Norm = { cmd = "norm" }
-    }
-}
--- }}}
-
 -- Random things {{{
 -- -----------------
 -- A faster way to save files
@@ -1693,16 +1702,8 @@ do
         vim.fn.setreg('*', url)
     end
 
-    local function copy_current_location_orgmode_url()
-        local path = vim.api.nvim_buf_get_name(0)
-        local linenr = vim.api.nvim_win_get_cursor(0)[1]
-        local url = string.format('[[file:%s +%s]]', path, linenr);
-        vim.fn.setreg('*', url);
-    end
-
     nnoremap { lhs = '<leader>lgl', rhs = copy_current_location_url, desc = 'GitHub link here (text)' }
     nnoremap { lhs = '<leader>lgm', rhs = copy_current_location_markdown_url, desc = 'GitHub link here (md)' }
-    nnoremap { lhs = '<leader>lo', rhs = copy_current_location_orgmode_url, desc = 'Org-mode link here' }
 end
 -- }}}
 
@@ -1760,13 +1761,48 @@ vim.api.nvim_command([[
 ]])
 
 require('sunset').setup({
+    -- Berlin
     latitude  = 52.5200,
     longitude = 13.4050
+
+    -- Porto
+    -- latitude  = 41.1579,
+    -- longitude =  8.6291
 })
 -- }}}
 
+-- Writing mode {{{
+-- ----------------
+require('zen-mode').setup({
+    window = {
+        backdrop = 1.0,
+        width = 78,
+        height = 0.75,
+        options = {
+            cursorline = false,
+            number = false,
+            relativenumber = false,
+            signcolumn = "no"
+        }
+    }
+})
+
+noremap {
+    lhs = '<F12>',
+    rhs = ':ZenMode<CR>',
+    desc = 'Toggle writing mode'
+}
+-- }}}
+
+noremap {
+    lhs = "<C-e>",
+    rhs = function()
+        local result = vim.treesitter.get_captures_at_cursor(0)
+        print(vim.inspect(result))
+    end
+}
+
 -- TODO:
 --
--- 1. Better copilot interaction -- ideally, complete on demand
--- 2. Terminal UX -- doesn't start in insert mode
--- 3. Dynamic folds based on treesitter
+-- 1. Terminal UX -- doesn't start in insert mode
+-- 2. Dynamic folds based on treesitter
