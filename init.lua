@@ -617,7 +617,7 @@ noremap {
 noremap {
     lhs = '<leader>fsp',
     rhs = require('telescope_package_picker'),
-    desc = 'Bolt package'
+    desc = 'Bolt package search'
 }
 
 noremap {
@@ -627,7 +627,7 @@ noremap {
             search_dirs = { '/Users/ioreshnikov/repos/taxify/server/' }
         })
     end,
-    desc = 'Grep the whoe Bolt Server'
+    desc = 'Search file in the whole Bolt Server'
 }
 
 noremap {
@@ -637,7 +637,7 @@ noremap {
             search_dirs = { '/Users/ioreshnikov/repos/taxify/server/' }
         })
     end,
-    desc = 'Grep the whoe Bolt Server'
+    desc = 'Grep the whole Bolt Server'
 }
 
 vim.api.nvim_command([[hi link TelescopeNormal NormalFloat]])
@@ -716,6 +716,7 @@ do
         preset = "classic",
         delay = 1000,
         icons = {
+            mappings = false,
             colors = false,
             breadcrumbs = ">",
             separator = "->",
