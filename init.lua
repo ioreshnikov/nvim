@@ -742,13 +742,13 @@ end
 -- Command line {{{
 -- ----------------
 -- -- It's possible now to hide command line and it looks neat!
--- vim.opt.cmdheight = 0
+vim.opt.cmdheight = 0
 
 -- -- Except that it doesn't show you when you're recording a macro
--- vim.api.nvim_command([[autocmd CmdlineEnter * set cmdheight=1]])
--- vim.api.nvim_command([[autocmd CmdlineLeave * set cmdheight=0]])
--- vim.api.nvim_command([[autocmd RecordingEnter * set cmdheight=1]])
--- vim.api.nvim_command([[autocmd RecordingLeave * set cmdheight=0]])
+vim.api.nvim_command([[autocmd CmdlineEnter * set cmdheight=1]])
+vim.api.nvim_command([[autocmd CmdlineLeave * set cmdheight=0]])
+vim.api.nvim_command([[autocmd RecordingEnter * set cmdheight=1]])
+vim.api.nvim_command([[autocmd RecordingLeave * set cmdheight=0]])
 -- }}}
 
 -- Status line {{{
