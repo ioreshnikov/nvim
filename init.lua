@@ -1194,6 +1194,10 @@ local on_attach = function(client, buffer)
         vim.api.nvim_set_hl(0, group, {})
     end
 
+    if client.server_capabilities.inlayHintProvider then
+        vim.lsp.inlay_hint.enable(true)
+    end
+
     client.server_capabilities.semanticTokensProvider = nil
 end
 
