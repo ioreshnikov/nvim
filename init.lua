@@ -102,9 +102,6 @@ require('packer').startup(function (use)
     use "https://git.sr.ht/~whynothugo/lsp_lines.nvim"
     use 'folke/trouble.nvim'
 
-    -- TODO marks
-    use 'folke/todo-comments.nvim'
-
     -- Indentation guides
     use 'lukas-reineke/indent-blankline.nvim'
 
@@ -1244,60 +1241,6 @@ noremap { lhs = '<leader>ef', rhs = ':TroubleToggle document_diagnostics<CR>', d
 noremap { lhs = '<leader>ew', rhs = ':TroubleToggle workspace_diagnostics<CR>', desc = 'Workspace errors' }
 
 vim.api.nvim_command([[hi link TroubleNormal LspTroubleNormal]])
--- }}}
-
--- TODO comments {{{
--- -----------------
--- A neat utility for highlighting the comment-keywords.
-
--- NOTE: Before we set it up, it's a good idea to disable a couple of builtin
--- highlight groups.
-vim.api.nvim_command([[
-    hi clear Todo
-    hi clear WarningMsg
-]])
-
-require('todo-comments').setup {
-    keywords = {
-        FIX = {
-            icon = ' ',
-            color = 'error',
-            alt = { 'FIXME', 'BUG', 'FIXIT', 'ISSUE' },
-        },
-        TODO = {
-            icon = ' ',
-            color = 'info'
-        },
-        DONE = {
-            icon = ' ',
-            color = 'hint'
-        },
-        HACK = {
-            icon = ' ',
-            color = 'warning'
-        },
-        WARN = {
-            icon = ' ',
-            color = 'warning',
-            alt = { 'WARNING', 'XXX' }
-        },
-        PERF = {
-            icon = ' ',
-            alt = { 'OPTIM', 'OPTIMIZE', 'PERFORMANCE' }
-        },
-        NOTE = {
-            icon = ' ',
-            color = 'hint',
-            alt = { 'INFO' }
-        }
-    },
-    highlight = {
-        after = '',
-        keyword = 'bg'
-    }
-}
-
-noremap { lhs = '<leader>et', rhs = ':TodoTrouble<CR>', desc = 'Todo notes' }
 -- }}}
 
 -- Filesystem tree {{{
