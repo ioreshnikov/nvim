@@ -1437,7 +1437,7 @@ do
     local config = require('lspconfig')
     local cmplsp = require('cmp_nvim_lsp')
 
-    config.tsserver.setup {
+    config.ts_ls.setup {
         on_attach = on_attach,
         capabilities = cmplsp.default_capabilities(),
         root_dir = config.util.root_pattern('main', 'tsconfig.json'),
