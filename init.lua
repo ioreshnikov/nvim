@@ -1599,6 +1599,19 @@ do
 end
 -- }}}
 
+-- Language: CPP  {{{
+-- ------------------
+do
+    local config = require('lspconfig')
+    local cmplsp = require('cmp_nvim_lsp')
+
+    config.clangd.setup {
+        on_attach = on_attach,
+        capabilities = cmplsp.default_capabilities()
+    }
+end
+-- }}}
+
 -- REST client {{{
 -- ---------------
 require('rest-nvim').setup()
