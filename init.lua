@@ -1237,8 +1237,7 @@ require('trouble').setup {
     indent_lines = false
 }
 
-noremap { lhs = '<leader>ef', rhs = ':TroubleToggle document_diagnostics<CR>', desc = 'File errors' }
-noremap { lhs = '<leader>ew', rhs = ':TroubleToggle workspace_diagnostics<CR>', desc = 'Workspace errors' }
+noremap { lhs = '<leader>ed', rhs = ':Trouble diagnostics<CR>', desc = 'Project diagnostics' }
 
 vim.api.nvim_command([[hi link TroubleNormal LspTroubleNormal]])
 -- }}}
