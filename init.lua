@@ -135,11 +135,11 @@ require('packer').startup(function (use)
     -- Automatically switch background on sunset/sunrise
     use 'JManch/sunset.nvim'
 
-    -- Welp, it's time
-    use 'zbirenbaum/copilot.lua'
-
     -- Writing mode
     use 'folke/zen-mode.nvim'
+
+    -- LLM Helper
+    use 'olimorris/codecompanion.nvim'
 end)
 -- }}}
 
@@ -1016,17 +1016,6 @@ inoremap { lhs = '<M-b>', rhs = '<C-o><Plug>CamelCaseMotion_b' }
 -- Snippets {{{
 -- ------------
 require("luasnip.loaders.from_vscode").lazy_load()
--- }}}
-
--- Copilot {{{
--- do
---     require("copilot").setup({
---         suggestion = {
---             enabled = true,
---             auto_trigger = false
---         }
---     })
--- end
 -- }}}
 
 -- Code completion {{{
