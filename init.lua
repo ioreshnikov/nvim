@@ -260,7 +260,7 @@ vim.api.nvim_command([[
         call EnableSignColumn()
     endfunction
 
-    autocmd BufReadPost,BufWritePost,BufNewFile * call EnableEditingHelpers()
+    autocmd BufReadPost,BufNewFile * call EnableEditingHelpers()
     autocmd FileType NeogitCommitMessage call EnableEditingHelpers()
     autocmd FileType NeogitStatus call EnableSignColumn()
 ]])
@@ -1690,7 +1690,7 @@ require('zen-mode').setup({
     window = {
         backdrop = 1.0,
         width = 78,
-        height = 0.75,
+        height = 0.90,
         options = {
             cursorline = false,
             number = false,
