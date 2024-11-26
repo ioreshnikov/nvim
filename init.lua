@@ -32,7 +32,7 @@ require('packer').startup(function (use)
     use 'cshuaimin/ssr.nvim'
 
     -- Managing Git repos
-    use 'NeogitOrg/neogit'
+    use 'ioreshnikov/neogit'
 
     -- Git blame
     use 'FabijanZulj/blame.nvim'
@@ -311,7 +311,10 @@ vim.opt.linebreak = true
 -- but as of now they're glitchy and tend to randomly collapse when you edit a
 -- region. Therefore I resort to good old fold by marker.
 
-vim.opt.foldmethod = 'manual'
+vim.opt.foldmethod = 'expr'
+vim.opt.foldexpr = "v:lua.vim.treesitter.foldexpr()"
+vim.opt.foldtext = "v:lua.vim.treesitter.foldtext()"
+vim.opt.foldlevel = 99
 -- }}}
 
 -- Movement in tabs and splits {{{
@@ -720,7 +723,8 @@ do
         options = {
             component_separators = '',
             section_separators = '',
-            disabled_filetypes = {}
+            disabled_filetypes = {},
+            globalstatus = true
         },
         sections = {
             lualine_a = {
@@ -806,12 +810,16 @@ require('ibl').setup {
 -- -------
 -- Almost no setup required
 require('neogit').setup {
+    auto_show_console = true,
     commit_popup = { kind = 'vsplit' },
     disable_commit_confirmation = true,
     disable_hint = true,
     signs = {
         section = {' ' , ' '},
         item = {' ' , ' '},
+    },
+    filewatcher = {
+        enabled = false
     }
 }
 
@@ -971,7 +979,6 @@ local has_words_before = function()
 end
 
 local cmp = require('cmp')
-local luasnip = require('luasnip')
 
 cmp.setup({
     snippet = {
@@ -1150,7 +1157,7 @@ vim.api.nvim_command('command! LspCodeAction         lua vim.lsp.buf.code_action
 -- Error diagnostics {{{
 -- ---------------------
 -- Better rendering in virtual text
-require('lsp_lines').setup {}
+require('lsp_lines').setup({})
 
 -- We disable it by default, but we add to a shortcut to toggle from short to
 -- long format
@@ -1488,6 +1495,20 @@ do
     local cmplsp = require('cmp_nvim_lsp')
 
     config.clangd.setup {
+        on_attach = on_attach,
+        capabilities = cmplsp.default_capabilities()
+    }
+end
+-- }}}
+
+-- Language: Zig {{{
+-- -----------------
+do
+    local config = require('lspconfig')
+    local cmplsp = require('cmp_nvim_lsp')
+
+    config.zls.setup {
+        cmd = { os.getenv('HOME') .. '/repos/rest/zls/zig-out/bin/zls' },
         on_attach = on_attach,
         capabilities = cmplsp.default_capabilities()
     }
