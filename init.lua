@@ -68,9 +68,6 @@ require('packer').startup(function (use)
     -- A custom tab line
     use 'alvarosevilla95/luatab.nvim'
 
-    -- Toggleable terminal
-    use 'akinsho/toggleterm.nvim'
-
     -- Which key
     use 'folke/which-key.nvim'
 
@@ -646,67 +643,6 @@ vim.api.nvim_command([[hi link TelescopeBorder NormalFloat]])
 vim.api.nvim_command([[hi link TelescopePromptPrefix Comment]])
 vim.api.nvim_command([[hi link TelescopeTitle Ignore]])
 -- }}}
-
--- Terminal {{{
--- ------------
--- Automatically enter insert mode when entering a terminal window.
--- Automatically switch to normal on exit.
--- vim.api.nvim_command([[autocmd WinEnter term://* startinsert]])
--- vim.api.nvim_command([[autocmd WinLeave term://* stopinsert]])
--- SEE: https://github.com/neovim/neovim/pull/16596
--- NOTE: Broken :(
-
--- Open terminal in a toggle
-require('toggleterm').setup {
-    highlights = {
-        Normal = { guifg = "#ffffff", guibg = "#000000" },
-        CursorLine = { guifg = "#ffffff", guibg = "#181818" },
-        StatusLine = { guifg = "#666666", guibg = "#000000" },
-        StatusLineNC = { guifg = "#666666", guibg = "#000000" },
-    },
-    shade_terminals = false,
-    start_in_insert = true,
-    size = function (term)
-        if term.direction == 'horizontal' then
-            return 25
-        elseif term.direction == 'vertical' then
-            return vim.o.columns * 0.5
-        else
-            return 25
-        end
-    end
-}
-
--- Setup DevIcons icon for ToggleTerm
-require('nvim-web-devicons').set_icon({
-    toggleterm = {
-        icon = '',
-        name = 'Terminal'
-    }
-})
-
-noremap {
-    lhs = '<leader>ts',
-    rhs = function ()
-        require('toggleterm').toggle(1, nil, nil, 'horizontal')
-    end,
-    desc = 'Terminal horizontal'
-}
-noremap {
-    lhs = '<leader>tv',
-    rhs = function ()
-        require('toggleterm').toggle(1, nil, nil, 'vertical')
-    end,
-    desc = 'Terminal vertical'
-}
-noremap {
-    lhs = '<leader>tt',
-    rhs = function ()
-        require('toggleterm').toggle(1, nil, nil, 'tab')
-    end,
-    desc = 'Terminal in a tab'
-}
--- " }}}
 
 -- Which key {{{
 -- -------------
