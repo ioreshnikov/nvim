@@ -123,7 +123,7 @@ require('packer').startup(function (use)
     use 'echasnovski/mini.colors'
 
     use 'ioreshnikov/helix'
-    use '~/repos/rest/solarized/'
+    use '~/repos/rest/solarized.nvim/'
     use 'folke/tokyonight.nvim'
 
     -- Automatically switch background on sunset/sunrise
@@ -133,7 +133,7 @@ require('packer').startup(function (use)
     use 'folke/zen-mode.nvim'
 
     -- LLM Helper
-    use 'olimorris/codecompanion.nvim'
+    use 'jackMort/ChatGPT.nvim'
 end)
 -- }}}
 
@@ -664,6 +664,11 @@ do
         },
         layout = {
             spacing = 10
+        },
+        win = {
+            wo = {
+                winblend = 10
+            }
         }
     })
 
@@ -1714,6 +1719,13 @@ noremap {
         print(vim.inspect(result))
     end
 }
+
+-- Code companion {{{
+-- ------------------
+require("chatgpt").setup({
+    api_key_cmd = "op read op://private/OpenAI/credential --no-newline"
+})
+-- }}}
 
 -- TODO:
 --
