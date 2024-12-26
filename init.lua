@@ -414,7 +414,6 @@ local sorters = require('telescope.sorters')
 telescope.setup {
     defaults = {
         border = true,
-        borderchars = { ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '},
         file_ignore_patterns = {
             '__pycache__/',
             '%.pyc',
@@ -428,17 +427,15 @@ telescope.setup {
             prompt_position = 'top',
         },
         prompt_prefix = '   ',
-        prompt_title = false,
-        results_title = ' ',
-        selection_caret = '  ',
+        prompt_title = true,
         sorter = sorters.get_fzy_sorter,
         sorting_strategy = 'ascending',
-        winblend = 10,
+        winblend = 5,
     },
     extensions = {
         file_browser = {
             dir_icon = '',
-            hidden = true,
+            -- hidden = true,
         },
         fzf = {
             fuzzy = true,
@@ -588,8 +585,9 @@ do
             spacing = 10
         },
         win = {
+            border = "rounded",
             wo = {
-                winblend = 10
+                winblend = 5
             }
         }
     })
@@ -731,7 +729,7 @@ require('ibl').setup {
         enabled = false
     }
 }
--- " }}}
+-- }}}
 
 -- Git {{{
 -- -------
