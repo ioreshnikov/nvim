@@ -62,9 +62,6 @@ require('packer').startup(function (use)
     -- Use a custom statusline
     use 'nvim-lualine/lualine.nvim'
 
-    -- A custom tab line
-    use 'alvarosevilla95/luatab.nvim'
-
     -- Which key
     use 'folke/which-key.nvim'
 
