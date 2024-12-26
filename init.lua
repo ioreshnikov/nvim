@@ -59,6 +59,9 @@ require('packer').startup(function (use)
     use 'L3MON4D3/LuaSnip'
     use 'saadparwaiz1/cmp_luasnip'
 
+    -- Debugger
+    use 'mfussenegger/nvim-dap'
+
     -- Use a custom statusline
     use 'nvim-lualine/lualine.nvim'
 
@@ -644,7 +647,7 @@ do
             component_separators = '',
             section_separators = '',
             disabled_filetypes = {},
-            globalstatus = true
+            globalstatus = false
         },
         sections = {
             lualine_a = {
@@ -1344,6 +1347,16 @@ do
         on_attach = on_attach,
         capabilities = cmplsp.default_capabilities()
     }
+
+    require('render-markdown').setup({
+        file_types = { "markdown", "Avante" },
+        heading = {
+            icons = { '# ', '## ' },
+        },
+        sign = {
+            enabled = false
+        }
+   })
 end
 -- }}}
 
