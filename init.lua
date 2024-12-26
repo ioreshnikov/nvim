@@ -133,7 +133,7 @@ require('packer').startup(function (use)
     use 'folke/zen-mode.nvim'
 
     -- LLM Helper
-    use 'jackMort/ChatGPT.nvim'
+    use 'yetone/avante.nvim'
 end)
 -- }}}
 
@@ -1722,8 +1722,9 @@ noremap {
 
 -- Code companion {{{
 -- ------------------
-require("chatgpt").setup({
-    api_key_cmd = "op read op://private/OpenAI/credential --no-newline"
+require('avante_lib').load()
+require('avante').setup({
+    provider = 'copilot'
 })
 -- }}}
 
