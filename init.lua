@@ -59,9 +59,6 @@ require('packer').startup(function (use)
     use 'L3MON4D3/LuaSnip'
     use 'saadparwaiz1/cmp_luasnip'
 
-    -- Interactive debugging through DAP
-    use 'mfussenegger/nvim-dap'
-
     -- Use a custom statusline
     use 'nvim-lualine/lualine.nvim'
 
@@ -133,6 +130,7 @@ require('packer').startup(function (use)
     use 'folke/zen-mode.nvim'
 
     -- LLM Helper
+    use 'MeanderingProgrammer/render-markdown.nvim'
     use 'yetone/avante.nvim'
 end)
 -- }}}
@@ -1259,67 +1257,6 @@ do
     }
 end
 
--- DAP settings
-do
-    local dap = require('dap')
-
-    dap.adapters.node2 = {
-        type = 'executable',
-        command = 'node',
-        args = { os.getenv('HOME') .. '/repos/rest/vscode-node-debug2/out/src/nodeDebug.js' }
-    }
-
-    dap.configurations.javascript = {
-        {
-            name = 'Launch',
-            type = 'node2',
-            request = 'launch',
-            program = '${file}',
-            cwd = vim.fn.getcwd(),
-            sourceMaps = true,
-            protocol = 'inspector',
-            console = 'integratedTerminal'
-        },
-        {
-            name = 'Attach to process',
-            type = 'node2',
-            request = 'attach',
-            processId = require('dap.utils').pick_process
-        },
-    }
-
-    dap.configurations.typescript = {
-        {
-            name = 'Attach to process',
-            type = 'node2',
-            request = 'attach',
-            processId = require('dap.utils').pick_process
-        },
-    }
-
-    local function add_configuration_bolt_service(service_name)
-        local entrypoint =
-            os.getenv('HOME')
-            .. '/repos/taxify/server/src/'
-            .. 'server-' .. service_name .. '.js'
-
-        local label = 'Bolt Server -> ' .. service_name
-        table.insert(dap.configurations.typescript, {
-            type = 'node2',
-            request = 'launch',
-            name = label,
-            program = entrypoint
-        })
-    end
-
-    add_configuration_bolt_service('rider-events')
-    add_configuration_bolt_service('driverx-events')
-    add_configuration_bolt_service('fleet-registration')
-    add_configuration_bolt_service('event')
-end
-
--- " }}}
-
 -- Language: HTML and CSS {{{
 -- --------------------------
 -- Well, that's obvious
@@ -1581,6 +1518,16 @@ end
 
 -- Color scheme {{{
 -- ----------------
+require('sunset').setup({
+    -- Berlin
+    latitude  = 52.5200,
+    longitude = 13.4050
+
+    -- Porto
+    -- latitude  = 41.1579,
+    -- longitude =  8.6291
+})
+
 vim.api.nvim_command([[
     set termguicolors
     colorscheme solarized
@@ -1597,16 +1544,6 @@ vim.api.nvim_command([[
     inoremap <silent> <F6> <C-o>:call ToggleBackground()<CR>
     vnoremap <silent> <F6> <ESC>:call ToggleBackground()<CR>
 ]])
-
-require('sunset').setup({
-    -- Berlin
-    latitude  = 52.5200,
-    longitude = 13.4050
-
-    -- Porto
-    -- latitude  = 41.1579,
-    -- longitude =  8.6291
-})
 -- }}}
 
 -- Writing mode {{{
