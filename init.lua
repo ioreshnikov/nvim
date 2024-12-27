@@ -890,6 +890,7 @@ require('blink.cmp').setup({
         documentation = { auto_show = true },
         ghost_text = { enabled = true }
     },
+    signature = { enabled = true }
 })
 
 -- Debugging with DAP {{{
