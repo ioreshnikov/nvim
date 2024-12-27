@@ -40,24 +40,14 @@ require('packer').startup(function (use)
     -- Code completion backend through LSP servers
     use 'neovim/nvim-lspconfig'
 
-    -- Code completion frontend with `nvim-cmp`
-    use 'hrsh7th/cmp-nvim-lsp'
-    use 'hrsh7th/cmp-buffer'
-    use 'hrsh7th/cmp-path'
-    use 'hrsh7th/cmp-cmdline'
-    use 'hrsh7th/cmp-emoji'
-    use 'hrsh7th/nvim-cmp'
+    -- Code completion frontend with `blink.cmp`
+    use 'Saghen/blink.cmp'
 
     use 'onsails/lspkind-nvim'
     use 'ray-x/lsp_signature.nvim'
 
     -- Vim global completion in lua lsp
     use 'folke/neodev.nvim'
-
-    -- Snippets
-    use 'rafamadriz/friendly-snippets'
-    use 'L3MON4D3/LuaSnip'
-    use 'saadparwaiz1/cmp_luasnip'
 
     -- Debugger
     use 'mfussenegger/nvim-dap'
@@ -881,11 +871,6 @@ inoremap { lhs = '<M-f>', rhs = '<C-o><Plug>CamelCaseMotion_w' }
 inoremap { lhs = '<M-b>', rhs = '<C-o><Plug>CamelCaseMotion_b' }
 -- }}}
 
--- Snippets {{{
--- ------------
-require("luasnip.loaders.from_vscode").lazy_load()
--- }}}
-
 -- Code completion {{{
 -- -------------------
 -- Completion backend is handed by the LSP servers of choice. We configure them
@@ -893,71 +878,10 @@ require("luasnip.loaders.from_vscode").lazy_load()
 
 vim.opt.pumheight = 16
 vim.opt.pumwidth = 32
-vim.opt.pumblend = 10
+vim.opt.pumblend = 5
 vim.opt.completeopt = {'menu', 'menuone', 'noselect'}
 
-local has_words_before = function()
-  local line, col = unpack(vim.api.nvim_win_get_cursor(0))
-  return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match("%s") == nil
-end
-
-local cmp = require('cmp')
-
-cmp.setup({
-    snippet = {
-        expand = function(args)
-            require('luasnip').lsp_expand(args.body)
-        end,
-    },
-    mapping = cmp.mapping.preset.insert({
-        ['<C-b>'] = cmp.mapping.scroll_docs(-4),
-        ['<C-f>'] = cmp.mapping.scroll_docs(4),
-        ['<C-Space>'] = cmp.mapping.complete(),
-        ['<C-e>'] = cmp.mapping.abort(),
-        ['<CR>'] = cmp.mapping.confirm(),
-        ['<Tab>'] = cmp.mapping(function(fallback)
-            if cmp.visible() then
-                cmp.select_next_item()
-            elseif has_words_before() then
-                cmp.complete()
-            else
-                fallback()
-            end
-        end, { "i", "s" }),
-        ['<S-Tab>'] = cmp.mapping(function(fallback)
-            if cmp.visible() then
-                cmp.select_prev_item()
-            else
-                fallback()
-            end
-        end, { "i", "s" }),
-    }),
-    sources = cmp.config.sources(
-        {
-            { name = 'nvim_lsp' },
-            { name = 'path' }
-        },
-        {
-            { name = 'buffer' },
-        },
-        {
-            { name = 'nvim_lsp_signature_help' }
-        },
-        {
-            { name = 'emoji' }
-        }
-    )
-})
-
-require('lsp_signature').setup {
-    floating_window = false,
-    floating_window_off_x = 0,
-    hint_prefix = ' ',
-    handler_opts = {
-        border = "none"
-    }
-}
--- }}}
+require('blink.cmp').setup({})
 
 -- Debugging with DAP {{{
 -- ----------------------
@@ -1163,11 +1087,11 @@ nnoremap { lhs = '<leader>d', rhs = ':Neotree focus toggle<CR>', desc = 'Toggle 
 -- LSP server. Thankfully, there is such a server!
 do
     local config = require('lspconfig')
-    local cmplsp = require('cmp_nvim_lsp')
+    local blink = require('blink.cmp')
 
     config.vimls.setup {
         on_attach = on_attach,
-        capabilities = cmplsp.default_capabilities()
+        capabilities = blink.get_lsp_capabilities()
     }
 end
 -- " }}}
@@ -1179,11 +1103,11 @@ do
     require("neodev").setup({})
 
     local config = require('lspconfig')
-    local cmplsp = require('cmp_nvim_lsp')
+    local blink = require('blink.cmp')
 
     config.lua_ls.setup {
         on_attach = on_attach,
-        capabilities = cmplsp.default_capabilities(),
+        capabilities = blink.get_lsp_capabilities(),
         settings = {
             globals = { 'vim', 'use' }
         }
@@ -1212,11 +1136,11 @@ end
 -- LSP settings
 do
     local config = require('lspconfig')
-    local cmplsp = require('cmp_nvim_lsp')
+    local blink = require('blink.cmp')
 
     config.pyright.setup {
         on_attach = on_attach,
-        capabilities = cmplsp.default_capabilities()
+        capabilities = blink.get_lsp_capabilities()
     }
 end
 
@@ -1247,11 +1171,11 @@ end
 -- LSP settings
 do
     local config = require('lspconfig')
-    local cmplsp = require('cmp_nvim_lsp')
+    local blink = require('blink.cmp')
 
     config.ts_ls.setup {
         on_attach = on_attach,
-        capabilities = cmplsp.default_capabilities(),
+        capabilities = blink.get_lsp_capabilities(),
         root_dir = config.util.root_pattern('main', 'tsconfig.json'),
         cmd = {"/Users/ioreshnikov/.nvm/versions/node/v20.12.1/bin/typescript-language-server", "--stdio"}
     }
@@ -1262,15 +1186,15 @@ end
 -- Well, that's obvious
 do
     local config = require('lspconfig')
-    local cmplsp = require('cmp_nvim_lsp')
+    local blink = require('blink.cmp')
 
     config.html.setup {
         on_attach = on_attach,
-        capabilities = cmplsp.default_capabilities()
+        capabilities = blink.get_lsp_capabilities(),
     }
     config.cssls.setup {
         on_attach = on_attach,
-        capabilities = cmplsp.default_capabilities()
+        capabilities = blink.get_lsp_capabilities(),
     }
 end
 -- }}}
@@ -1281,11 +1205,11 @@ end
 -- well.
 do
     local config = require('lspconfig')
-    local cmplsp = require('cmp_nvim_lsp')
+    local blink = require('blink.cmp')
 
     config.texlab.setup {
         on_attach = on_attach,
-        capabilities = cmplsp.default_capabilities()
+        capabilities = blink.get_lsp_capabilities()
     }
 end
 
@@ -1301,11 +1225,11 @@ vnoremap { lhs = '<C-\\>', rhs = ':<C-u>call unicoder#selection()<CR>' }
 -- :)
 do
     local config = require('lspconfig')
-    local cmplsp = require('cmp_nvim_lsp')
+    local blink = require('blink.cmp')
 
     config.rust_analyzer.setup {
         on_attach = on_attach,
-        capabilities = cmplsp.default_capabilities()
+        capabilities = blink.get_lsp_capabilities()
     }
 end
 -- }}}
@@ -1315,11 +1239,11 @@ end
 -- I am shocked as well :)
 do
     local config = require('lspconfig')
-    local cmplsp = require('cmp_nvim_lsp')
+    local blink = require('blink.cmp')
 
     config.phpactor.setup {
         on_attach = on_attach,
-        capabilities = cmplsp.default_capabilities()
+        capabilities = blink.get_lsp_capabilities()
     }
 end
 -- }}}
@@ -1328,11 +1252,11 @@ end
 -- -----------------
 do
     local config = require('lspconfig')
-    local cmplsp = require('cmp_nvim_lsp')
+    local blink = require('blink.cmp')
 
     config.sqlls.setup {
         on_attach = on_attach,
-        capabilities = cmplsp.default_capabilities()
+        capabilities = blink.get_lsp_capabilities()
     }
 end
 -- }}}
@@ -1341,11 +1265,11 @@ end
 -- ----------------------
 do
     local config = require('lspconfig')
-    local cmplsp = require('cmp_nvim_lsp')
+    local blink = require('blink.cmp')
 
     config.marksman.setup {
         on_attach = on_attach,
-        capabilities = cmplsp.default_capabilities()
+        capabilities = blink.get_lsp_capabilities(),
     }
 
     require('render-markdown').setup({
@@ -1364,11 +1288,11 @@ end
 -- ------------------
 do
     local config = require('lspconfig')
-    local cmplsp = require('cmp_nvim_lsp')
+    local blink = require('blink.cmp')
 
     config.clangd.setup {
         on_attach = on_attach,
-        capabilities = cmplsp.default_capabilities()
+        capabilities = blink.get_lsp_capabilities()
     }
 end
 -- }}}
@@ -1377,12 +1301,12 @@ end
 -- -----------------
 do
     local config = require('lspconfig')
-    local cmplsp = require('cmp_nvim_lsp')
+    local blink = require('blink.cmp')
 
     config.zls.setup {
         cmd = { os.getenv('HOME') .. '/repos/rest/zls/zig-out/bin/zls' },
         on_attach = on_attach,
-        capabilities = cmplsp.default_capabilities()
+        capabilities = blink.get_lsp_capabilities()
     }
 end
 -- }}}
