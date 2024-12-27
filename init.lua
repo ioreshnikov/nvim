@@ -881,7 +881,16 @@ vim.opt.pumwidth = 32
 vim.opt.pumblend = 5
 vim.opt.completeopt = {'menu', 'menuone', 'noselect'}
 
-require('blink.cmp').setup({})
+require('blink.cmp').setup({
+    completion = {
+        list = { selection = 'auto_insert' },
+        menu = {
+            winblend = 5
+        },
+        documentation = { auto_show = true },
+        ghost_text = { enabled = true }
+    },
+})
 
 -- Debugging with DAP {{{
 -- ----------------------
