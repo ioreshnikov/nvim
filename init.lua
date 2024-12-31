@@ -43,9 +43,6 @@ require('packer').startup(function (use)
     -- Code completion frontend with `blink.cmp`
     use 'Saghen/blink.cmp'
 
-    use 'onsails/lspkind-nvim'
-    use 'ray-x/lsp_signature.nvim'
-
     -- Vim global completion in lua lsp
     use 'folke/neodev.nvim'
 
@@ -383,6 +380,7 @@ vim.api.nvim_command([[
 do
     local defaults = require('project_nvim.config').defaults
     require('project_nvim').setup {
+        detection_methods = { "pattern" },
         patterns = {
             'main',
             'tsconfig.json',
@@ -1052,7 +1050,10 @@ require('neo-tree').setup {
     enable_git_status = false,
     enable_diagnostics = false,
     filesystem = {
-        follow_current_file = true,
+        follow_current_file = {
+            enabled = true,
+            leave_dirs_open = true
+        },
         use_libuv_file_watcher = true,
         renderers = {
             directory = {
