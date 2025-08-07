@@ -31,9 +31,6 @@ require('packer').startup(function (use)
     -- Structural searhc and replace
     use 'cshuaimin/ssr.nvim'
 
-    -- Managing Git repos
-    use 'ioreshnikov/neogit'
-
     -- Git blame
     use 'FabijanZulj/blame.nvim'
 
@@ -41,7 +38,10 @@ require('packer').startup(function (use)
     use 'neovim/nvim-lspconfig'
 
     -- Code completion frontend with `blink.cmp`
-    use 'Saghen/blink.cmp'
+    use {
+      "saghen/blink.cmp",
+      run = "cargo +nightly build --release"
+    }
 
     -- Vim global completion in lua lsp
     use 'folke/neodev.nvim'
@@ -246,8 +246,6 @@ vim.api.nvim_command([[
     endfunction
 
     autocmd BufReadPost,BufNewFile * call EnableEditingHelpers()
-    autocmd FileType NeogitCommitMessage call EnableEditingHelpers()
-    autocmd FileType NeogitStatus call EnableSignColumn()
 ]])
 -- " }}}
 
@@ -478,7 +476,9 @@ noremap {
 }
 noremap {
     lhs = '<leader>fb',
-    rhs = require('telescope.builtin').buffers,
+    rhs = function ()
+        require('telescope.builtin').buffers({ show_all_buffers = true })
+    end,
     desc = 'Buffers'
 }
 noremap {
@@ -704,7 +704,6 @@ require('ibl').setup {
             'help',
             'markdown',
             'neo-tree',
-            'NeogitStatus',
             'TelescopePrompt',
             'tex',
             'toggleterm',
@@ -717,28 +716,7 @@ require('ibl').setup {
 }
 -- }}}
 
--- Git {{{
--- -------
--- Almost no setup required
-require('neogit').setup {
-    auto_show_console = true,
-    commit_popup = { kind = 'vsplit' },
-    disable_commit_confirmation = true,
-    disable_hint = true,
-    signs = {
-        section = {' ' , ' '},
-        item = {' ' , ' '},
-    },
-    filewatcher = {
-        enabled = false
-    }
-}
-
 require('blame').setup({})
-
--- A simple key combination for opening git status anywhere
-noremap { lhs = '<leader>g', rhs = require('neogit').open, desc = 'Neogit' }
--- " }}}
 
 -- Tree sitter {{{
 -- ---------------
@@ -881,14 +859,16 @@ vim.opt.completeopt = {'menu', 'menuone', 'noselect'}
 
 require('blink.cmp').setup({
     completion = {
-        list = { selection = 'auto_insert' },
-        menu = {
-            winblend = 5
-        },
+        menu = { winblend = 5 },
         documentation = { auto_show = true },
-        ghost_text = { enabled = true }
+        -- ghost_text = { enabled = true }
     },
-    signature = { enabled = true }
+    signature = { enabled = true },
+    keymap = {
+        ['<Tab>'] = { 'select_next', 'fallback' },
+        ['<S-Tab>'] = { 'select_prev', 'fallback' },
+        ['<CR>'] = { 'accept', 'fallback' }
+    }
 })
 
 -- Debugging with DAP {{{
@@ -1046,6 +1026,10 @@ vim.api.nvim_command([[hi link TroubleNormal LspTroubleNormal]])
 
 -- Filesystem tree {{{
 -- -------------------
+require('nvim-web-devicons').setup({
+    color_icons = false
+})
+
 require('neo-tree').setup {
     enable_git_status = false,
     enable_diagnostics = false,
