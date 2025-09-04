@@ -296,7 +296,7 @@ vim.opt.linebreak = true
 
 vim.opt.foldmethod = 'expr'
 vim.opt.foldexpr = "v:lua.vim.treesitter.foldexpr()"
-vim.opt.foldtext = "v:lua.vim.treesitter.foldtext()"
+-- vim.opt.foldtext = "v:lua.vim.treesitter.foldtext()"
 vim.opt.foldlevel = 99
 -- }}}
 
@@ -861,13 +861,16 @@ require('blink.cmp').setup({
     completion = {
         menu = { winblend = 5 },
         documentation = { auto_show = true },
-        -- ghost_text = { enabled = true }
+        ghost_text = { enabled = true }
     },
     signature = { enabled = true },
     keymap = {
         ['<Tab>'] = { 'select_next', 'fallback' },
         ['<S-Tab>'] = { 'select_prev', 'fallback' },
         ['<CR>'] = { 'accept', 'fallback' }
+    },
+    sources = {
+        default = {'lsp', 'path', 'snippets'}
     }
 })
 
@@ -957,7 +960,11 @@ local on_attach = function(client, buffer)
         { noremap = true, silent = true })
     vim.api.nvim_buf_set_keymap(
         buffer,
-        'n', 'ca', '<cmd>lua vim.lsp.buf.code_action()<CR>',
+        'n', 'la', '<cmd>lua vim.lsp.buf.code_action()<CR>',
+        { noremap = true, silent = true })
+    vim.api.nvim_buf_set_keymap(
+        buffer,
+        'n', 'lr', '<cmd>lua vim.lsp.buf.rename()<CR>',
         { noremap = true, silent = true })
     vim.api.nvim_buf_set_keymap(
         buffer,
@@ -1172,7 +1179,7 @@ do
         on_attach = on_attach,
         capabilities = blink.get_lsp_capabilities(),
         root_dir = config.util.root_pattern('main', 'tsconfig.json'),
-        cmd = {"/Users/ioreshnikov/.nvm/versions/node/v20.12.1/bin/typescript-language-server", "--stdio"}
+        cmd = {"/Users/ioreshnikov/.nvm/versions/node/v22.13.1/bin/typescript-language-server", "--stdio"}
     }
 end
 
@@ -1259,13 +1266,13 @@ end
 -- Language: Markdown {{{
 -- ----------------------
 do
-    local config = require('lspconfig')
-    local blink = require('blink.cmp')
+    -- local config = require('lspconfig')
+    -- local blink = require('blink.cmp')
 
-    config.marksman.setup {
-        on_attach = on_attach,
-        capabilities = blink.get_lsp_capabilities(),
-    }
+    -- config.marksman.setup {
+    --     on_attach = on_attach,
+    --     capabilities = blink.get_lsp_capabilities(),
+    -- }
 
     require('render-markdown').setup({
         file_types = { "markdown", "Avante" },
@@ -1513,8 +1520,3 @@ require('avante').setup({
     provider = 'copilot'
 })
 -- }}}
-
--- TODO:
---
--- 1. Terminal UX -- doesn't start in insert mode
--- 2. Dynamic folds based on treesitter
