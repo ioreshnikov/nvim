@@ -296,7 +296,7 @@ vim.opt.linebreak = true
 
 vim.opt.foldmethod = 'expr'
 vim.opt.foldexpr = "v:lua.vim.treesitter.foldexpr()"
--- vim.opt.foldtext = "v:lua.vim.treesitter.foldtext()"
+vim.opt.foldtext = ""
 vim.opt.foldlevel = 99
 -- }}}
 
@@ -861,7 +861,7 @@ require('blink.cmp').setup({
     completion = {
         menu = { winblend = 5, draw = { columns = { {'label'}, {'kind_icon', 'kind', gap = 1} } } },
         documentation = { auto_show = true },
-        ghost_text = { enabled = true }
+        ghost_text = { enabled = false }
     },
     signature = { enabled = true },
     keymap = {
@@ -960,11 +960,11 @@ local on_attach = function(client, buffer)
         { noremap = true, silent = true })
     vim.api.nvim_buf_set_keymap(
         buffer,
-        'n', 'la', '<cmd>lua vim.lsp.buf.code_action()<CR>',
+        'n', '<leader>la', '<cmd>lua vim.lsp.buf.code_action()<CR>',
         { noremap = true, silent = true })
     vim.api.nvim_buf_set_keymap(
         buffer,
-        'n', 'lr', '<cmd>lua vim.lsp.buf.rename()<CR>',
+        'n', '<leader>lr', '<cmd>lua vim.lsp.buf.rename()<CR>',
         { noremap = true, silent = true })
     vim.api.nvim_buf_set_keymap(
         buffer,
