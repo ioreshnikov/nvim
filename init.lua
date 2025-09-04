@@ -859,7 +859,7 @@ vim.opt.completeopt = {'menu', 'menuone', 'noselect'}
 
 require('blink.cmp').setup({
     completion = {
-        menu = { winblend = 5 },
+        menu = { winblend = 5, draw = { columns = { {'label'}, {'kind_icon', 'kind', gap = 1} } } },
         documentation = { auto_show = true },
         ghost_text = { enabled = true }
     },
@@ -871,7 +871,7 @@ require('blink.cmp').setup({
     },
     sources = {
         default = {'lsp', 'path', 'snippets'}
-    }
+    },
 })
 
 -- Debugging with DAP {{{
@@ -926,10 +926,10 @@ require('nvim-autopairs').setup {}
 -- General LSP setup {{{
 -- ---------------------
 local signs = {
-    Error = ' ',
-    Warn = ' ',
-    Hint = ' ',
-    Info = ' ',
+    Error = '',
+    Warn = '',
+    Hint = '',
+    Info = '',
 }
 
 for type, icon in pairs(signs) do
@@ -999,7 +999,7 @@ vim.api.nvim_command('command! LspCodeAction         lua vim.lsp.buf.code_action
 -- Error diagnostics {{{
 -- ---------------------
 -- Better rendering in virtual text
-require('lsp_lines').setup({})
+-- require('lsp_lines').setup({})
 
 -- We disable it by default, but we add to a shortcut to toggle from short to
 -- long format
