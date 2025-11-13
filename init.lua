@@ -380,8 +380,8 @@ do
     require('project_nvim').setup {
         detection_methods = { "pattern" },
         patterns = {
-            'main',
             'tsconfig.json',
+            'main/',
             unpack(defaults.patterns)
         },
         scope_chdir = 'tab'
