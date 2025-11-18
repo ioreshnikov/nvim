@@ -1350,6 +1350,13 @@ nnoremap {
     desc = 'Close buffer'
 }
 
+-- Close all buffers except current
+nnoremap {
+    lhs = '<leader>K',
+    rhs = ':%bd \\| e# \\| bd#<CR>',
+    desc = 'Close all buffers except current'
+}
+
 -- Disable startup message
 vim.opt.shm = vim.opt.shm + 'I'
 
