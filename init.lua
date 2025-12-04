@@ -7,119 +7,123 @@ vim.g.mapleader = ' ';
 
 -- Plugins {{{
 -- -----------
-require('packer').startup(function (use)
-    -- Let packer manage itself
-    use 'wbthomason/packer.nvim'
+-- Bootstrap lazy.nvim
+local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
+if not (vim.uv or vim.loop).fs_stat(lazypath) then
+    local lazyrepo = "https://github.com/folke/lazy.nvim.git"
+    local out = vim.fn.system({ "git", "clone", "--filter=blob:none", "--branch=stable", lazyrepo, lazypath })
+    if vim.v.shell_error ~= 0 then
+        vim.api.nvim_echo({
+            { "Failed to clone lazy.nvim:\n", "ErrorMsg" },
+            { out, "WarningMsg" },
+            { "\nPress any key to exit..." },
+        }, true, {})
+        vim.fn.getchar()
+        os.exit(1)
+    end
+end
+vim.opt.rtp:prepend(lazypath)
 
+require('lazy').setup({
     -- Text icons
-    use 'kyazdani42/nvim-web-devicons'
+    'kyazdani42/nvim-web-devicons',
 
     -- Fuzzy everything
-    use 'nvim-lua/plenary.nvim'
-    use 'nvim-telescope/telescope.nvim'
-    use { 'nvim-telescope/telescope-fzf-native.nvim', run = 'make' }
-    use 'nvim-telescope/telescope-project.nvim'
-    use 'tami5/sqlite.lua'
+    'nvim-lua/plenary.nvim',
+    'nvim-telescope/telescope.nvim',
+    { 'nvim-telescope/telescope-fzf-native.nvim', build = 'make' },
+    'nvim-telescope/telescope-project.nvim',
+    'tami5/sqlite.lua',
 
     -- Modern syntax highlight with `tree-sitter`
-    use { 'nvim-treesitter/nvim-treesitter', run = ':TSUpdate' }
-    use 'nvim-treesitter/playground'
+    { 'nvim-treesitter/nvim-treesitter', build = ':TSUpdate' },
+    'nvim-treesitter/playground',
 
     -- Text objects with treesitter
-    use 'nvim-treesitter/nvim-treesitter-textobjects'
+    'nvim-treesitter/nvim-treesitter-textobjects',
 
     -- Structural searhc and replace
-    use 'cshuaimin/ssr.nvim'
+    'cshuaimin/ssr.nvim',
 
     -- Git blame
-    use 'FabijanZulj/blame.nvim'
-
-    -- Code completion backend through LSP servers
-    use 'neovim/nvim-lspconfig'
+    'FabijanZulj/blame.nvim',
 
     -- Code completion frontend with `blink.cmp`
-    use {
+    {
       "saghen/blink.cmp",
-      run = "cargo +nightly build --release"
-    }
-
-    -- Vim global completion in lua lsp
-    use 'folke/neodev.nvim'
+      version = "v0.*"
+    },
 
     -- Debugger
-    use 'mfussenegger/nvim-dap'
+    'mfussenegger/nvim-dap',
 
     -- Use a custom statusline
-    use 'nvim-lualine/lualine.nvim'
+    'nvim-lualine/lualine.nvim',
 
     -- Which key
-    use 'folke/which-key.nvim'
+    'folke/which-key.nvim',
 
     -- Commenting
-    use 'tpope/vim-commentary'
+    'tpope/vim-commentary',
 
     -- Surround
-    use 'machakann/vim-sandwich'
+    'machakann/vim-sandwich',
 
     -- Sub-word motion
-    use 'bkad/CamelCaseMotion'
+    'bkad/CamelCaseMotion',
 
     -- Case coercion
-    use 'tpope/vim-abolish'
+    'tpope/vim-abolish',
 
     -- Auto-pairing
-    use 'windwp/nvim-autopairs'
+    'windwp/nvim-autopairs',
 
     -- TeX
-    use 'lervag/vimtex'
+    'lervag/vimtex',
 
     -- Prettier javascript
-    use { 'prettier/vim-prettier', run = 'yarn install --frozen-lockfile --production' }
+    { 'prettier/vim-prettier', build = 'yarn install --frozen-lockfile --production' },
 
     -- Unicode symbols entry
-    use 'joom/latex-unicoder.vim'
+    'joom/latex-unicoder.vim',
 
     -- LSP errors
-    use "https://git.sr.ht/~whynothugo/lsp_lines.nvim"
-    use 'folke/trouble.nvim'
+    "https://git.sr.ht/~whynothugo/lsp_lines.nvim",
+    'folke/trouble.nvim',
 
     -- Indentation guides
-    use 'lukas-reineke/indent-blankline.nvim'
+    'lukas-reineke/indent-blankline.nvim',
 
     -- Indent level autodetection
-    use 'timakro/vim-yadi'
+    'timakro/vim-yadi',
 
     -- Automatically change cwd to the root of the project
-    use 'ahmedkhalf/project.nvim'
+    'ahmedkhalf/project.nvim',
 
     -- Tree viewer
-    use 'MunifTanjim/nui.nvim'
-    use 'nvim-neo-tree/neo-tree.nvim'
+    'MunifTanjim/nui.nvim',
+    'nvim-neo-tree/neo-tree.nvim',
 
     -- REST client
-    use 'NTBBloodbath/rest.nvim'
+    'NTBBloodbath/rest.nvim',
 
     -- Live preview commands
-    use 'smjonas/live-command.nvim'
+    'smjonas/live-command.nvim',
 
     -- Theming
-    use 'rktjmp/lush.nvim'
-    use 'echasnovski/mini.colors'
+    'rktjmp/lush.nvim',
+    'echasnovski/mini.colors',
 
-    use 'ioreshnikov/helix'
-    use '~/repos/rest/solarized.nvim/'
-    use 'folke/tokyonight.nvim'
+    'ioreshnikov/helix',
+    { dir = '~/Code/solarized.nvim/' },
+    'folke/tokyonight.nvim',
 
     -- Automatically switch background on sunset/sunrise
-    use 'JManch/sunset.nvim'
+    'JManch/sunset.nvim',
 
     -- Writing mode
-    use 'folke/zen-mode.nvim'
-
-    -- LLM Helper
-    use 'MeanderingProgrammer/render-markdown.nvim'
-    use 'yetone/avante.nvim'
-end)
+    'folke/zen-mode.nvim',
+})
 -- }}}
 
 -- Shortcuts {{{
@@ -417,10 +421,6 @@ telescope.setup {
         winblend = 5,
     },
     extensions = {
-        file_browser = {
-            dir_icon = '',
-            -- hidden = true,
-        },
         fzf = {
             fuzzy = true,
             override_generic_sorter = true,
@@ -428,8 +428,8 @@ telescope.setup {
         },
         project = {
             base_dirs = {
-                { '~/repos/', max_depth = 3 },
-                { '~/.local/share/nvim/site/pack/packer/start', max_depth = 2 },
+                { '~/Code/', max_depth = 3 },
+                { vim.fn.stdpath('data') .. '/lazy', max_depth = 2 },
                 { '~/.config/nvim' }
             },
             make_display = function (project)
@@ -519,33 +519,6 @@ noremap {
     desc = 'Resume'
 }
 
--- Bolt-specific additions
-noremap {
-    lhs = '<leader>fsp',
-    rhs = require('telescope_package_picker'),
-    desc = 'Bolt package search'
-}
-
-noremap {
-    lhs = '<leader>fsf',
-    rhs = function ()
-        require('telescope.builtin').find_files({
-            search_dirs = { '/Users/ioreshnikov/repos/taxify/server/' }
-        })
-    end,
-    desc = 'Search file in the whole Bolt Server'
-}
-
-noremap {
-    lhs = '<leader>fsg',
-    rhs = function ()
-        require('telescope.builtin').live_grep({
-            search_dirs = { '/Users/ioreshnikov/repos/taxify/server/' }
-        })
-    end,
-    desc = 'Grep the whole Bolt Server'
-}
-
 vim.api.nvim_command([[hi link TelescopeNormal NormalFloat]])
 vim.api.nvim_command([[hi link TelescopeBorder NormalFloat]])
 vim.api.nvim_command([[hi link TelescopePromptPrefix Comment]])
@@ -612,12 +585,12 @@ do
 
     local modesymbol = {
         ['NORMAL']   = ' NOR',
-        ['INSERT']   = ' INS',
+        ['INSERT']   = '󰇘 INS',
         ['VISUAL']   = 'ﱓ VIS',
         ['V-LINE']   = ' VIS',
         ['V-BLOCK']  = ' VIS',
         ['TERMINAL'] = ' ZSH',
-        ['COMMAND']  = ' CMD',
+        ['COMMAND']  = ' CMD',
     }
 
     local function mode()
@@ -725,7 +698,7 @@ require('blame').setup({})
 -- highlighting, selection, indentation and automatic delimiters pairing.
 require('nvim-treesitter.configs').setup {
     ensure_installed = 'all',
-    ignore_install = {'phpdoc'},
+    ignore_install = {'phpdoc', 'ipkg'},
     highlight = {
         enable = true,
         additional_vim_regex_highlighting = {'org'}
@@ -1046,29 +1019,9 @@ require('neo-tree').setup {
             leave_dirs_open = true
         },
         use_libuv_file_watcher = true,
-        renderers = {
-            directory = {
-                {
-                    'icon',
-                    folder_closed = '',
-                    folder_open = 'ﱮ',
-                    padding = '  '
-                },
-                { 'current_filter' },
-                { 'name' }
-            },
-            file = {
-                {
-                    'icon',
-                    default = '',
-                    padding = '  '
-                },
-                { 'name' },
-            }
-        },
         window = {
             position = "left",
-            width = 0.3
+            width = 0.25
         },
     },
     window = {
@@ -1088,13 +1041,22 @@ nnoremap { lhs = '<leader>d', rhs = ':Neotree focus toggle<CR>', desc = 'Toggle 
 -- It would be cool if editing this very config was done with the help of an
 -- LSP server. Thankfully, there is such a server!
 do
-    local config = require('lspconfig')
     local blink = require('blink.cmp')
 
-    config.vimls.setup {
+    vim.lsp.config('vimls', {
+        cmd = { 'vim-language-server', '--stdio' },
+        filetypes = { 'vim' },
+        root_markers = { '.git' },
         on_attach = on_attach,
         capabilities = blink.get_lsp_capabilities()
-    }
+    })
+
+    vim.api.nvim_create_autocmd('FileType', {
+        pattern = 'vim',
+        callback = function()
+            vim.lsp.enable('vimls')
+        end
+    })
 end
 -- " }}}
 
@@ -1102,34 +1064,39 @@ end
 -- -----------------
 -- Some of the editing is done in Lua
 do
-    require("neodev").setup({})
-
-    local config = require('lspconfig')
     local blink = require('blink.cmp')
 
-    config.lua_ls.setup {
+    vim.lsp.config('lua_ls', {
+        cmd = { 'lua-language-server' },
+        filetypes = { 'lua' },
+        root_markers = { '.git', '.luarc.json' },
         on_attach = on_attach,
         capabilities = blink.get_lsp_capabilities(),
         settings = {
-            globals = { 'vim', 'use' }
+            Lua = {
+                runtime = {
+                    version = 'LuaJIT'
+                },
+                diagnostics = {
+                    globals = { 'vim', 'use' }
+                },
+                workspace = {
+                    library = vim.api.nvim_get_runtime_file("", true),
+                    checkThirdParty = false
+                },
+                telemetry = {
+                    enable = false
+                }
+            }
         }
-        -- settings = {
-        --     Lua = {
-        --         runtime = {
-        --             version = 'LuaJIT'
-        --         },
-        --         diagnostics = {
-        --             globals = { 'vim' }
-        --         },
-        --         workspace = {
-        --             library = vim.api.nvim_get_runtime_file("", true)
-        --         },
-        --         telemetry = {
-        --             enabled = false
-        --         }
-        --     }
-        -- }
-    }
+    })
+
+    vim.api.nvim_create_autocmd('FileType', {
+        pattern = 'lua',
+        callback = function()
+            vim.lsp.enable('lua_ls')
+        end
+    })
 end
 -- }}}
 
@@ -1137,13 +1104,22 @@ end
 -- --------------------
 -- LSP settings
 do
-    local config = require('lspconfig')
     local blink = require('blink.cmp')
 
-    config.pyright.setup {
+    vim.lsp.config('pyright', {
+        cmd = { 'pyright-langserver', '--stdio' },
+        filetypes = { 'python' },
+        root_markers = { 'pyproject.toml', 'setup.py', 'requirements.txt', '.git' },
         on_attach = on_attach,
         capabilities = blink.get_lsp_capabilities()
-    }
+    })
+
+    vim.api.nvim_create_autocmd('FileType', {
+        pattern = 'python',
+        callback = function()
+            vim.lsp.enable('pyright')
+        end
+    })
 end
 
 -- DAP settings
@@ -1172,32 +1148,59 @@ end
 -- And sometimes I need to write frontend code as well.
 -- LSP settings
 do
-    local config = require('lspconfig')
     local blink = require('blink.cmp')
 
-    config.ts_ls.setup {
+    vim.lsp.config('ts_ls', {
+        cmd = {"/Users/ioreshnikov/.nvm/versions/node/v22.13.1/bin/typescript-language-server", "--stdio"},
+        filetypes = { 'javascript', 'javascriptreact', 'typescript', 'typescriptreact' },
+        root_markers = { 'main', 'tsconfig.json', 'package.json', '.git' },
         on_attach = on_attach,
-        capabilities = blink.get_lsp_capabilities(),
-        root_dir = config.util.root_pattern('main', 'tsconfig.json'),
-        cmd = {"/Users/ioreshnikov/.nvm/versions/node/v22.13.1/bin/typescript-language-server", "--stdio"}
-    }
+        capabilities = blink.get_lsp_capabilities()
+    })
+
+    vim.api.nvim_create_autocmd('FileType', {
+        pattern = { 'javascript', 'javascriptreact', 'typescript', 'typescriptreact' },
+        callback = function()
+            vim.lsp.enable('ts_ls')
+        end
+    })
 end
 
 -- Language: HTML and CSS {{{
 -- --------------------------
 -- Well, that's obvious
 do
-    local config = require('lspconfig')
     local blink = require('blink.cmp')
 
-    config.html.setup {
+    vim.lsp.config('html', {
+        cmd = { 'vscode-html-language-server', '--stdio' },
+        filetypes = { 'html' },
+        root_markers = { '.git', 'package.json' },
         on_attach = on_attach,
         capabilities = blink.get_lsp_capabilities(),
-    }
-    config.cssls.setup {
+    })
+
+    vim.lsp.config('cssls', {
+        cmd = { 'vscode-css-language-server', '--stdio' },
+        filetypes = { 'css', 'scss', 'less' },
+        root_markers = { '.git', 'package.json' },
         on_attach = on_attach,
         capabilities = blink.get_lsp_capabilities(),
-    }
+    })
+
+    vim.api.nvim_create_autocmd('FileType', {
+        pattern = 'html',
+        callback = function()
+            vim.lsp.enable('html')
+        end
+    })
+
+    vim.api.nvim_create_autocmd('FileType', {
+        pattern = { 'css', 'scss', 'less' },
+        callback = function()
+            vim.lsp.enable('cssls')
+        end
+    })
 end
 -- }}}
 
@@ -1206,13 +1209,22 @@ end
 -- Occasionally I write LaTeX. It turns out there is an LSP mode for that as
 -- well.
 do
-    local config = require('lspconfig')
     local blink = require('blink.cmp')
 
-    config.texlab.setup {
+    vim.lsp.config('texlab', {
+        cmd = { 'texlab' },
+        filetypes = { 'tex', 'bib', 'plaintex' },
+        root_markers = { '.latexmkrc', '.git' },
         on_attach = on_attach,
         capabilities = blink.get_lsp_capabilities()
-    }
+    })
+
+    vim.api.nvim_create_autocmd('FileType', {
+        pattern = { 'tex', 'bib', 'plaintex' },
+        callback = function()
+            vim.lsp.enable('texlab')
+        end
+    })
 end
 
 vim.g.unicoder_no_map = true
@@ -1226,91 +1238,50 @@ vnoremap { lhs = '<C-\\>', rhs = ':<C-u>call unicoder#selection()<CR>' }
 -- I need to learn a system programming language and it's definitely not C/C++
 -- :)
 do
-    local config = require('lspconfig')
     local blink = require('blink.cmp')
 
-    config.rust_analyzer.setup {
+    vim.lsp.config('rust_analyzer', {
+        cmd = { 'rust-analyzer' },
+        filetypes = { 'rust' },
+        root_markers = { 'Cargo.toml', 'rust-project.json' },
         on_attach = on_attach,
         capabilities = blink.get_lsp_capabilities()
-    }
-end
--- }}}
+    })
 
--- Language: PHP {{{
--- -----------------
--- I am shocked as well :)
-do
-    local config = require('lspconfig')
-    local blink = require('blink.cmp')
-
-    config.phpactor.setup {
-        on_attach = on_attach,
-        capabilities = blink.get_lsp_capabilities()
-    }
+    vim.api.nvim_create_autocmd('FileType', {
+        pattern = 'rust',
+        callback = function()
+            vim.lsp.enable('rust_analyzer')
+        end
+    })
 end
 -- }}}
 
 -- Language: SQL {{{
 -- -----------------
 do
-    local config = require('lspconfig')
     local blink = require('blink.cmp')
 
-    config.sqlls.setup {
+    vim.lsp.config('sqlls', {
+        cmd = { 'sql-language-server', 'up', '--method', 'stdio' },
+        filetypes = { 'sql', 'mysql' },
+        root_markers = { '.git' },
         on_attach = on_attach,
         capabilities = blink.get_lsp_capabilities()
-    }
+    })
+
+    vim.api.nvim_create_autocmd('FileType', {
+        pattern = { 'sql', 'mysql' },
+        callback = function()
+            vim.lsp.enable('sqlls')
+        end
+    })
 end
 -- }}}
 
 -- Language: Markdown {{{
 -- ----------------------
-do
-    -- local config = require('lspconfig')
-    -- local blink = require('blink.cmp')
-
-    -- config.marksman.setup {
-    --     on_attach = on_attach,
-    --     capabilities = blink.get_lsp_capabilities(),
-    -- }
-
-    require('render-markdown').setup({
-        file_types = { "markdown", "Avante" },
-        heading = {
-            icons = { '# ', '## ' },
-        },
-        sign = {
-            enabled = false
-        }
-   })
-end
--- }}}
-
--- Language: CPP  {{{
--- ------------------
-do
-    local config = require('lspconfig')
-    local blink = require('blink.cmp')
-
-    config.clangd.setup {
-        on_attach = on_attach,
-        capabilities = blink.get_lsp_capabilities()
-    }
-end
--- }}}
-
--- Language: Zig {{{
--- -----------------
-do
-    local config = require('lspconfig')
-    local blink = require('blink.cmp')
-
-    config.zls.setup {
-        cmd = { os.getenv('HOME') .. '/repos/rest/zls/zig-out/bin/zls' },
-        on_attach = on_attach,
-        capabilities = blink.get_lsp_capabilities()
-    }
-end
+-- Markdown LSP and rendering plugins can be added here if needed
 -- }}}
 
 -- REST client {{{
@@ -1510,20 +1481,4 @@ noremap {
     rhs = ':ZenMode<CR>',
     desc = 'Toggle writing mode'
 }
--- }}}
-
-noremap {
-    lhs = "<C-e>",
-    rhs = function()
-        local result = vim.treesitter.get_captures_at_cursor(0)
-        print(vim.inspect(result))
-    end
-}
-
--- Code companion {{{
--- ------------------
-require('avante_lib').load()
-require('avante').setup({
-    provider = 'copilot'
-})
 -- }}}
