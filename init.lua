@@ -585,10 +585,10 @@ do
     local modesymbol = {
         ['NORMAL']   = ' NOR',
         ['INSERT']   = '󰇘 INS',
-        ['VISUAL']   = 'ﱓ VIS',
-        ['V-LINE']   = ' VIS',
-        ['V-BLOCK']  = ' VIS',
-        ['TERMINAL'] = ' ZSH',
+        ['VISUAL']   = '󰝕 VIS',
+        ['V-LINE']   = '󰉸 VIS',
+        ['V-BLOCK']  = '󰉶 VIS',
+        ['TERMINAL'] = ' ZSH',
         ['COMMAND']  = ' CMD',
     }
 
