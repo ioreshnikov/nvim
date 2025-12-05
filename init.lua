@@ -102,7 +102,7 @@ require('lazy').setup({
 
     -- Tree viewer
     'MunifTanjim/nui.nvim',
-    'nvim-neo-tree/neo-tree.nvim',
+    {'nvim-neo-tree/neo-tree.nvim', version = "3.38.0"},
 
     -- REST client
     'NTBBloodbath/rest.nvim',
@@ -1011,6 +1011,7 @@ require('nvim-web-devicons').setup({
 })
 
 require('neo-tree').setup {
+    enable_git_status = false,
     enable_diagnostics = false,
     filesystem = {
         follow_current_file = {
