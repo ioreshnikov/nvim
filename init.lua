@@ -36,6 +36,7 @@ require('lazy').setup({
     'tami5/sqlite.lua',
 
     -- Modern syntax highlight with `tree-sitter`
+    { 'nvim-treesitter/nvim-treesitter', lazy = false, build = ':TSUpdate' },
     'nvim-treesitter/playground',
 
     -- Text objects with treesitter
@@ -899,8 +900,8 @@ require('nvim-autopairs').setup {}
 -- ---------------------
 local signs = {
     Error = '',
-    Warn = '',
-    Hint = '',
+    Warn = '',
+    Hint = '',
     Info = '',
 }
 
@@ -1010,7 +1011,6 @@ require('nvim-web-devicons').setup({
 })
 
 require('neo-tree').setup {
-    enable_git_status = false,
     enable_diagnostics = false,
     filesystem = {
         follow_current_file = {
