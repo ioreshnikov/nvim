@@ -36,7 +36,6 @@ require('lazy').setup({
     'tami5/sqlite.lua',
 
     -- Modern syntax highlight with `tree-sitter`
-    { 'nvim-treesitter/nvim-treesitter', build = ':TSUpdate' },
     'nvim-treesitter/playground',
 
     -- Text objects with treesitter
@@ -51,7 +50,7 @@ require('lazy').setup({
     -- Code completion frontend with `blink.cmp`
     {
       "saghen/blink.cmp",
-      version = "v0.*"
+      version = "v1.*"
     },
 
     -- Debugger
