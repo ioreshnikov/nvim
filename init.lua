@@ -1149,7 +1149,7 @@ do
     local blink = require('blink.cmp')
 
     vim.lsp.config('ts_ls', {
-        cmd = {"/Users/ioreshnikov/.nvm/versions/node/v22.13.1/bin/typescript-language-server", "--stdio"},
+        cmd = {"typescript-language-server", "--stdio"},
         filetypes = { 'javascript', 'javascriptreact', 'typescript', 'typescriptreact' },
         root_markers = { 'main', 'tsconfig.json', 'package.json', '.git' },
         on_attach = on_attach,
