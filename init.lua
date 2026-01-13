@@ -974,21 +974,21 @@ vim.api.nvim_command('command! LspCodeAction         lua vim.lsp.buf.code_action
 -- Better rendering in virtual text
 -- require('lsp_lines').setup({})
 
--- We disable it by default, but we add to a shortcut to toggle from short to
--- long format
-local short_form_errors = true
+-- By default show only sign column indicators, no virtual text
+-- The hotkey toggles long-form error display (virtual lines)
+local long_lines_visible = false
 vim.diagnostic.config({
-    virtual_text = short_form_errors,
-    virtual_lines = not short_form_errors
+    virtual_text = false,
+    virtual_lines = false
 })
 
 noremap {
     lhs = '<leader>el',
     rhs = function ()
-        short_form_errors = not short_form_errors
+        long_lines_visible = not long_lines_visible
         vim.diagnostic.config({
-            virtual_text = short_form_errors,
-            virtual_lines = not short_form_errors
+            virtual_text = false,
+            virtual_lines = long_lines_visible
         })
     end,
     desc = 'Toggle long-form error format'
