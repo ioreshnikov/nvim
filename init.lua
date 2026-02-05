@@ -118,9 +118,6 @@ require('lazy').setup({
     { dir = '~/Code/solarized.nvim/' },
     'folke/tokyonight.nvim',
 
-    -- Automatically switch background on sunset/sunrise
-    'JManch/sunset.nvim',
-
     -- Writing mode
     'folke/zen-mode.nvim',
 })
@@ -1430,16 +1427,6 @@ end
 
 -- Color scheme {{{
 -- ----------------
-require('sunset').setup({
-    -- Berlin
-    latitude  = 52.5200,
-    longitude = 13.4050
-
-    -- Porto
-    -- latitude  = 41.1579,
-    -- longitude =  8.6291
-})
-
 vim.api.nvim_command([[
     set termguicolors
     colorscheme solarized
