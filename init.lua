@@ -89,7 +89,7 @@ require('lazy').setup({
 
     -- LSP errors
     "https://git.sr.ht/~whynothugo/lsp_lines.nvim",
-    'folke/trouble.nvim',
+    'yorickpeterse/nvim-pqf',
 
     -- Indentation guides
     'lukas-reineke/indent-blankline.nvim',
@@ -677,7 +677,6 @@ require('ibl').setup {
             'TelescopePrompt',
             'tex',
             'toggleterm',
-            'Trouble',
         }
     },
     scope = {
@@ -992,13 +991,16 @@ noremap {
 }
 
 -- Error view
-require('trouble').setup {
-    indent_lines = false
+require('pqf').setup()
+
+noremap {
+    lhs = '<leader>ed',
+    rhs = function()
+        vim.diagnostic.setqflist()
+        vim.cmd('copen')
+    end,
+    desc = 'Project diagnostics'
 }
-
-noremap { lhs = '<leader>ed', rhs = ':Trouble diagnostics<CR>', desc = 'Project diagnostics' }
-
-vim.api.nvim_command([[hi link TroubleNormal LspTroubleNormal]])
 -- }}}
 
 -- Filesystem tree {{{
