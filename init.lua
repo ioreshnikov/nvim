@@ -1278,7 +1278,24 @@ end
 
 -- Language: Markdown {{{
 -- ----------------------
--- Markdown LSP and rendering plugins can be added here if needed
+do
+    local blink = require('blink.cmp')
+
+    vim.lsp.config('markdown_oxide', {
+        cmd = { 'markdown-oxide' },
+        filetypes = { 'markdown' },
+        root_markers = { '.obsidian' },
+        on_attach = on_attach,
+        capabilities = blink.get_lsp_capabilities()
+    })
+
+    vim.api.nvim_create_autocmd('FileType', {
+        pattern = 'markdown',
+        callback = function()
+            vim.lsp.enable('markdown_oxide')
+        end
+    })
+end
 -- }}}
 
 -- REST client {{{
