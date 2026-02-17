@@ -107,6 +107,11 @@ require('lazy').setup({
     -- REST client
     'NTBBloodbath/rest.nvim',
 
+    -- Database client
+    'tpope/vim-dadbod',
+    'kristijanhusak/vim-dadbod-ui',
+    'kristijanhusak/vim-dadbod-completion',
+
     -- Live preview commands
     'smjonas/live-command.nvim',
 
@@ -557,6 +562,7 @@ do
         { "<leader>s", group = "Swap/" },
         { "<leader>t", group = "Terminal/" },
         { "<leader>v", group = "Evaluate/" },
+        { "<leader>db", group = "Database/" },
     })
 end
 -- }}}
@@ -839,7 +845,18 @@ require('blink.cmp').setup({
         ['<CR>'] = { 'accept', 'fallback' }
     },
     sources = {
-        default = {'lsp', 'path', 'snippets'}
+        default = {'lsp', 'path', 'snippets'},
+        per_filetype = {
+            sql = { 'dadbod', 'lsp', 'path', 'snippets' },
+            mysql = { 'dadbod', 'lsp', 'path', 'snippets' },
+            plsql = { 'dadbod', 'lsp', 'path', 'snippets' }
+        },
+        providers = {
+            dadbod = {
+                name = 'Dadbod',
+                module = 'vim_dadbod_completion.blink'
+            }
+        }
     },
 })
 
@@ -1107,6 +1124,7 @@ do
 
     vim.lsp.config('pyright', {
         cmd = { 'pyright-langserver', '--stdio' },
+        filetypes = { 'python' },
         on_attach = on_attach,
         capabilities = blink.get_lsp_capabilities()
     })
@@ -1306,6 +1324,48 @@ noremap {
     rhs = '<Plug>RestNvim<CR>',
     desc = 'Run buffer with RESTClient'
 }
+-- }}}
+
+-- Database client {{{
+-- -------------------
+vim.g.db_ui_use_nerd_fonts = 1
+vim.g.db_ui_show_database_icon = 1
+vim.g.db_ui_winwidth = 40
+vim.g.db_ui_save_location = vim.fn.stdpath("data") .. "/db_ui"
+vim.g.db_ui_execute_on_save = 0  -- Don't auto-execute on save
+
+noremap {
+    lhs = '<leader>dbt',
+    rhs = ':DBUI<CR>',
+    desc = 'Toggle database UI'
+}
+
+-- Custom keybindings for query execution
+vim.api.nvim_create_autocmd('FileType', {
+    pattern = { 'sql', 'mysql', 'plsql' },
+    callback = function(ev)
+        -- Override default <Leader>W with our own mapping
+        vim.keymap.set('n', '<leader>W', '<Nop>', { buffer = ev.buf })
+        vim.keymap.set('v', '<leader>W', '<Nop>', { buffer = ev.buf })
+
+        -- Our custom mappings
+        vim.keymap.set('n', '<leader>dbr', '<Plug>(DBUI_ExecuteQuery)', {
+            buffer = ev.buf,
+            silent = true,
+            desc = 'Run query'
+        })
+        vim.keymap.set('v', '<leader>dbr', '<Plug>(DBUI_ExecuteQuery)', {
+            buffer = ev.buf,
+            silent = true,
+            desc = 'Run selected query'
+        })
+        vim.keymap.set('n', '<leader>dbs', '<Plug>(DBUI_SaveQuery)', {
+            buffer = ev.buf,
+            silent = true,
+            desc = 'Save query'
+        })
+    end
+})
 -- }}}
 
 -- Docker {{{
