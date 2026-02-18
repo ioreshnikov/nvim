@@ -45,8 +45,8 @@ require('lazy').setup({
     -- Structural searhc and replace
     'cshuaimin/ssr.nvim',
 
-    -- Git blame
-    'FabijanZulj/blame.nvim',
+    -- Git client
+    'NeogitOrg/neogit',
 
     -- Code completion frontend with `blink.cmp`
     {
@@ -554,6 +554,7 @@ do
     })
 
     wk.add({
+        { "<leader>g", group = "Git/" },
         { "<leader>e", group = "Diagnostics/" },
         { "<leader>f", group = "Telescope/" },
         { "<leader>fs", group = "Bolt/" },
@@ -691,7 +692,17 @@ require('ibl').setup {
 }
 -- }}}
 
-require('blame').setup({})
+-- Neogit {{{
+-- ----------
+require('neogit').setup({
+    signs = {
+        hunk    = { "▶", "▼" },
+        item    = { "▶", "▼" },
+        section = { "▶", "▼" },
+    },
+})
+nnoremap { lhs = '<leader>gg', rhs = ':Neogit<CR>', desc = 'Neogit' }
+-- }}}
 
 -- Tree sitter {{{
 -- ---------------
