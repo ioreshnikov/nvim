@@ -1391,6 +1391,10 @@ vim.api.nvim_command([[
 
 -- Random things {{{
 -- -----------------
+-- Disable accidental command-line window
+nnoremap { lhs = 'q:', rhs = '<Nop>' }
+nnoremap { lhs = 'q/', rhs = '<Nop>' }
+
 -- A faster way to save files
 noremap { lhs = '<leader>w', rhs = ':w<CR>', desc = 'Write file' }
 
