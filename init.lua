@@ -676,6 +676,7 @@ end
 -- The setup is minimalistic -- I mostly disable the indentation guides in the
 -- modes I don't want them to see.
 require('ibl').setup {
+    indent = { char = '▏' },
     exclude = {
         filetypes = {
             'help',
