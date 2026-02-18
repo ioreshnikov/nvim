@@ -695,6 +695,9 @@ require('ibl').setup {
 -- Neogit {{{
 -- ----------
 require('neogit').setup({
+    kind = "replace",
+    disable_hint = true,
+    filewatcher = { enabled = false },
     signs = {
         hunk    = { "▶", "▼" },
         item    = { "▶", "▼" },
