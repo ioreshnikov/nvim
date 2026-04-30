@@ -421,7 +421,6 @@ telescope.setup {
         prompt_title = true,
         sorter = sorters.get_fzy_sorter,
         sorting_strategy = 'ascending',
-        winblend = 5,
     },
     extensions = {
         fzf = {
@@ -548,9 +547,6 @@ do
         },
         win = {
             border = "rounded",
-            wo = {
-                winblend = 5
-            }
         }
     })
 
@@ -874,7 +870,7 @@ vim.opt.completeopt = {'menu', 'menuone', 'noselect'}
 
 require('blink.cmp').setup({
     completion = {
-        menu = { winblend = 5, draw = { columns = { {'label'}, {'kind_icon', 'kind', gap = 1} } } },
+        menu = { draw = { columns = { {'label'}, {'kind_icon', 'kind', gap = 1} } } },
         documentation = { auto_show = true },
         ghost_text = { enabled = false }
     },
