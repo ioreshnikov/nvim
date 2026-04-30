@@ -571,14 +571,14 @@ end
 
 -- Command line {{{
 -- ----------------
--- -- It's possible now to hide command line and it looks neat!
+require('vim._core.ui2').enable()
+
+-- It's possible now to hide command line and it looks neat!
 vim.opt.cmdheight = 0
 
--- -- Except that it doesn't show you when you're recording a macro
+-- Except that it doesn't show you when you're recording a macro
 vim.api.nvim_command([[autocmd CmdlineEnter * set cmdheight=1]])
 vim.api.nvim_command([[autocmd CmdlineLeave * set cmdheight=0]])
-vim.api.nvim_command([[autocmd RecordingEnter * set cmdheight=1]])
-vim.api.nvim_command([[autocmd RecordingLeave * set cmdheight=0]])
 -- }}}
 
 -- Status line {{{
@@ -608,6 +608,22 @@ do
         end
     end
 
+    local function recording()
+        local reg = vim.fn.reg_recording()
+        if reg == '' then
+            return ''
+        end
+        return '󰑊 @' .. reg
+    end
+
+    vim.api.nvim_create_autocmd({ 'RecordingEnter', 'RecordingLeave' }, {
+        callback = function()
+            vim.schedule(function()
+                require('lualine').refresh({ place = { 'statusline' } })
+            end)
+        end
+    })
+
     require('lualine').setup {
         options = {
             component_separators = '',
@@ -633,6 +649,10 @@ do
                 'location',
             },
             lualine_x = {
+                {
+                    recording,
+                    color = 'DiagnosticWarn'
+                },
                 'branch',
                 'fileformat',
                 'encoding',
