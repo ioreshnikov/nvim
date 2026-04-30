@@ -37,7 +37,6 @@ require('lazy').setup({
 
     -- Modern syntax highlight with `tree-sitter`
     { 'nvim-treesitter/nvim-treesitter', lazy = false, build = ':TSUpdate' },
-    'nvim-treesitter/playground',
 
     -- Text objects with treesitter
     'nvim-treesitter/nvim-treesitter-textobjects',
@@ -88,7 +87,6 @@ require('lazy').setup({
     'joom/latex-unicoder.vim',
 
     -- LSP errors
-    "https://git.sr.ht/~whynothugo/lsp_lines.nvim",
     'yorickpeterse/nvim-pqf',
 
     -- Indentation guides
@@ -125,6 +123,9 @@ require('lazy').setup({
 
     -- Writing mode
     'folke/zen-mode.nvim',
+
+    -- Markdown rendering
+    'MeanderingProgrammer/render-markdown.nvim',
 })
 -- }}}
 
@@ -706,6 +707,13 @@ require('neogit').setup({
     },
 })
 nnoremap { lhs = '<leader>gg', rhs = ':Neogit<CR>', desc = 'Neogit' }
+
+vim.api.nvim_create_autocmd('FileType', {
+    pattern = 'NeogitStatus',
+    callback = function(ev)
+        vim.api.nvim_clear_autocmds({ event = 'FocusGained', buffer = ev.buf })
+    end
+})
 -- }}}
 
 -- Tree sitter {{{
@@ -779,9 +787,6 @@ require('nvim-treesitter.configs').setup {
                 ["[C"] = "@class.outer",
             }
         }
-    },
-    playground = {
-        enable = true
     }
 }
 -- NOTE: about `ignore_install` above: I want to use treesitter for everything,
@@ -922,6 +927,12 @@ nnoremap { lhs = '<F11>', rhs = ':DapStepInto<CR>' }
 -- Automatic delimiter pairing {{{
 -- -------------------------------
 require('nvim-autopairs').setup {}
+
+require('render-markdown').setup({
+    sign = { enabled = false },
+    heading = { icons = {} },
+    link = { hyperlink = '' },
+})
 -- }}}
 
 -- General LSP setup {{{
@@ -999,9 +1010,6 @@ vim.api.nvim_command('command! LspCodeAction         lua vim.lsp.buf.code_action
 
 -- Error diagnostics {{{
 -- ---------------------
--- Better rendering in virtual text
--- require('lsp_lines').setup({})
-
 -- By default show only sign column indicators, no virtual text
 -- The hotkey toggles long-form error display (virtual lines)
 local long_lines_visible = false
