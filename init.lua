@@ -36,10 +36,10 @@ require('lazy').setup({
     'tami5/sqlite.lua',
 
     -- Modern syntax highlight with `tree-sitter`
-    { 'nvim-treesitter/nvim-treesitter', lazy = false, build = ':TSUpdate' },
+    { 'nvim-treesitter/nvim-treesitter', branch = 'main', lazy = false, build = ':TSUpdate' },
 
     -- Text objects with treesitter
-    'nvim-treesitter/nvim-treesitter-textobjects',
+    { 'nvim-treesitter/nvim-treesitter-textobjects', branch = 'main' },
 
     -- Structural searhc and replace
     'cshuaimin/ssr.nvim',
@@ -297,12 +297,11 @@ vim.opt.linebreak = true
 
 -- Folds {{{
 -- ---------
--- Folds are occasionally useful. I wish I could use tree-sitter aware folds,
--- but as of now they're glitchy and tend to randomly collapse when you edit a
--- region. Therefore I resort to good old fold by marker.
+-- Folds are occasionally useful. Marker folds are the safe default; buffers
+-- with tree-sitter enabled switch to tree-sitter folds in the corresponding
+-- FileType callback.
 
-vim.opt.foldmethod = 'expr'
-vim.opt.foldexpr = "v:lua.vim.treesitter.foldexpr()"
+vim.opt.foldmethod = 'marker'
 vim.opt.foldtext = ""
 vim.opt.foldlevel = 99
 -- }}}
@@ -737,80 +736,113 @@ vim.api.nvim_create_autocmd('FileType', {
 
 -- The section below configures `tree-sitter` to be used for syntax
 -- highlighting, selection, indentation and automatic delimiters pairing.
-require('nvim-treesitter.configs').setup {
-    ensure_installed = 'all',
-    ignore_install = {'phpdoc', 'ipkg'},
-    highlight = {
-        enable = true,
-        additional_vim_regex_highlighting = {'org'}
-    },
-    incremental_selection = {
-        enable = true,
-        keymaps = {
-            init_selection = 'gnn',
-            node_incremental = 'grn',
-            scope_incremental = 'grc',
-            node_decremental = 'grm'
-        }
-    },
-    indent = {
-        enable = true,
-        disable = { 'python' }
-    },
-    textobjects = {
+do
+    local treesitter_languages = {
+        'bash',
+        'bibtex',
+        'css',
+        'dockerfile',
+        'html',
+        'javascript',
+        'json',
+        'latex',
+        'lua',
+        'markdown',
+        'markdown_inline',
+        'python',
+        'rust',
+        'scss',
+        'sql',
+        'toml',
+        'tsx',
+        'typescript',
+        'vim',
+        'vimdoc',
+        'yaml',
+    }
+
+    local treesitter_filetypes = {
+        'bash',
+        'bib',
+        'css',
+        'dockerfile',
+        'html',
+        'javascript',
+        'javascriptreact',
+        'json',
+        'lua',
+        'markdown',
+        'mysql',
+        'plaintex',
+        'python',
+        'rust',
+        'scss',
+        'sql',
+        'tex',
+        'toml',
+        'typescript',
+        'typescriptreact',
+        'vim',
+        'vimdoc',
+        'yaml',
+    }
+
+    require('nvim-treesitter').setup {
+        install_dir = vim.fn.stdpath('data') .. '/site'
+    }
+
+    require('nvim-treesitter').install(treesitter_languages)
+
+    vim.api.nvim_create_autocmd('FileType', {
+        pattern = treesitter_filetypes,
+        callback = function(ev)
+            vim.treesitter.start(ev.buf)
+
+            vim.wo[0][0].foldmethod = 'expr'
+            vim.wo[0][0].foldexpr = 'v:lua.vim.treesitter.foldexpr()'
+
+            if vim.bo[ev.buf].filetype ~= 'python' then
+                vim.bo[ev.buf].indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
+            end
+        end,
+    })
+
+    local select = require('nvim-treesitter-textobjects.select')
+    local swap = require('nvim-treesitter-textobjects.swap')
+    local move = require('nvim-treesitter-textobjects.move')
+
+    require('nvim-treesitter-textobjects').setup {
         select = {
-            enable = true,
             lookahead = true,
-            keymaps = {
-                ["ia"] = "@parameter.inner",
-                ["aa"] = "@parameter.outer",
-                ["if"] = "@function.inner",
-                ["af"] = "@function.outer",
-                ["ic"] = "@class.inner",
-                ["ac"] = "@class.outer",
-            },
-        },
-        swap = {
-            enable = true,
-            swap_next = {
-                ["<leader>sa"] = "@parameter.inner"
-            },
-            swap_previous = {
-                ["<leader>sA"] = "@parameter.inner"
-            }
         },
         move = {
-            enable = true,
             set_jumps = true,
-            goto_next_start = {
-                ["]a"] = "@parameter.inner",
-                ["]f"] = "@function.outer",
-                ["]c"] = "@class.outer",
-            },
-            goto_next_end = {
-                ["]A"] = "@parameter.outer",
-                ["]F"] = "@function.outer",
-                ["]C"] = "@class.outer",
-            },
-            goto_previous_start = {
-                ["[a"] = "@parameter.inner",
-                ["[f"] = "@function.outer",
-                ["[c"] = "@class.outer",
-            },
-            goto_previous_end = {
-                ["[A"] = "@parameter.outer",
-                ["[F"] = "@function.outer",
-                ["[C"] = "@class.outer",
-            }
-        }
+        },
     }
-}
--- NOTE: about `ignore_install` above: I want to use treesitter for everything,
--- but I want to stick to stable grammar files. Until April 2022 it was
--- possible to do this with setting `ensure_installed = 'maintained'`. Since
--- April 2022 'maintained' was marked as deprecated and I switched to 'all'.
--- Some of the grammars in 'all' are occasionally broken. One of them is
--- 'phpdoc', but the list will surely grow.
+
+    noremap { mode = { 'x', 'o' }, lhs = 'ia', rhs = function() select.select_textobject('@parameter.inner', 'textobjects') end, desc = 'Inner parameter' }
+    noremap { mode = { 'x', 'o' }, lhs = 'aa', rhs = function() select.select_textobject('@parameter.outer', 'textobjects') end, desc = 'Around parameter' }
+    noremap { mode = { 'x', 'o' }, lhs = 'if', rhs = function() select.select_textobject('@function.inner', 'textobjects') end, desc = 'Inner function' }
+    noremap { mode = { 'x', 'o' }, lhs = 'af', rhs = function() select.select_textobject('@function.outer', 'textobjects') end, desc = 'Around function' }
+    noremap { mode = { 'x', 'o' }, lhs = 'ic', rhs = function() select.select_textobject('@class.inner', 'textobjects') end, desc = 'Inner class' }
+    noremap { mode = { 'x', 'o' }, lhs = 'ac', rhs = function() select.select_textobject('@class.outer', 'textobjects') end, desc = 'Around class' }
+
+    nnoremap { lhs = '<leader>sa', rhs = function() swap.swap_next('@parameter.inner') end, desc = 'Swap with next parameter' }
+    nnoremap { lhs = '<leader>sA', rhs = function() swap.swap_previous('@parameter.inner') end, desc = 'Swap with previous parameter' }
+
+    noremap { mode = { 'n', 'x', 'o' }, lhs = ']a', rhs = function() move.goto_next_start('@parameter.inner', 'textobjects') end, desc = 'Next parameter start' }
+    noremap { mode = { 'n', 'x', 'o' }, lhs = ']f', rhs = function() move.goto_next_start('@function.outer', 'textobjects') end, desc = 'Next function start' }
+    noremap { mode = { 'n', 'x', 'o' }, lhs = ']c', rhs = function() move.goto_next_start('@class.outer', 'textobjects') end, desc = 'Next class start' }
+    noremap { mode = { 'n', 'x', 'o' }, lhs = ']A', rhs = function() move.goto_next_end('@parameter.outer', 'textobjects') end, desc = 'Next parameter end' }
+    noremap { mode = { 'n', 'x', 'o' }, lhs = ']F', rhs = function() move.goto_next_end('@function.outer', 'textobjects') end, desc = 'Next function end' }
+    noremap { mode = { 'n', 'x', 'o' }, lhs = ']C', rhs = function() move.goto_next_end('@class.outer', 'textobjects') end, desc = 'Next class end' }
+    noremap { mode = { 'n', 'x', 'o' }, lhs = '[a', rhs = function() move.goto_previous_start('@parameter.inner', 'textobjects') end, desc = 'Previous parameter start' }
+    noremap { mode = { 'n', 'x', 'o' }, lhs = '[f', rhs = function() move.goto_previous_start('@function.outer', 'textobjects') end, desc = 'Previous function start' }
+    noremap { mode = { 'n', 'x', 'o' }, lhs = '[c', rhs = function() move.goto_previous_start('@class.outer', 'textobjects') end, desc = 'Previous class start' }
+    noremap { mode = { 'n', 'x', 'o' }, lhs = '[A', rhs = function() move.goto_previous_end('@parameter.outer', 'textobjects') end, desc = 'Previous parameter end' }
+    noremap { mode = { 'n', 'x', 'o' }, lhs = '[F', rhs = function() move.goto_previous_end('@function.outer', 'textobjects') end, desc = 'Previous function end' }
+    noremap { mode = { 'n', 'x', 'o' }, lhs = '[C', rhs = function() move.goto_previous_end('@class.outer', 'textobjects') end, desc = 'Previous class end' }
+end
 -- }}}
 
 -- Structural search and replace {{{
