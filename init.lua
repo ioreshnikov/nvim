@@ -80,9 +80,6 @@ require('lazy').setup({
     -- TeX
     'lervag/vimtex',
 
-    -- Prettier javascript
-    { 'prettier/vim-prettier', build = 'yarn install --frozen-lockfile --production' },
-
     -- Unicode symbols entry
     'joom/latex-unicoder.vim',
 
@@ -1451,6 +1448,28 @@ vim.api.nvim_command([[
 -- Disable accidental command-line window
 nnoremap { lhs = 'q:', rhs = '<Nop>' }
 nnoremap { lhs = 'q/', rhs = '<Nop>' }
+
+-- Run the nearest project-local Prettier for the current file.
+vim.api.nvim_create_user_command('Prettier', function()
+    local filename = vim.api.nvim_buf_get_name(0)
+    if filename == '' then
+        vim.notify('Prettier requires a file-backed buffer', vim.log.levels.WARN)
+        return
+    end
+
+    local prettier = vim.fs.find('node_modules/.bin/prettier', {
+        path = filename,
+        upward = true,
+    })[1]
+    if not prettier then
+        vim.notify('Could not find a local Prettier executable', vim.log.levels.WARN)
+        return
+    end
+
+    vim.cmd('%!' .. vim.fn.shellescape(prettier) .. ' --stdin-filepath ' .. vim.fn.shellescape(filename))
+end, {})
+
+noremap { lhs = '<leader>p', rhs = '<cmd>Prettier<CR>', desc = 'Format with Prettier' }
 
 -- A faster way to save files
 noremap { lhs = '<leader>w', rhs = ':w<CR>', desc = 'Write file' }
