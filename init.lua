@@ -290,7 +290,7 @@ vim.api.nvim_command([[autocmd BufWritePre * :%s/\s\+$//e]])
 vim.opt.linebreak = true
 vim.opt.textwidth = 0
 vim.opt.wrapmargin = 0
-vim.opt.showbreak='⤷ '
+vim.opt.showbreak='↪ '
 
 -- By default we do not wrap, but that can be overriden in some buffers
 vim.opt.wrap = false
@@ -980,8 +980,12 @@ require('nvim-autopairs').setup {}
 
 require('render-markdown').setup({
     sign = { enabled = false },
+    anti_conceal = { enabled = false },
     heading = { icons = {} },
     link = { hyperlink = '' },
+    bullet = {
+        icons = { '•', '◦', '▪', '▫' },
+    },
 })
 -- }}}
 
