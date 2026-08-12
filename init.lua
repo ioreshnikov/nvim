@@ -187,6 +187,11 @@ vim.opt.mouse = 'a'
 vim.opt.clipboard = 'unnamedplus'
 -- }}}
 
+-- Global statusline {{{
+-- ---------------------
+vim.opt.laststatus = 3
+-- }}}
+
 -- Scroll {{{
 -- ----------
 -- I love when there's a bit of space between the current line and the end of
@@ -621,7 +626,7 @@ do
             component_separators = '',
             section_separators = '',
             disabled_filetypes = {},
-            globalstatus = false
+            globalstatus = true
         },
         sections = {
             lualine_a = {
