@@ -731,6 +731,14 @@ vim.api.nvim_create_autocmd('FileType', {
         vim.api.nvim_clear_autocmds({ event = 'FocusGained', buffer = ev.buf })
     end
 })
+
+vim.api.nvim_create_autocmd({ 'BufWinEnter', 'WinEnter' }, {
+    callback = function()
+        if not vim.bo.filetype:match('^Neogit') then
+            vim.api.nvim_win_set_hl_ns(0, 0)
+        end
+    end
+})
 -- }}}
 
 -- Tree sitter {{{
