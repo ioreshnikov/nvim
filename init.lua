@@ -1625,23 +1625,36 @@ vim.api.nvim_command([[
     inoremap <silent> <F6> <C-o>:call ToggleBackground()<CR>
     vnoremap <silent> <F6> <ESC>:call ToggleBackground()<CR>
 ]])
+
 -- }}}
 
 -- Writing mode {{{
 -- ----------------
-require('zen-mode').setup({
-    window = {
-        backdrop = 1.0,
-        width = 78,
-        height = 0.90,
-        options = {
-            cursorline = false,
-            number = false,
-            relativenumber = false,
-            signcolumn = "no"
-        }
-    }
-})
+do
+    local showbreak
+
+    require('zen-mode').setup({
+        window = {
+            backdrop = 1.0,
+            width = 78,
+            height = 0.90,
+            options = {
+                cursorline = false,
+                number = false,
+                relativenumber = false,
+                signcolumn = "no",
+                list = false,
+            }
+        },
+        on_open = function()
+            showbreak = vim.o.showbreak
+            vim.o.showbreak = ''
+        end,
+        on_close = function()
+            vim.o.showbreak = showbreak
+        end,
+    })
+end
 
 noremap {
     lhs = '<F12>',
