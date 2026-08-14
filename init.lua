@@ -1250,20 +1250,15 @@ end
 do
     local blink = require('blink.cmp')
 
-    vim.lsp.config('ts_ls', {
-        cmd = {"/opt/homebrew/bin/typescript-language-server", "--stdio"},
+    vim.lsp.config('ts_native', {
+        cmd = { './node_modules/.bin/tsc', '--lsp', '--stdio' },
         filetypes = { 'javascript', 'javascriptreact', 'typescript', 'typescriptreact' },
         root_markers = { 'main', 'tsconfig.json', 'package.json', '.git' },
         on_attach = on_attach,
         capabilities = blink.get_lsp_capabilities()
     })
 
-    vim.api.nvim_create_autocmd('FileType', {
-        pattern = { 'javascript', 'javascriptreact', 'typescript', 'typescriptreact' },
-        callback = function()
-            vim.lsp.enable('ts_ls')
-        end
-    })
+    vim.lsp.enable('ts_native')
 end
 
 -- Language: HTML and CSS {{{
