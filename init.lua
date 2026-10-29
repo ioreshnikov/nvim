@@ -1137,6 +1137,15 @@ require('neo-tree').setup {
 nnoremap { lhs = '<leader>d', rhs = ':Neotree focus toggle<CR>', desc = 'Toggle directory tree' }
 -- }}}
 
+-- Symbol sidebar {{{
+-- ------------------
+require('symbol_sidebar').setup {
+    window = {
+        width = 0.25,
+    },
+}
+-- }}}
+
 -- Language: VIM {{{
 -- -----------------
 -- It would be cool if editing this very config was done with the help of an
