@@ -717,6 +717,10 @@ require('neogit').setup({
     kind = "replace",
     disable_hint = true,
     filewatcher = { enabled = false },
+    popup = {
+        kind = "popup",
+        show_title = true,
+    },
     signs = {
         hunk    = { "▶", "▼" },
         item    = { "▶", "▼" },
